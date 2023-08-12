@@ -1,11 +1,16 @@
 package br.edu.ifpb.agora.model;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Professor extends Usuario{
+
+    @OneToOne
     private Coordenador coordenador;
+    @ManyToMany
     private List<Colegiado> colegiados;
     public Professor() {
     }

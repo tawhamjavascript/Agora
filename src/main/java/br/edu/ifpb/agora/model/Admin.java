@@ -1,22 +1,42 @@
 package br.edu.ifpb.agora.model;
 
-import java.util.ArrayList;
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
 public class Admin {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @OneToMany
+    @JoinColumn(name = "admin_id")
     private List<Professor> professores;
+    @OneToMany
+    @JoinColumn(name = "admin_id")
     private List<Aluno> alunos;
+    @OneToMany
+    @JoinColumn(name = "admin_id")
     private List<Curso> cursos;
-    private Professor coordenador;
-    private List<Usuario> usuarios;
+
+    @OneToMany
+    @JoinColumn(name = "admin_id")
+    private List<Professor> coordenador;
+
+    @OneToMany
+    @JoinColumn(name = "admin_id")
     private List<Assunto> assuntos;
+
 
     public Admin() {
 
     }
-    public Admin(Professor coordenador) {
-        this.coordenador = coordenador;
+
+    public long getId() {
+        return id;
     }
+
 
     public List<Professor> getProfessores() {
         return professores;
@@ -42,21 +62,14 @@ public class Admin {
         cursos.add(curso);
     }
 
-    public Professor getCoordenador() {
+    public List<Professor> getCoordenador() {
         return coordenador;
     }
 
-    public void setCoordenador(Professor coordenador) {
-        this.coordenador = coordenador;
+    public void addCoordenador(Professor coordenador) {
+        this.coordenador.add(coordenador);
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void addUsuario(Usuario usuario) {
-        usuarios.add(usuario);
-    }
 
     public List<Assunto> getAssuntos() {
         return assuntos;
@@ -65,8 +78,4 @@ public class Admin {
     public void addAssunto(Assunto assunto) {
         assuntos.add(assunto);
     }
-
-
-
-
 }

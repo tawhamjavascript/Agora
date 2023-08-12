@@ -1,11 +1,27 @@
 package br.edu.ifpb.agora.model;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Coordenador {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @OneToMany
+    @JoinColumn(name = "coordenador_id")
     private List<Reuniao> reunioes;
+
+    @OneToMany
+    @JoinColumn(name = "coordenador_id")
     private List<Processo> processos;
+
+    @OneToMany
+    @JoinColumn(name = "coordenador_id")
     private List<Colegiado> colegiados;
 
     public Coordenador() {

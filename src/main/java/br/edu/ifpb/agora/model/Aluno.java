@@ -1,5 +1,9 @@
 package br.edu.ifpb.agora.model;
 
+
+import jakarta.persistence.Entity;
+
+@Entity
 public class Aluno extends Usuario {
         public Aluno() {
 

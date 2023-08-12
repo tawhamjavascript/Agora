@@ -1,10 +1,20 @@
 package br.edu.ifpb.agora.model;
 
+
+import jakarta.persistence.*;
+
+@Entity
 public class Voto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Enumerated(EnumType.ORDINAL)
     private TipoVoto tipoVoto;
     private boolean ausente;
 
+    @OneToOne
+    @JoinColumn(name = "professor_id")
     private Professor voto;
 
 
@@ -16,7 +26,6 @@ public class Voto {
         this.ausente = ausente;
         this.voto = voto;
     }
-
 
     public long getId() {
         return id;

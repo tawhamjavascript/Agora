@@ -1,20 +1,27 @@
 package br.edu.ifpb.agora.model;
 
-import java.util.ArrayList;
+import jakarta.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Colegiado {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private Date dataInicio;
     private Date dataFim;
     private String descricao;
     private String portaria;
 
+    @OneToOne
+    @JoinColumn(name = "curso_id")
     private Curso curso;
-
+    @ManyToMany(mappedBy = "colegiados")
     private List<Professor> membros;
 
+    @OneToMany(mappedBy = "colegiado")
     private List<Reuniao> reunioes;
 
 
