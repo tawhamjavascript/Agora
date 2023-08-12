@@ -12,7 +12,12 @@ public class Curso {
         this.nome = nome;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getNome() {
         return nome;
     }
+
 }

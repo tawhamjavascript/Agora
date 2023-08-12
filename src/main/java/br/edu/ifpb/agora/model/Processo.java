@@ -14,7 +14,7 @@ public class Processo {
     private TipoDecisao decisaoRelator;
     private Assunto assunto;
 
-    private List<Voto> votos = new ArrayList<>();
+    private List<Voto> votos;
 
     private Aluno interessado;
 

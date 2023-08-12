@@ -12,7 +12,7 @@ public class Reuniao {
 
     private byte[] ata;
 
-    private List<Processo> processos = new ArrayList<>();
+    private List<Processo> processos;
     private Colegiado colegiado;
 
     public Reuniao() {

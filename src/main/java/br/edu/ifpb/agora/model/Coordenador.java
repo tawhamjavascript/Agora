@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Coordenador {
-    private final List<Reuniao> reunioes = new ArrayList<>();
-    private final List<Processo> processos = new ArrayList<>();
-    private final List<Colegiado> colegiados = new ArrayList<>();
+    private List<Reuniao> reunioes;
+    private List<Processo> processos;
+    private List<Colegiado> colegiados;
 
     public Coordenador() {
     }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Professor extends Usuario{
     private Coordenador coordenador;
-    private final List<Colegiado> colegiados = new ArrayList<>();
+    private List<Colegiado> colegiados;
     public Professor() {
     }
     public Professor(String nome, String fone, String matricula, String login, String senha, Coordenador coordenador) {

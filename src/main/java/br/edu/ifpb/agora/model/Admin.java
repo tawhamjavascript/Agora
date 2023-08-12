@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Admin {
-    private final List<Professor> professores = new ArrayList<>();
-    private final List<Aluno> alunos = new ArrayList<>();
-    private final List<Curso> cursos = new ArrayList<>();
+    private List<Professor> professores;
+    private List<Aluno> alunos;
+    private List<Curso> cursos;
     private Professor coordenador;
-    private final List<Usuario> usuarios = new ArrayList<>();
-    private final List<Assunto> assuntos = new ArrayList<>();
+    private List<Usuario> usuarios;
+    private List<Assunto> assuntos;
 
     public Admin() {
 

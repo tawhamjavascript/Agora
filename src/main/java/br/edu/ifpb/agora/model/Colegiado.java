@@ -13,9 +13,9 @@ public class Colegiado {
 
     private Curso curso;
 
-    private List<Professor> membros = new ArrayList<>();
+    private List<Professor> membros;
 
-    private List<Reuniao> reunioes = new ArrayList<>();
+    private List<Reuniao> reunioes;
 
 
     public Colegiado() {
