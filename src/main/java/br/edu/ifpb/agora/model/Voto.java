@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Voto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Enumerated(EnumType.ORDINAL)
     private TipoVoto tipoVoto;
@@ -27,7 +27,7 @@ public class Voto {
         this.voto = voto;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

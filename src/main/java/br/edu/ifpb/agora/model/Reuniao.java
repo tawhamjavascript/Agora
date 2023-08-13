@@ -11,7 +11,7 @@ public class Reuniao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private Date dataReuniao;
 
     @Enumerated(EnumType.ORDINAL)
@@ -34,7 +34,7 @@ public class Reuniao {
         this.colegiado = colegiado;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

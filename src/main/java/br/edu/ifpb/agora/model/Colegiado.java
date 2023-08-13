@@ -9,7 +9,7 @@ import java.util.List;
 public class Colegiado {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private Date dataInicio;
     private Date dataFim;
     private String descricao;
@@ -36,7 +36,7 @@ public class Colegiado {
         this.curso = curso;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

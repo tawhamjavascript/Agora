@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String nome;
 
     public Curso() {
@@ -20,7 +20,7 @@ public class Curso {
         this.nome = nome;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

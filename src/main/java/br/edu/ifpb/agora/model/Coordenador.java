@@ -10,7 +10,7 @@ public class Coordenador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @OneToMany
     @JoinColumn(name = "coordenador_id")
@@ -25,6 +25,10 @@ public class Coordenador {
     private List<Colegiado> colegiados;
 
     public Coordenador() {
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public List<Reuniao> getReunioes() {

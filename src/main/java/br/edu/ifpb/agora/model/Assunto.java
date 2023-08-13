@@ -11,7 +11,7 @@ public class Assunto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String nome;
 
     public Assunto() {
@@ -21,7 +21,7 @@ public class Assunto {
         this.nome = nome;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

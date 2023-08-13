@@ -8,7 +8,7 @@ import java.util.List;
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @OneToMany
     @JoinColumn(name = "admin_id")
@@ -33,7 +33,7 @@ public class Admin {
 
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -77,5 +77,41 @@ public class Admin {
 
     public void addAssunto(Assunto assunto) {
         assuntos.add(assunto);
+    }
+
+    public void removeProfessor(Professor professor) {
+        this.professores.remove(professor);
+    }
+
+    public void updateProfessor(Professor professor) {
+        this.professores.set(this.professores.indexOf(professor), professor);
+    }
+
+    public void removeAluno(Aluno aluno) {
+        this.alunos.remove(aluno);
+    }
+
+    public void updateAluno(Aluno aluno) {
+        this.alunos.set(this.alunos.indexOf(aluno), aluno);
+    }
+
+    public void removeCurso(Curso curso) {
+        this.cursos.remove(curso);
+    }
+
+    public void updateCurso(Curso curso) {
+        this.cursos.set(this.cursos.indexOf(curso), curso);
+    }
+
+    public void removeCoordenador(Professor professor) {
+        this.coordenador.remove(professor);
+    }
+
+    public void removeAssunto(Assunto assunto) {
+        this.assuntos.remove(assunto);
+    }
+
+    public void updateAssunto(Assunto assunto) {
+        this.assuntos.set(this.assuntos.indexOf(assunto), assunto);
     }
 }

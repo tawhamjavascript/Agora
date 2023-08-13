@@ -14,6 +14,10 @@ public class Professor extends Usuario{
     private List<Colegiado> colegiados;
     public Professor() {
     }
+
+    public Professor(String nome, String fone, String matricula, String login, String senha) {
+        super(nome, fone, matricula, login, senha);
+    }
     public Professor(String nome, String fone, String matricula, String login, String senha, Coordenador coordenador) {
         super(nome, fone, matricula, login, senha);
         this.coordenador = coordenador;
@@ -34,4 +38,7 @@ public class Professor extends Usuario{
     }
 
 
+    public void setCoordenador(Coordenador coordenador) {
+        this.coordenador = coordenador;
+    }
 }

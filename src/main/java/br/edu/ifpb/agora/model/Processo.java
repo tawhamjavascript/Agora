@@ -10,7 +10,7 @@ import java.util.List;
 public class Processo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String numero;
     private Date dataRecepcao;
     private Date dataDistribuicao;
@@ -55,7 +55,7 @@ public class Processo {
         this.relator = relator;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
