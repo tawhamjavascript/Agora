@@ -1,18 +1,29 @@
 package br.edu.ifpb.agora.model;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Reuniao {
-    private long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private Date dataReuniao;
 
+    @Enumerated(EnumType.ORDINAL)
     private StatusReuniao status;
 
     private byte[] ata;
 
+    @OneToMany()
+    @JoinColumn(name = "reuniao_id")
     private List<Processo> processos;
+
+    @ManyToOne
     private Colegiado colegiado;
 
     public Reuniao() {
@@ -23,7 +34,7 @@ public class Reuniao {
         this.colegiado = colegiado;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

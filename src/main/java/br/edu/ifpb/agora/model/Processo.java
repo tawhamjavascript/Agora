@@ -1,25 +1,41 @@
 package br.edu.ifpb.agora.model;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Processo {
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String numero;
     private Date dataRecepcao;
     private Date dataDistribuicao;
     private Date dataParecer;
     private byte[] parecer;
+
+    @Enumerated(EnumType.ORDINAL)
     private TipoDecisao decisaoRelator;
+
+    @OneToOne
+    @JoinColumn(name = "assunto_id")
     private Assunto assunto;
 
+    @OneToMany
+    @JoinColumn(name = "processo_id")
     private List<Voto> votos;
 
+    @OneToOne
+    @JoinColumn(name = "aluno_id")
     private Aluno interessado;
 
     private boolean emPauta = false;
 
+    @OneToOne
+    @JoinColumn(name = "professor_id")
     private Professor relator;
 
 
@@ -39,7 +55,7 @@ public class Processo {
         this.relator = relator;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
