@@ -7,28 +7,16 @@ import java.util.List;
 
 @Entity
 public class Professor extends Usuario{
-
-    @OneToOne
-    private Coordenador coordenador;
     @ManyToMany
     private List<Colegiado> colegiados;
+
+    private boolean coordenador;
     public Professor() {
     }
-
-    public Professor(String nome, String fone, String matricula, String login, String senha) {
-        super(nome, fone, matricula, login, senha);
-    }
-    public Professor(String nome, String fone, String matricula, String login, String senha, Coordenador coordenador) {
-        super(nome, fone, matricula, login, senha);
+    public Professor(String nome, String fone, String matricula, String login, String senha, boolean admin, boolean coordenador) {
+        super(nome, fone, matricula, login, senha, admin);
         this.coordenador = coordenador;
     }
-
-    public Coordenador getCoordenador() {
-        return coordenador;
-    }
-
-
-
     private List<Colegiado> getColegiados() {
         return colegiados;
     }
@@ -37,8 +25,11 @@ public class Professor extends Usuario{
         colegiados.add(colegiado);
     }
 
+    public boolean isCoordenador() {
+        return coordenador;
+    }
 
-    public void setCoordenador(Coordenador coordenador) {
+    public void setCoordenador(boolean coordenador) {
         this.coordenador = coordenador;
     }
 }
