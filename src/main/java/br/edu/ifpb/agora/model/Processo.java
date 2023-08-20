@@ -2,7 +2,6 @@ package br.edu.ifpb.agora.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +15,9 @@ public class Processo {
     private Date dataDistribuicao;
     private Date dataParecer;
     private byte[] parecer;
+
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
 
     @Enumerated(EnumType.ORDINAL)
     private TipoDecisao decisaoRelator;
@@ -53,6 +55,7 @@ public class Processo {
         this.assunto = assunto;
         this.interessado = interessado;
         this.relator = relator;
+        this.status = StatusEnum.CRIADO;
     }
 
     public Long getId() {
