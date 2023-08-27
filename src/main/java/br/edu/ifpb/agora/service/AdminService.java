@@ -10,16 +10,21 @@ import java.util.List;
 
 @Service
 public class AdminService {
+
     @Autowired
     private ProfessorRepository professorRepository;
 
     @Autowired
+
     private AlunoRepository alunoRepository;
     @Autowired
+
     private CursoRepository cursoRepository;
 
     @Autowired
     private AssuntoRepository assuntoRepository;
+
+
 
 
 

@@ -11,7 +11,9 @@ import br.edu.ifpb.agora.model.Processo;
 import br.edu.ifpb.agora.model.StatusEnum;
 import br.edu.ifpb.agora.repository.ProcessoRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AlunoService {
     
     @Autowired
@@ -33,11 +35,11 @@ public class AlunoService {
 
     @Transactional
     public List<Processo> consultaProcessosPorAssunto(Aluno aluno, Assunto assunto){
-        return processoRepository.findAllByAlunoAndAssunto(aluno, assunto);
+        return processoRepository.findAllByInteressadoIdAndAssuntoNome(aluno.getId(), assunto.getNome());
     }
 
     @Transactional
     public List<Processo> consultaProcessosPorStatus(Aluno aluno, StatusEnum status){
-        return processoRepository.findAllByAlunoAndStatus(aluno, status);
+        return processoRepository.findAllByInteressadoIdAndStatus(aluno.getId(), status);
     }
 }
