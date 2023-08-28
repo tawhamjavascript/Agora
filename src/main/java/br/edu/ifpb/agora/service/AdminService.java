@@ -74,15 +74,20 @@ public class AdminService {
         return alunoRepository.findById(id).orElse(null);
     }
 
+    @Transactional
+
     public void addCourse(Curso curso) {
         cursoRepository.save(curso);
     }
+
+    @Transactional
 
     public void removeCourse(Curso curso) {
         cursoRepository.delete(curso);
 
     }
 
+    @Transactional
     public void updateCourse(Curso curso) {
         cursoRepository.save(curso);
     }
@@ -96,6 +101,7 @@ public class AdminService {
         return cursoRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     public void addCoordinator(Long id) {
         Professor professor = professorRepository.findById(id).orElse(null);
         if (professor == null) {
@@ -105,15 +111,20 @@ public class AdminService {
         professorRepository.save(professor);
     }
 
+    @Transactional
 
     public void registerSubject(Assunto assunto) {
 
         assuntoRepository.save(assunto);
     }
 
+    @Transactional
+
     public void removeSubject(Assunto assunto) {
         assuntoRepository.delete(assunto);
     }
+
+    @Transactional
 
     public void updateSubject(Assunto assunto) {
 

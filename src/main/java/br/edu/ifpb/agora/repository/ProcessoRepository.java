@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 
-    public List<Processo> findAllByInteressado(Aluno aluno);
+    public List<Processo> findAllByInteressadoId(Long id);
 
     public List<Processo> findAllByInteressadoIdAndAssuntoNome(Long id, String nome);
 
@@ -27,5 +27,10 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
     public List<Processo> findAllByEmPauta(Boolean pauta);
 
     public List<Processo> findAllByInteressadoIdAndStatus(Long id, StatusEnum status);
+
+    public Processo findByNumero(String numero);
+
+
+
 
 }

@@ -30,7 +30,7 @@ public class AlunoService {
 
     @Transactional
     public List<Processo> consultaProcessos(Aluno aluno){
-        return processoRepository.findAllByInteressado(aluno);
+        return processoRepository.findAllByInteressadoId(aluno.getId());
     }
 
     @Transactional
