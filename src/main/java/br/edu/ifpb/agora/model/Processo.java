@@ -44,7 +44,7 @@ public class Processo {
     public Processo() {
     }
 
-    public Processo(String numero, Date dataRecepcao, Date dataDistribuicao, Date dataParecer, byte[] parecer, TipoDecisao decisaoRelator, Assunto assunto, Aluno interessado, Professor relator) {
+    public Processo(String numero, Date dataRecepcao, Date dataDistribuicao, Date dataParecer, byte[] parecer, TipoDecisao decisaoRelator, Assunto assunto, Aluno interessado) {
 
         this.numero = numero;
         this.dataRecepcao = dataRecepcao;
@@ -54,7 +54,6 @@ public class Processo {
         this.decisaoRelator = decisaoRelator;
         this.assunto = assunto;
         this.interessado = interessado;
-        this.relator = relator;
         this.status = StatusEnum.CRIADO;
     }
 
@@ -91,6 +90,10 @@ public class Processo {
         return decisaoRelator;
     }
 
+    public void setDecisaoRelator(TipoDecisao decisao){
+        this.decisaoRelator = decisao;
+    }
+
     public Assunto getAssunto() {
         return assunto;
     }
@@ -115,6 +118,10 @@ public class Processo {
 
     public Professor getRelator() {
         return relator;
+    }
+
+    public void setRelator(Professor relator){
+        this.relator = relator;
     }
 
 

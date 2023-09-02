@@ -1,7 +1,6 @@
 package br.edu.ifpb.agora.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
 
 import java.util.List;
 
