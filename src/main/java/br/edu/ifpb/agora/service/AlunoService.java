@@ -21,10 +21,9 @@ public class AlunoService {
 
     @Transactional
     public void cadastraNovoProcesso(Assunto assunto, String textoReq, Aluno aluno){
-        
         String numProcesso = "" + System.currentTimeMillis();
         Date dataRecepcao = new Date();
-        Processo processo = new Processo(numProcesso, dataRecepcao, null, null, null, null, assunto, aluno, null);
+        Processo processo = new Processo(numProcesso, dataRecepcao, null, null, null, null, assunto, aluno);
         processoRepository.save(processo);
     }
 

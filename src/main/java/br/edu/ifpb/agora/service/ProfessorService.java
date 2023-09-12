@@ -19,51 +19,51 @@ public class ProfessorService {
     @Autowired
     private ProcessoRepository processoRepository;
 
-    @Transactional
     public List<Processo> listarProcessosDesignados(Professor professor){
         return processoRepository.findAllByRelatorId(professor.getId());
     }
 
-    @Transactional
+
     public List<Processo> listarTodosProcessosDoColegiado(Professor coordenador, Colegiado colegiado){
         if (coordenador.isCoordenador()){
-            return processoRepository.findAllByColegiado(colegiado);
+            return processoRepository.findAllByColegiado(colegiado.getId());
         } else {
             throw new Error("Este professor não pode realizar esta consulta, pois não é coordenador!");
         }
     }
 
-    @Transactional
+
     public List<Processo> listarTodosProcessosDoColegiadoPorStatus(Professor coordenador, Colegiado colegiado, StatusEnum status){
         if (coordenador.isCoordenador()){
-            return processoRepository.findAllByColegiadoAndStatus(colegiado, status);
+            return processoRepository.findAllByColegiadoAndStatus(colegiado.getId(), status);
         } else {
             throw new Error("Este professor não pode realizar esta consulta, pois não é coordenador!");
         }
     }
     
-    @Transactional
+
     public List<Processo> listarTodosProcessosDoColegiadoPorAluno(Professor coordenador, Colegiado colegiado, Aluno interessado){
         if (coordenador.isCoordenador()){
-            return processoRepository.findAllByColegiadoAndInteressado(colegiado, interessado);
+            return processoRepository.findAllByColegiadoAndInteressado(colegiado.getId(), interessado);
         } else {
             throw new Error("Este professor não pode realizar esta consulta, pois não é coordenador!");
         }
     }
 
-    @Transactional
     public List<Processo> listarTodosProcessosDoColegiadoPorRelator(Professor coordenador, Colegiado colegiado, Professor relator){
         if (coordenador.isCoordenador()){
-            return processoRepository.findAllByColegiadoAndRelator(colegiado, relator);
+            return processoRepository.findAllByColegiadoAndRelator(colegiado.getId(), relator);
         } else {
             throw new Error("Este professor não pode realizar esta consulta, pois não é coordenador!");
         }
     }
 
+    // é necessário verificar se o professor es
     @Transactional
     public void distribuirProcessoParaProfessorRelator(Professor coordenador, Professor relator, Processo processo){
         if (coordenador.isCoordenador()){
-            if(processo.getRelator() == null){
+            if(processo.getRelator() == null) {
+                // verificar se o prof
                 processo.setRelator(relator);
             } else {
                 throw new Error("Este processo já possui um relator!");

@@ -1,7 +1,6 @@
 package br.edu.ifpb.agora.repository;
 
 import br.edu.ifpb.agora.model.Aluno;
-import br.edu.ifpb.agora.model.Colegiado;
 import br.edu.ifpb.agora.model.Processo;
 import br.edu.ifpb.agora.model.Professor;
 import br.edu.ifpb.agora.model.StatusEnum;
@@ -31,17 +30,18 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 
     public Processo findByNumero(String numero);
 
-    @Query("select p from Colegiado c.reunioes r join r.processos p where c.id = ?1")
-    public List<Processo> findAllByColegiado(Colegiado colegiado);
 
-    @Query("select p from Colegiado c.reunioes r join r.processos p where c.id = ?1 and p.status = ?2")
-    public List<Processo> findAllByColegiadoAndStatus(Colegiado colegiado, StatusEnum status);
+    @Query("select p from Colegiado c join c.reunioes r join r.processos p where c.id = ?1")
+    public List<Processo> findAllByColegiado(Long id);
 
-    @Query("select p from Colegiado c.reunioes r join r.processos p where c.id = ?1 and p.interessado = ?2")
-    public List<Processo> findAllByColegiadoAndInteressado(Colegiado colegiado, Aluno interessado);
+    @Query("select p from Colegiado c join c.reunioes r join r.processos p where c.id = ?1 and p.status = ?2")
+    public List<Processo> findAllByColegiadoAndStatus(Long id, StatusEnum status);
 
-    @Query("select p from Colegiado c.reunioes r join r.processos p where c.id = ?1 and p.relator = ?2")
-    public List<Processo> findAllByColegiadoAndRelator(Colegiado colegiado, Professor relator);
+    @Query("select p from Colegiado c join c.reunioes r join r.processos p where c.id = ?1 and p.interessado = ?2")
+    public List<Processo> findAllByColegiadoAndInteressado(Long id, Aluno interessado);
+
+    @Query("select p from Colegiado c join c.reunioes r join r.processos p where c.id = ?1 and p.relator = ?2")
+    public List<Processo> findAllByColegiadoAndRelator(Long id, Professor relator);
 
 
 
