@@ -16,6 +16,8 @@ public class Processo {
     private Date dataParecer;
     private byte[] parecer;
 
+    private String textoAluno;
+
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
@@ -40,11 +42,15 @@ public class Processo {
     @JoinColumn(name = "professor_id")
     private Professor relator;
 
+    @ElementCollection
+    private List<byte[]> anexos;
+
 
     public Processo() {
     }
 
-    public Processo(String numero, Date dataRecepcao, Date dataDistribuicao, Date dataParecer, byte[] parecer, TipoDecisao decisaoRelator, Assunto assunto, Aluno interessado) {
+    public Processo(String numero, Date dataRecepcao, Date dataDistribuicao, Date dataParecer, byte[] parecer, TipoDecisao decisaoRelator,
+                    Assunto assunto, Aluno interessado, String textoAluno) {
 
         this.numero = numero;
         this.dataRecepcao = dataRecepcao;
@@ -55,6 +61,7 @@ public class Processo {
         this.assunto = assunto;
         this.interessado = interessado;
         this.status = StatusEnum.CRIADO;
+        this.textoAluno = textoAluno;
     }
 
     public Long getId() {
@@ -124,5 +131,20 @@ public class Processo {
         this.relator = relator;
     }
 
+    public String getTextoAluno() {
+        return textoAluno;
+    }
 
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
+
+
+    public void addAnexos(byte[] anexo) {
+        this.anexos.add(anexo);
+    }
 }

@@ -18,9 +18,7 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 
     public List<Processo> findAllByInteressadoIdAndEmPauta(Long id, Boolean pauta);
 
-    public List<Processo> findAllByInteressadoAndAssuntoNomeOrderByDataRecepcaoAsc(Aluno aluno, String assunto);
 
-    public List<Processo> findAllByInteressadoAndEmPautaOrderByDataRecepcaoAsc(Aluno aluno, Boolean pauta);
 
     public List<Processo> findAllByRelatorId(Long idRelator);
 
@@ -37,13 +35,16 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
     @Query("select p from Colegiado c join c.reunioes r join r.processos p where c.id = ?1 and p.status = ?2")
     public List<Processo> findAllByColegiadoAndStatus(Long id, StatusEnum status);
 
-    @Query("select p from Colegiado c join c.reunioes r join r.processos p where c.id = ?1 and p.interessado = ?2")
-    public List<Processo> findAllByColegiadoAndInteressado(Long id, Aluno interessado);
+    @Query("select p from Colegiado c join c.reunioes r join r.processos p where c.id = ?1 and p.interessado.id = ?2")
+    public List<Processo> findAllByColegiadoAndInteressado(Long id, Long idInteressado);
 
-    @Query("select p from Colegiado c join c.reunioes r join r.processos p where c.id = ?1 and p.relator = ?2")
-    public List<Processo> findAllByColegiadoAndRelator(Long id, Professor relator);
-
-
+    @Query("select p from Colegiado c join c.reunioes r join r.processos p where c.id = ?1 and p.relator.id = ?2")
+    public List<Processo> findAllByColegiadoAndRelator(Long id, Long idRelator);
 
 
+    List<Processo> findAllByInteressadoIdAndAssuntoNomeOrderByDataRecepcaoDesc(Long id, String nome);
+
+    List<Processo> findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(Long id, StatusEnum status);
+
+    List<Processo> findAllByInteressadoIdOrderByDataRecepcaoDesc(Long id);
 }

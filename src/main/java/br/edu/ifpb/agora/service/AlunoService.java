@@ -23,22 +23,38 @@ public class AlunoService {
     public void cadastraNovoProcesso(Assunto assunto, String textoReq, Aluno aluno){
         String numProcesso = "" + System.currentTimeMillis();
         Date dataRecepcao = new Date();
-        Processo processo = new Processo(numProcesso, dataRecepcao, null, null, null, null, assunto, aluno);
+        Processo processo = new Processo(numProcesso, dataRecepcao, null, null, null, null, assunto, aluno, textoReq);
         processoRepository.save(processo);
     }
 
-    @Transactional
     public List<Processo> consultaProcessos(Aluno aluno){
         return processoRepository.findAllByInteressadoId(aluno.getId());
     }
 
-    @Transactional
     public List<Processo> consultaProcessosPorAssunto(Aluno aluno, Assunto assunto){
         return processoRepository.findAllByInteressadoIdAndAssuntoNome(aluno.getId(), assunto.getNome());
     }
 
-    @Transactional
     public List<Processo> consultaProcessosPorStatus(Aluno aluno, StatusEnum status){
         return processoRepository.findAllByInteressadoIdAndStatus(aluno.getId(), status);
+    }
+
+    public List<Processo> consultarProcessosPorAssuntoOrdenados(Aluno aluno, Assunto assunto){
+        return processoRepository.findAllByInteressadoIdAndAssuntoNomeOrderByDataRecepcaoDesc(aluno.getId(), assunto.getNome());
+
+    }
+
+    public List<Processo> consultarProcessosPorStatusOrdenados(Aluno aluno, StatusEnum status){
+        return processoRepository.findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(aluno.getId(), status);
+    }
+
+    public List<Processo> consultarProcessosOrdenados(Aluno aluno){
+        return processoRepository.findAllByInteressadoIdOrderByDataRecepcaoDesc(aluno.getId());
+    }
+
+    @Transactional
+    public void adicionarAnexo(Processo processo, byte[] anexo) {
+        processo.addAnexos(anexo);
+        processoRepository.save(processo);
     }
 }

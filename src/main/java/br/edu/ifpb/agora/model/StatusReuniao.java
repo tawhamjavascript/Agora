@@ -1,5 +1,5 @@
 package br.edu.ifpb.agora.model;
 
 public enum StatusReuniao {
-    ENCERRADA, PROGRAMADA
+    ENCERRADA, PROGRAMADA, EM_ANDAMENTO
 }
