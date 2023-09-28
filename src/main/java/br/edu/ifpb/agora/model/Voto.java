@@ -13,18 +13,21 @@ public class Voto {
     private TipoVoto tipoVoto;
     private boolean ausente;
 
-    @OneToOne
-    @JoinColumn(name = "professor_id")
-    private Professor voto;
+    @ManyToOne
+    private Professor professor;
+
+    private String justificativa;
 
 
     public Voto() {
     }
 
-    public Voto( TipoVoto tipoVoto, boolean ausente, Professor voto) {
+
+    public Voto( TipoVoto tipoVoto, boolean ausente, String justificativa, Professor professor) {
         this.tipoVoto = tipoVoto;
         this.ausente = ausente;
-        this.voto = voto;
+        this.justificativa = justificativa;
+        this.professor = professor;
     }
 
     public Long getId() {
@@ -39,7 +42,11 @@ public class Voto {
         return ausente;
     }
 
-    public Professor getVoto() {
-        return voto;
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public String getJustificativa() {
+        return justificativa;
     }
 }

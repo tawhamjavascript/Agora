@@ -72,9 +72,16 @@ public class Processo {
         return numero;
     }
 
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
 
     public Date getDataRecepcao() {
         return dataRecepcao;
+    }
+
+    public void setDataRecepcao(Date dataRecepcao) {
+        this.dataRecepcao = dataRecepcao;
     }
 
     public Date getDataDistribuicao() {
@@ -84,6 +91,8 @@ public class Processo {
     public Date getDataParecer() {
         return dataParecer;
     }
+
+
 
     public byte[] getParecer() {
         return parecer;

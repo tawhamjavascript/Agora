@@ -108,7 +108,6 @@ public class AdminService {
             return;
         }
         professor.setCoordenador(true);
-        professorRepository.save(professor);
     }
 
     @Transactional
