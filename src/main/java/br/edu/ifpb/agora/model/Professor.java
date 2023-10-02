@@ -7,9 +7,9 @@ import java.util.List;
 
 @Entity
 public class Professor extends Usuario{
+    
     @ManyToMany
     private List<Colegiado> colegiados;
-
     private boolean coordenador;
 
     @OneToMany(mappedBy = "professor")

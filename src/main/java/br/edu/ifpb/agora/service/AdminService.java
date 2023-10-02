@@ -15,18 +15,13 @@ public class AdminService {
     private ProfessorRepository professorRepository;
 
     @Autowired
-
     private AlunoRepository alunoRepository;
-    @Autowired
 
+    @Autowired
     private CursoRepository cursoRepository;
 
     @Autowired
     private AssuntoRepository assuntoRepository;
-
-
-
-
 
     @Transactional
     public void registerTeacher(Professor professor) {
@@ -37,6 +32,7 @@ public class AdminService {
     public void removeTeacher(Professor professor) {
         professorRepository.delete(professor);
     }
+
     @Transactional
     public void updateTeacher(Professor professor) {
         professorRepository.save(professor);
@@ -75,13 +71,11 @@ public class AdminService {
     }
 
     @Transactional
-
     public void addCourse(Curso curso) {
         cursoRepository.save(curso);
     }
 
     @Transactional
-
     public void removeCourse(Curso curso) {
         cursoRepository.delete(curso);
 
@@ -102,29 +96,31 @@ public class AdminService {
     }
 
     @Transactional
-    public void addCoordinator(Long id) {
+    public void setCoordinator(Long id) {
+        
         Professor professor = professorRepository.findById(id).orElse(null);
+        Professor atualCoordenador = professorRepository.findByCoordenadorTrue();
         if (professor == null) {
             return;
         }
+        atualCoordenador.setCoordenador(false);
         professor.setCoordenador(true);
+        professorRepository.save(professor);
+        professorRepository.save(atualCoordenador);
     }
 
     @Transactional
-
     public void registerSubject(Assunto assunto) {
 
         assuntoRepository.save(assunto);
     }
 
     @Transactional
-
     public void removeSubject(Assunto assunto) {
         assuntoRepository.delete(assunto);
     }
 
     @Transactional
-
     public void updateSubject(Assunto assunto) {
 
         assuntoRepository.save(assunto);
