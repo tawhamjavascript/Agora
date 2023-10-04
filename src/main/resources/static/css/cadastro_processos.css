@@ -1,0 +1,102 @@
+.titulo {
+    font-family: 'Sunflower', sans-serif;
+    color: #10428C;
+    text-align: center;
+    margin-top: 20px; 
+    font-weight: bold;
+}
+
+
+.student-name {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-weight: bold;
+    font-family: 'Sunflower', sans-serif;
+    color: #10428C;
+}
+
+
+.title-divider {
+    border-bottom: 2px solid #10428C;
+    margin: 20px auto;
+}
+
+
+.filter-dropdown {
+    display: inline-block;
+    border: 1px solid #10428C;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-family: 'Sunflower', sans-serif;
+    color: #10428C;
+    cursor: pointer;
+    font-size: 24px; 
+    width: auto; 
+}
+
+
+
+.column-title-container {
+    background-color: #F1F1F1; 
+    padding: 10px; 
+    font-weight: bold; 
+    font-size: 20px; 
+    margin-bottom: 20px; 
+}
+
+
+.column-title {
+    text-align: center; 
+    display: inline-block;
+    color: #10428C; 
+}
+
+.column-title-container .col {
+    border: none;
+}
+
+.process-list {
+    margin-top: 10px; 
+}
+
+
+.process-row {
+    padding: 10px; 
+}
+
+
+.process-background-1 {
+    background-color: #D9D9D9;
+}
+
+.process-background-2 {
+    background-color: #F1F1F1;
+}
+
+.btn-custom {
+border-radius: 30px;
+background: linear-gradient(to right, #50D5FF, #2F64CC);
+color: white;
+font-family: 'Sunflower', sans-serif;
+font-size: 24px;
+padding: 10px 20px;
+border: none;
+}
+
+.form-group label {
+color: #0D4085;
+}
+
+.dropdown button.dropdown-toggle {
+background-color: white;
+color: #0D4085;
+}
+
+.dropdown button.dropdown-toggle::after {
+color: #0D4085;
+}
+
+.dropdown-menu {
+background-color: white;
+}
