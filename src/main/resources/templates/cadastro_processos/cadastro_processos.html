@@ -58,9 +58,8 @@
         }
 
 
-        .column-title {
-            text-align: center;
-            display: inline-block;
+
+        .table-title {
             color: #10428C;
         }
 
@@ -146,51 +145,45 @@
         </div>
     </div>
 
-    
 
-
-
-
-    <div class="container">
-        <div class="row column-title-container">
-            <div class="col column-title">
-                Processo
-            </div>
-            <div class="col column-title">
-                Data Req.
-            </div>
-            <div class="col column-title">
-                Arquivos
-            </div>
-            <div class="col column-title">
-                Status
-            </div>
-            <div class="col column-title">
-                Operações
-            </div>
-            <div class="col column-title">
-                Visualizar
-            </div>
-        </div>
-        <div class="process-list">
-            <div class="process-row process-background-1">
-                <div class="col">Número do Processo 1</div>
-                <div class="col">Data 1</div>
-                <div class="col">Arquivos 1</div>
-                <div class="col">Status 1</div>
-                <div class="col">Operações 1</div>
-                <div class="col">Visualizar 1</div>
-            </div>
-            <div class="process-row process-background-2">
-                <div class="col">Número do Processo 2</div>
-                <div class="col">Data 2</div>
-                <div class="col">Arquivos 2</div>
-                <div class="col">Status 2</div>
-                <div class="col">Operações 2</div>
-                <div class="col">Visualizar 2</div>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped table-hover mx-auto">
+                    <thead class="table-title">
+                        <tr>
+                            <th scope="col">Processo</th>
+                            <th scope="col">Data Req.</th>
+                            <th scope="col">Arquivos</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Operações</th>
+                            <th scope="col">Visualizar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Número do Processo 1</td>
+                            <td>Data 1</td>
+                            <td>Arquivos 1</td>
+                            <td>Status 1</td>
+                            <td>Operações 1</td>
+                            <td>Visualizar 1</td>
+                        </tr>
+                        <tr>
+                            <td>Número do Processo 2</td>
+                            <td>Data 2</td>
+                            <td>Arquivos 2</td>
+                            <td>Status 2</td>
+                            <td>Operações 2</td>
+                            <td>Visualizar 2</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
+    
 
     <div class="container mt-4">
         <div class="row">
@@ -209,11 +202,11 @@
                         <div class="btn-group">
                             <button type="button" class="btn mb-4 btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                Filtrar por Status:
+                                Escolha um tipo:
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Em análise</a></li>
-                                <li><a class="dropdown-item" href="#">Concluído</a></li>
+                                <li><a class="dropdown-item" href="#">Tipo 1</a></li>
+                                <li><a class="dropdown-item" href="#">Tipo 2</a></li>
                                 <!-- <li><a class="dropdown-item" href="#">Something else here</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
@@ -267,7 +260,9 @@
 
 
 
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        </body>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+                crossorigin="anonymous"></script>
+</body>
 
 </html>
