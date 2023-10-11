@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./../../static/css/processos.css">
+    <title>Processos</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="icon">
+            <a href="professor.html">&#9665; </a>
+        </div>
+        <h1>Processos</h1>
+    </div>
+
+    <div class="tabela">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>Data</th>
+                    <th>Assunto</th>
+                    <th>Status</th>
+                    <th>Documento</th>
+                    <th>Votar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>2023-10-15</td>
+                    <td>Assunto do Processo</td>
+                    <td>Pendente</td>
+                    <td><a href="" target="_blank">Ver Documento</a></td>
+                    <td>
+                        <form class="form" method="post" action="">
+                            <button class="btn-votar" type="submit" name="voto" value="deferir">Deferir</button>
+                            <button class="btn-votar" type="submit" name="voto" value="indeferir">Indeferir</button>
+                            <textarea name="justificativa" placeholder="Digite sua justificativa"></textarea>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
