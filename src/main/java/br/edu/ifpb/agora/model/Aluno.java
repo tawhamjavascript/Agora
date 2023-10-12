@@ -2,13 +2,18 @@ package br.edu.ifpb.agora.model;
 
 
 import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
+
+@NoArgsConstructor
 @Entity
-public class Aluno extends Usuario {
-        public Aluno() {
 
-        }
-        public Aluno(String nome, String fone, String matricula, String login, String senha) {
-            super(nome, fone, matricula, login, senha, false);
-        }
+
+public class Aluno extends Usuario {
+
 }

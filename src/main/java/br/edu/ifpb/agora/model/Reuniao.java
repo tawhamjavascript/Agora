@@ -1,11 +1,17 @@
 package br.edu.ifpb.agora.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Reuniao {
 
@@ -26,48 +32,16 @@ public class Reuniao {
     @ManyToOne
     private Colegiado colegiado;
 
-    public Reuniao() {
-    }
-    public Reuniao(Date dataReuniao, StatusReuniao status, Colegiado colegiado) {
-        this.dataReuniao = dataReuniao;
-        this.status = status;
+
+    public Reuniao(Date data, StatusReuniao statusReuniao, Colegiado colegiado) {
+        this.dataReuniao = data;
+        this.status = statusReuniao;
         this.colegiado = colegiado;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Date getDataReuniao() {
-        return dataReuniao;
-    }
-
-    public StatusReuniao getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusReuniao status) {
-        this.status = status;
-    }
-
-    public byte[] getAta() {
-        return ata;
-    }
-
-    public void setAta(byte[] ata) {
-        this.ata = ata;
+        this.processos = new ArrayList<>();
     }
 
     public void addProcesso(Processo processo) {
-        processos.add(processo);
-    }
+        this.processos.add(processo);
 
-    public List<Processo> getProcessos() {
-        return processos;
     }
-
-    public Colegiado getColegiado() {
-        return colegiado;
-    }
-
 }
