@@ -36,10 +36,11 @@
                     <td>Pendente</td>
                     <td><a href="" target="_blank">Ver Documento</a></td>
                     <td>
-                        <form class="form" method="post" action="">
-                            <button class="btn-votar" type="submit" name="voto" value="deferir">Deferir</button>
-                            <button class="btn-votar" type="submit" name="voto" value="indeferir">Indeferir</button>
+                        <form class="vote-form" method="post" action="processar_voto.php">
+                            <input type="radio" class="vote-radio" name="voto" value="deferir"> Deferir
+                            <input type="radio" class="vote-radio" name="voto" value="indeferir"> Indeferir
                             <textarea name="justificativa" placeholder="Digite sua justificativa"></textarea>
+                            <button type="submit">Submeter</button>
                         </form>
                     </td>
                 </tr>

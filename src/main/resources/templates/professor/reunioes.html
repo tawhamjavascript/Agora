@@ -21,7 +21,18 @@
         <p>[username do professor]</p>
     </div>
 
-    <div class="center-content">
+
+    <div class="centro">
+        <form class="filter-form">
+            <label for="status-filter">Filtrar por status:</label>
+            <select id="status-filter" name="status">
+                <option value="agendadas">Agendadas</option>
+                <option value="finalizadas">Finalizadas</option>
+            </select>
+            <button type="submit">Filtrar</button>
+        </form>
+
+    <div class="centro">
         <table>
             <thead>
                 <tr>
@@ -33,7 +44,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- As linhas da tabela serão preenchidas dinamicamente aqui usando JavaScript ou servidor-side scripting -->
+                
             </tbody>
         </table>
     </div>
