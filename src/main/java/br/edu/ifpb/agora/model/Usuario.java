@@ -21,5 +21,8 @@ public class Usuario {
     private String login;
     private String senha;
     private boolean admin;
+    @OneToOne
+    @JoinColumn(name="curso_id")
+    private Curso curso;
 
 }

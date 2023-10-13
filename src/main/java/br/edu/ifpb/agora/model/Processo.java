@@ -21,6 +21,7 @@ public class Processo {
     private Date dataDistribuicao;
     private Date dataParecer;
     private byte[] parecer;
+    private String textoRelator;
 
     private String textoAluno;
 
@@ -38,21 +39,34 @@ public class Processo {
     @JoinColumn(name = "processo_id")
     private List<Voto> votos;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "aluno_id")
     private Aluno interessado;
 
     private boolean emPauta = false;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "professor_id")
     private Professor relator;
 
     @ElementCollection
     private List<byte[]> anexos;
 
-
     public void addAnexos(byte[] anexo) {
         this.anexos.add(anexo);
     }
+
+    public void addVoto(Voto voto) {
+        this.votos.add(voto);
+    }
+
+    public void setTipoDecisao(TipoDecisao decisaoRelator) {
+        this.decisaoRelator = decisaoRelator;
+    }
+
+    public TipoDecisao getTipoDecisao() {
+        return this.decisaoRelator;
+    }
+
+
 }

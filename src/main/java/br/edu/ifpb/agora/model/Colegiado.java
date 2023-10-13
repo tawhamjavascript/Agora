@@ -25,7 +25,8 @@ public class Colegiado {
     @OneToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
-    @ManyToMany(mappedBy = "colegiados")
+
+    @OneToMany(mappedBy = "colegiado")
     private List<Professor> membros;
 
     @OneToMany(mappedBy = "colegiado")

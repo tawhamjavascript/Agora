@@ -32,14 +32,6 @@ public class Reuniao {
     @ManyToOne
     private Colegiado colegiado;
 
-
-    public Reuniao(Date data, StatusReuniao statusReuniao, Colegiado colegiado) {
-        this.dataReuniao = data;
-        this.status = statusReuniao;
-        this.colegiado = colegiado;
-        this.processos = new ArrayList<>();
-    }
-
     public void addProcesso(Processo processo) {
         this.processos.add(processo);
 

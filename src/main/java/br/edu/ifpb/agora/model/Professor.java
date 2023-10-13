@@ -1,7 +1,5 @@
 package br.edu.ifpb.agora.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,11 +15,17 @@ import java.util.List;
 @Entity
 public class Professor extends Usuario{
     
-    @ManyToMany
-    private List<Colegiado> colegiados;
+    @ManyToOne
+    @JoinColumn(name="colegiado_id")
+    private Colegiado colegiado;
     private boolean coordenador;
 
     @OneToMany(mappedBy = "professor")
     private List<Voto> votos;
+
+    @OneToMany(mappedBy = "relator")
+    private List<Processo> processos;
+
+
 
 }

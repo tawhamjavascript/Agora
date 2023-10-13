@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./../../static/css/processos.css">
+    <link rel="stylesheet" th:href="@{/css/processos.css}">
     <title>Processos</title>
 </head>
 
 <body>
     <div class="header">
         <div class="icon">
-            <a href="professor.html">&#9665; </a>
+            <a href="home.html">&#9665; </a>
         </div>
         <h1>Processos</h1>
     </div>
@@ -21,7 +21,6 @@
             <thead>
                 <tr>
                     <th>Nº</th>
-                    <th>Data</th>
                     <th>Assunto</th>
                     <th>Status</th>
                     <th>Documento</th>
@@ -29,24 +28,25 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>2023-10-15</td>
-                    <td>Assunto do Processo</td>
-                    <td>Pendente</td>
+                <tr th:each="processo : ${processos}">
+                    <td th:text="${processo.numero}"></td>
+                    <td th:text="${processo.assunto.nome}">Assunto do Processo</td>
                     <td><a href="" target="_blank">Ver Documento</a></td>
                     <td>
-                        <form class="vote-form" method="post" action="processar_voto.php">
+                        <form class="vote-form" method="post" th:action="@{/professor/processos}"
+                        th:if="${processo.tipoDecisao == null}">
                             <input type="radio" class="vote-radio" name="voto" value="deferir"> Deferir
                             <input type="radio" class="vote-radio" name="voto" value="indeferir"> Indeferir
                             <textarea name="justificativa" placeholder="Digite sua justificativa"></textarea>
-                            <button type="submit">Submeter</button>
+                            <button type="submit">Enviar</button>
                         </form>
+                        <div th:unless="${processo.tipoDecisao == null}">
+                            <p> Processo votado </p>
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </body>
-
 </html>

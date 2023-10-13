@@ -6,4 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
     public Professor findByCoordenadorTrue();
+
+
+
+    Professor findByMatricula(String login);
 }
