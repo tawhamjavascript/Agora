@@ -35,6 +35,7 @@
                     <td>
                         <form class="vote-form" method="post" th:action="@{/professor/processos}"
                         th:if="${processo.tipoDecisao == null}">
+                            <input type="hidden" name="id" th:value="${processo.id}">
                             <input type="radio" class="vote-radio" name="voto" value="deferir"> Deferir
                             <input type="radio" class="vote-radio" name="voto" value="indeferir"> Indeferir
                             <textarea name="justificativa" placeholder="Digite sua justificativa"></textarea>
