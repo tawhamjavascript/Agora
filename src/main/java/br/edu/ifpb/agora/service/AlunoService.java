@@ -40,53 +40,46 @@ public class AlunoService {
         return processoRepository.findAllByInteressadoId(1L);
     }
 
-    public List<Processo> consultaProcessosPorAssunto(String nome){
-        return processoRepository.findAllByInteressadoIdAndAssuntoNome(1L, nome);
-    }
 
-    public List<Processo> consultaProcessosPorStatus(String status) {
-        switch (status) {
-            case "Criado":
-                return processoRepository.findAllByInteressadoIdAndStatus(1L, StatusEnum.CRIADO);
+    public List<Processo> filtrarProcesso(String filtro, String order) {
+        try {
+            Long assuntoId = Long.parseLong(filtro);
+            if (order == null) {
+                return consultaProcessosPorAssunto(assuntoId);
+            }
+            else {
+                return consultarProcessosPorAssuntoOrdenados(assuntoId);
+            }
 
-            case "Distribuido":
-                return processoRepository.findAllByInteressadoIdAndStatus(1L, StatusEnum.DISTRIBUIDO);
-
-            case "Em pauta":
-                return processoRepository.findAllByInteressadoIdAndStatus(1L, StatusEnum.EM_PAUTA);
-
-            case "Em julgamento":
-                return processoRepository.findAllByInteressadoIdAndStatus(1L, StatusEnum.EM_JULGAMENTO);
-
-            default:
-                return processoRepository.findAllByInteressadoIdAndStatus(1L, StatusEnum.JULGADO);
-
+        } catch (NumberFormatException e) {
+            StatusEnum filtroEnum = StatusEnum.valueOf(filtro);
+            if (order == null) {
+                return consultaProcessosPorStatus(filtroEnum);
+            }
+            else {
+                return consultarProcessosPorStatusOrdenados(filtroEnum);
+            }
         }
     }
 
-    public List<Processo> consultarProcessosPorAssuntoOrdenados(String assunto){
-        return processoRepository.findAllByInteressadoIdAndAssuntoNomeOrderByDataRecepcaoDesc(1L, assunto);
+    public List<Processo> consultaProcessosPorAssunto(Long id){
+        return processoRepository.findAllByInteressadoIdAndAssuntoId(1L, id);
+    }
+
+    public List<Processo> consultaProcessosPorStatus(StatusEnum status) {
+        return processoRepository.findAllByInteressadoIdAndStatus(1L, status);
 
     }
 
-    public List<Processo> consultarProcessosPorStatusOrdenados(String status){
-        switch (status) {
-            case "Criado":
-                return processoRepository.findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(1L, StatusEnum.CRIADO);
+    public List<Processo> consultarProcessosPorAssuntoOrdenados(Long id){
+        return processoRepository.findAllByInteressadoIdAndAssuntoIdOrderByDataRecepcaoDesc(1L, id);
 
-            case "Distribuido":
-                return processoRepository.findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(1L, StatusEnum.DISTRIBUIDO);
+    }
 
-            case "Em pauta":
-                return processoRepository.findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(1L, StatusEnum.EM_PAUTA);
+    public List<Processo> consultarProcessosPorStatusOrdenados(StatusEnum status){
+        return processoRepository.findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(1L, status);
 
-            case "Em julgamento":
-                return processoRepository.findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(1L, StatusEnum.EM_JULGAMENTO);
 
-            default:
-                return processoRepository.findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(1L, StatusEnum.JULGADO);
-
-        }
 
     }
 

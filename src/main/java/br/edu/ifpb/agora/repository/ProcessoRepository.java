@@ -14,7 +14,7 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 
     public List<Processo> findAllByInteressadoId(Long id);
 
-    public List<Processo> findAllByInteressadoIdAndAssuntoNome(Long id, String nome);
+    public List<Processo> findAllByInteressadoIdAndAssuntoId(Long id, Long idAssunto);
 
     public List<Processo> findAllByInteressadoIdAndEmPauta(Long id, Boolean pauta);
 
@@ -44,7 +44,7 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
     public List<Processo> findAllByColegiadoAndRelator(Long id, Long idRelator);
 
 
-    List<Processo> findAllByInteressadoIdAndAssuntoNomeOrderByDataRecepcaoDesc(Long id, String nome);
+    List<Processo> findAllByInteressadoIdAndAssuntoIdOrderByDataRecepcaoDesc(Long id, Long idAssunto);
 
     List<Processo> findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(Long id, StatusEnum status);
 

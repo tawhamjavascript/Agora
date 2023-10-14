@@ -3,6 +3,7 @@ package br.edu.ifpb.agora.controller;
 
 import br.edu.ifpb.agora.model.Assunto;
 import br.edu.ifpb.agora.model.Processo;
+import br.edu.ifpb.agora.model.StatusEnum;
 import br.edu.ifpb.agora.repository.AssuntoRepository;
 import br.edu.ifpb.agora.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class AlunoController {
         return assuntoRepository.findAll();
     }
 
+    @ModelAttribute("statusItens")
+    public List<StatusEnum> getStatus() {
+        return List.of(StatusEnum.values());
+    }
+
     @PostMapping("/processo/cadastrar")
     public ModelAndView salvarProcesso(Processo processo, ModelAndView modelAndView) {
         alunoService.cadastraNovoProcesso(processo);
@@ -53,5 +59,21 @@ public class AlunoController {
         return mav;
 
     }
+
+    @PostMapping("/processo/consultar")
+    public ModelAndView filtrarProcesso(String filtro, String order, ModelAndView modelAndView) {
+        modelAndView.addObject("processos", alunoService.filtrarProcesso(filtro, order));
+        modelAndView.setViewName("redirect:/aluno/processo");
+        return modelAndView;
+    }
+
+
+
+
+
+
+
+
+
 
 }
