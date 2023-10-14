@@ -3,6 +3,7 @@ package br.edu.ifpb.agora.controller;
 import br.edu.ifpb.agora.model.Aluno;
 import br.edu.ifpb.agora.model.Assunto;
 import br.edu.ifpb.agora.model.Curso;
+import br.edu.ifpb.agora.model.Professor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -135,4 +136,43 @@ public class AdminController {
         mav.addObject("alunos", adminService.allStudent());
         return mav;
     }
+
+    @GetMapping("professor")
+    public ModelAndView getProfessores(ModelAndView mav) {
+        mav.setViewName("admin/listagem-professor");
+        mav.addObject("professores", adminService.allTeachers());
+        return mav;
+    }
+
+    @GetMapping("professor/cadastro")
+    public ModelAndView getCadastroProfessor(ModelAndView mav) {
+        mav.setViewName("admin/cadastro-professor");
+        mav.addObject("professor", new Professor());
+        return mav;
+    }
+
+    @PostMapping("professor")
+    public ModelAndView saveProfessor(Professor professor, ModelAndView mav) {
+        adminService.registerTeacher(professor);
+        mav.setViewName("redirect:/admin/professor");
+        mav.addObject("professores", adminService.allTeachers());
+        return mav;
+    }
+
+    @GetMapping("professor/{id}")
+    public ModelAndView editProfessor(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        mav.setViewName("admin/cadastro-professor");
+        mav.addObject("professor", adminService.getTeacher(id));
+        return mav;
+    }
+
+    @DeleteMapping("professor/{id}")
+    public ModelAndView deleteProfessor(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        adminService.removeTeacher(id);
+        mav.setViewName("redirect:/admin/professor");
+        mav.addObject("professores", adminService.allTeachers());
+        return mav;
+    }
+
+
 }

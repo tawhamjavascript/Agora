@@ -29,8 +29,8 @@ public class AdminService {
     }
 
     @Transactional
-    public void removeTeacher(Professor professor) {
-        professorRepository.delete(professor);
+    public void removeTeacher(Long id) {
+        professorRepository.delete(professorRepository.findById(id).get());
     }
 
     @Transactional
