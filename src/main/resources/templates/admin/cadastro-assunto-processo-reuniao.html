@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="/src/main/resources/static/css/main.css">
-  <link rel="stylesheet" href="/src/main/resources/static/css/admin/admin.css">
-  <link rel="stylesheet" href="/src/main/resources/static/css/admin/cadastro.css">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
+
+  <link rel="stylesheet" th:href="@{/css/admin/cadastro.css}">
   <title>Admin</title>
 </head>
 <body>
@@ -20,21 +21,23 @@
 
   <div class="container">
     <div id="sidebar">
-      <a href="cadastro-assunto-processo-reuniao.html">Incluir novo</a>
-      <a href="listagem-assunto-processo-reuniao.html">Listar assuntos</a>
-      <a href="#">Sair</a>
+      <a th:href="@{/admin/assunto/cadastro}">Incluir Novo</a>
+      <a th:href="@{/admin/assunto}">Listar Assunto</a>
+      <a th:href="@{/admin/home}"> Home </a>
+
     </div>
 
     <div id="main">
-      <h2>NOVO CADASTRO DE ASSUNTO DE PROCESSO OU REUNIÃO</h2>
+      <h2> Salvar processo </h2>
 
       <div id="form-register">
-        <form action="#" method="post">
+        <form th:action="@{/admin/assunto}" method="post" th:object="${assunto}">
+          <input type="hidden" th:field="*{id}"/>
           
           <label for="titulo">Título:</label>
-          <input type="text" id="titulo" class="form-control"/>
+          <input type="text" id="titulo" th:field="*{nome}" class="form-control"/>
 
-          <button type="submit" class="button-style">Cadastrar</button>
+          <button type="submit" class="button-style"> Salvar </button>
         </form>
         
       </div>

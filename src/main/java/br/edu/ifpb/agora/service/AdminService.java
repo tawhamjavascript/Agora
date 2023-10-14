@@ -116,8 +116,9 @@ public class AdminService {
     }
 
     @Transactional
-    public void removeSubject(Assunto assunto) {
-        assuntoRepository.delete(assunto);
+    public void removeSubject(Long id) {
+
+        assuntoRepository.delete(assuntoRepository.findById(id).get());
     }
 
     @Transactional

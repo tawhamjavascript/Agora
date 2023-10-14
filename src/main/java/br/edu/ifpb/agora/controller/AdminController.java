@@ -1,5 +1,6 @@
 package br.edu.ifpb.agora.controller;
 
+import br.edu.ifpb.agora.model.Assunto;
 import br.edu.ifpb.agora.model.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,6 +51,44 @@ public class AdminController {
         adminService.removeCourse(id);
         mav.setViewName("redirect:/admin/curso");
         mav.addObject("cursos", adminService.allCourses());
+        return mav;
+    }
+
+
+    @GetMapping("assunto")
+    public ModelAndView getAssuntos(ModelAndView mav) {
+        mav.setViewName("admin/listagem-assunto-processo-reuniao");
+        mav.addObject("assuntos", adminService.allSubjects());
+        return mav;
+    }
+
+    @GetMapping("assunto/cadastro")
+    public ModelAndView getCadastroAssunto(ModelAndView mav) {
+        mav.setViewName("admin/cadastro-assunto-processo-reuniao");
+        mav.addObject("assunto", new Assunto());
+        return mav;
+    }
+
+    @PostMapping("assunto")
+    public ModelAndView saveAssunto(Assunto assunto, ModelAndView mav) {
+        adminService.registerSubject(assunto);
+        mav.setViewName("redirect:/admin/assunto");
+        mav.addObject("assuntos", adminService.allSubjects());
+        return mav;
+    }
+
+    @GetMapping("assunto/{id}")
+    public ModelAndView editAssunto(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        mav.setViewName("admin/cadastro-assunto-processo-reuniao");
+        mav.addObject("assunto", adminService.getSubject(id));
+        return mav;
+    }
+
+    @DeleteMapping("assunto/{id}")
+    public ModelAndView deleteAssunto(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        adminService.removeSubject(id);
+        mav.setViewName("redirect:/admin/assunto");
+        mav.addObject("assuntos", adminService.allSubjects());
         return mav;
     }
 }
