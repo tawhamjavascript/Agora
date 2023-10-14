@@ -49,13 +49,14 @@ public class AdminService {
 
     @Transactional
     public void registerStudent(Aluno aluno) {
+        aluno.setAdmin(false);
 
         alunoRepository.save(aluno);
     }
 
     @Transactional
-    public void removeStudent(Aluno aluno) {
-        alunoRepository.delete(aluno);
+    public void removeStudent(Long id) {
+        alunoRepository.delete(alunoRepository.findById(id).get());
     }
     @Transactional
     public void updateStudent(Aluno aluno) {

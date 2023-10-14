@@ -1,5 +1,6 @@
 package br.edu.ifpb.agora.controller;
 
+import br.edu.ifpb.agora.model.Aluno;
 import br.edu.ifpb.agora.model.Assunto;
 import br.edu.ifpb.agora.model.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.edu.ifpb.agora.service.AdminService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -37,7 +40,6 @@ public class AdminController {
         mav.addObject("curso", adminService.getCourse(id));
         return mav;
     }
-
     @PostMapping("/curso")
     public ModelAndView saveCurso(Curso curso, ModelAndView mav) {
         adminService.addCourse(curso);
@@ -89,6 +91,48 @@ public class AdminController {
         adminService.removeSubject(id);
         mav.setViewName("redirect:/admin/assunto");
         mav.addObject("assuntos", adminService.allSubjects());
+        return mav;
+    }
+
+    @ModelAttribute("cursoItems")
+    public List<Curso> getCursos() {
+        return adminService.allCourses();
+    }
+
+    @GetMapping("aluno")
+    public ModelAndView getAlunos(ModelAndView mav) {
+        mav.setViewName("admin/listagem-aluno");
+        mav.addObject("alunos", adminService.allStudent());
+        return mav;
+    }
+
+    @GetMapping("aluno/cadastro")
+    public ModelAndView getCadastroAluno(ModelAndView mav) {
+        mav.setViewName("admin/cadastrar-aluno");
+        mav.addObject("aluno", new Aluno());
+        return mav;
+    }
+
+    @PostMapping("aluno")
+    public ModelAndView saveAluno(Aluno aluno, ModelAndView mav) {
+        adminService.registerStudent(aluno);
+        mav.setViewName("redirect:/admin/aluno");
+        mav.addObject("alunos", adminService.allStudent());
+        return mav;
+    }
+
+    @GetMapping("aluno/{id}")
+    public ModelAndView editAluno(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        mav.setViewName("admin/cadastrar-aluno");
+        mav.addObject("aluno", adminService.getStudent(id));
+        return mav;
+    }
+
+    @DeleteMapping("aluno/{id}")
+    public ModelAndView deleteAluno(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        adminService.removeStudent(id);
+        mav.setViewName("redirect:/admin/aluno");
+        mav.addObject("alunos", adminService.allStudent());
         return mav;
     }
 }
