@@ -3,6 +3,7 @@ package br.edu.ifpb.agora.service;
 import java.util.Date;
 import java.util.List;
 
+import br.edu.ifpb.agora.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.edu.ifpb.agora.model.Aluno;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AlunoService {
+    @Autowired
+    private AlunoRepository alunoRepository;
     
     @Autowired
     private ProcessoRepository processoRepository;
@@ -23,6 +26,11 @@ public class AlunoService {
     public void cadastraNovoProcesso(Processo processo){
         processo.setNumero("" + System.currentTimeMillis());
         Date dataRecepcao = new Date();
+
+        Aluno aluno = alunoRepository.findById(1L).get();
+        aluno.addProcesso(processo);
+
+        processo.setStatus(StatusEnum.CRIADO);
 
         processo.setDataRecepcao(dataRecepcao);
         processoRepository.save(processo);
