@@ -1,0 +1,110 @@
+#main h2 {
+  color:#316CCF;
+  text-shadow: 0px 4px 4px #00000040;
+}
+
+.a-style {
+  background: linear-gradient(90deg, #50D5FF 0%, #2F64CC 100%);
+  color: white;
+  width: 15rem;
+  height: 3rem;
+  border-radius: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: large;
+  font-weight: bold;
+
+  margin-top: 2rem;
+  margin-left: 30%;
+
+  text-decoration: none;
+}
+
+.a-style:hover {
+  color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* html, body {
+  color: #0D4085; 
+}
+
+
+#cabecalho {
+  text-align: center;
+  color: #10428C; 
+  box-shadow: 0px .8px .8px rgba(0, 0, 0, 0.5);
+
+  height: 3rem;
+}
+
+#cabecalho h3 {
+  margin-top: .8rem;
+  font-weight: bolder;
+}
+
+#top-table {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 2.6rem;
+}
+
+#status-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 1.5rem;
+}
+
+#top-table p {
+  margin-right: 10px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+#status-box h2 {
+  margin-right: 10px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+
+#status-options {
+  color: #0D4085;
+  font-weight: 700;
+  font-size: 18px;
+
+  border-radius: 8px;
+  background-color: white;
+}
+
+#tabela-processos {
+  background: #F1F1F1;
+  color: #0D4085; 
+} */
