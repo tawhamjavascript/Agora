@@ -38,7 +38,7 @@ public class AdminService {
         professorRepository.save(professor);
     }
 
-    public List<Professor> AllTeachers() {
+    public List<Professor> allTeachers() {
 
         return professorRepository.findAll();
     }
@@ -62,7 +62,7 @@ public class AdminService {
         alunoRepository.save(aluno);
     }
 
-    public List<Aluno> AllStudent() {
+    public List<Aluno> allStudent() {
         return alunoRepository.findAll();
     }
 
@@ -76,8 +76,8 @@ public class AdminService {
     }
 
     @Transactional
-    public void removeCourse(Curso curso) {
-        cursoRepository.delete(curso);
+    public void removeCourse(Long id) {
+        cursoRepository.delete( cursoRepository.findById(id).get() );
 
     }
 
@@ -86,7 +86,7 @@ public class AdminService {
         cursoRepository.save(curso);
     }
 
-    public List<Curso> AllCourses() {
+    public List<Curso> allCourses() {
 
         return cursoRepository.findAll();
     }
@@ -126,7 +126,7 @@ public class AdminService {
         assuntoRepository.save(assunto);
     }
 
-    public List<Assunto> AllSubjects() {
+    public List<Assunto> allSubjects() {
         return this.assuntoRepository.findAll();
     }
 

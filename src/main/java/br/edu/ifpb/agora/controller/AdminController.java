@@ -1,9 +1,9 @@
 package br.edu.ifpb.agora.controller;
 
+import br.edu.ifpb.agora.model.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.edu.ifpb.agora.service.AdminService;
@@ -16,6 +16,40 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @GetMapping("/curso")
+    public ModelAndView getCursos(ModelAndView mav) {
+        mav.setViewName("admin/listagem-cursos");
+        mav.addObject("cursos", adminService.allCourses());
+        return mav;
+    }
 
-    
+    @GetMapping("/curso/cadastro")
+    public ModelAndView getCadastro(ModelAndView mav) {
+        mav.setViewName("admin/cadastro-curso");
+        mav.addObject("curso", new Curso());
+        return mav;
+    }
+
+    @GetMapping("/curso/{id}")
+    public ModelAndView editCurso(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        mav.setViewName("admin/cadastro-curso");
+        mav.addObject("curso", adminService.getCourse(id));
+        return mav;
+    }
+
+    @PostMapping("/curso")
+    public ModelAndView saveCurso(Curso curso, ModelAndView mav) {
+        adminService.addCourse(curso);
+        mav.setViewName("redirect:/admin/curso");
+        mav.addObject("cursos", adminService.allCourses());
+        return mav;
+    }
+
+    @DeleteMapping("/curso/{id}")
+    public ModelAndView deleteCurso(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        adminService.removeCourse(id);
+        mav.setViewName("redirect:/admin/curso");
+        mav.addObject("cursos", adminService.allCourses());
+        return mav;
+    }
 }
