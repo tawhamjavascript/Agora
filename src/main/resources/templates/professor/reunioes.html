@@ -23,12 +23,12 @@
 
 
     <div class="centro">
-        <form class="filter-form" method="post" th:action="">
+        <form class="filter-form" method="post" th:action="@{professor/reunioes/filtro}">
             <label for="status-filter">Filtrar por status:</label>
+
             <select id="status-filter" name="status">
-                <option value="encerrada">Encerrada</option>
-                <option value="agendada">Agendada</option>
-                <option value="em_andamento">Em andamento</option>
+                <option th:each="status : ${statusItens}" th:value="${status}" th:text="${status.getStatus()}"> </option>
+
             </select>
             <button type="submit">Filtrar</button>
         </form>
