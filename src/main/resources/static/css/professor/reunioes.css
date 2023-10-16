@@ -1,44 +1,66 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Sunflower', sans-serif;
+    background-color: #F1F1F1;
+    color: #10428C;
 }
 
 .header {
+    background-color: #10428C;
+    color: white;
     text-align: center;
-    padding: 20px;
-    background-color: #f2f2f2;
+    padding: 10px 0;
 }
 
-.icon {
-    position: absolute;
-    top: 20px;
-    left: 20px;
+.header .icon {
     font-size: 24px;
+    float: left;
+    margin-right: 20px;
 }
 
 .username {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px 0;
 }
 
 .centro {
-    margin: 20px auto;
-    width: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    text-align: center;
+    margin: 20px;
+}
+
+.filter-form {
+    margin: 10px;
+}
+
+.filter-form label {
+    color: #10428C;
+}
+
+select, button {
+    background: linear-gradient(to right, #50D5FF, #2F64CC);
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
 table {
     width: 100%;
+    background-color: white;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin: auto; /* Centraliza a tabela */
 }
 
-th,
-td {
-    border: 1px solid #ccc;
+th, td {
+    border: 1px solid #10428C;
     padding: 10px;
     text-align: left;
+}
+
+th {
+    background-color: #10428C;
+    color: white;
 }
