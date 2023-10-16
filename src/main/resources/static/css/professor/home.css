@@ -1,0 +1,36 @@
+body {
+    font-family: 'Sunflower', sans-serif;
+    background-color: #F1F1F1;
+    color: #10428C;
+}
+
+.header {
+    background-color: #10428C;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.divider {
+    border-bottom: 2px solid #10428C;
+    margin: 20px auto;
+}
+
+.msg-bmvndo,
+.username {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.button {
+    background: linear-gradient(to right, #50D5FF, #2F64CC);
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.conteudo {
+    text-align: center;
+}
