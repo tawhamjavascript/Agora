@@ -75,22 +75,22 @@ public class CoordenadorService {
         }
     }
 
-    @Transactional
-    public void criarReuniao(List<Processo> processos, Date data, Colegiado colegiado) {
-        Reuniao reuniao = new Reuniao(data, StatusReuniao.PROGRAMADA, colegiado);
-
-        for (Processo processo : processos) {
-            reuniao.addProcesso(processo);
-        }
-
-        colegiado.addReuniao(reuniao);
-
-        colegiadoRepository.save(colegiado);
-
-        reuniaoRepository.save(reuniao);
-
-
-    }
+//    @Transactional
+//    public void criarReuniao(List<Processo> processos, Date data, Colegiado colegiado) {
+//        Reuniao reuniao = new Reuniao(data, StatusReuniao.PROGRAMADA, colegiado);
+//
+//        for (Processo processo : processos) {
+//            reuniao.addProcesso(processo);
+//        }
+//
+//        colegiado.addReuniao(reuniao);
+//
+//        colegiadoRepository.save(colegiado);
+//
+//        reuniaoRepository.save(reuniao);
+//
+//
+//    }
 
     @Transactional
     public void iniciarSessao(Reuniao reuniao){

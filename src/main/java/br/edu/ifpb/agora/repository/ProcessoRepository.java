@@ -18,6 +18,8 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 
     public List<Processo> findAllByInteressadoIdAndEmPauta(Long id, Boolean pauta);
 
+    public List<Processo> findAllByInteressadoCursoId(Long id);
+
 
 
     public List<Processo> findAllByRelatorId(Long idRelator);

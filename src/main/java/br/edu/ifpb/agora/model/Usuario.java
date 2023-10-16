@@ -2,7 +2,13 @@ package br.edu.ifpb.agora.model;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Usuario {
@@ -15,63 +21,8 @@ public class Usuario {
     private String login;
     private String senha;
     private boolean admin;
+    @OneToOne
+    @JoinColumn(name="curso_id")
+    private Curso curso;
 
-    public Usuario() {
-    }
-    public Usuario(String nome, String fone, String matricula, String login, String senha, boolean admin) {
-        this.nome = nome;
-        this.fone = fone;
-        this.matricula = matricula;
-        this.login = login;
-        this.senha = senha;
-        this.admin = admin;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getFone() {
-        return fone;
-    }
-
-    public void setFone(String fone) {
-        this.fone = fone;
-    }
-
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public boolean isAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
 }

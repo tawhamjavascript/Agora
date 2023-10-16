@@ -1,46 +1,31 @@
 package br.edu.ifpb.agora.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Professor extends Usuario{
     
-    @ManyToMany
-    private List<Colegiado> colegiados;
+    @ManyToOne
+    @JoinColumn(name="colegiado_id")
+    private Colegiado colegiado;
     private boolean coordenador;
 
     @OneToMany(mappedBy = "professor")
     private List<Voto> votos;
-    public Professor() {
-    }
-    public Professor(String nome, String fone, String matricula, String login, String senha, boolean admin, boolean coordenador) {
-        super(nome, fone, matricula, login, senha, admin);
-        this.coordenador = coordenador;
-    }
-    private List<Colegiado> getColegiados() {
-        return colegiados;
-    }
 
-    private void addColegiado(Colegiado colegiado) {
-        colegiados.add(colegiado);
-    }
+    @OneToMany(mappedBy = "relator")
+    private List<Processo> processos;
 
-    public boolean isCoordenador() {
-        return coordenador;
-    }
 
-    public void setCoordenador(boolean coordenador) {
-        this.coordenador = coordenador;
-    }
 
-    public List<Voto> getVotos() {
-        return votos;
-    }
-
-    public void addVoto(Voto voto) {
-        votos.add(voto);
-    }
 }

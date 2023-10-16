@@ -2,8 +2,15 @@ package br.edu.ifpb.agora.model;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+
 public class Voto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,35 +25,4 @@ public class Voto {
 
     private String justificativa;
 
-
-    public Voto() {
-    }
-
-
-    public Voto( TipoVoto tipoVoto, boolean ausente, String justificativa, Professor professor) {
-        this.tipoVoto = tipoVoto;
-        this.ausente = ausente;
-        this.justificativa = justificativa;
-        this.professor = professor;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public TipoVoto getTipoVoto() {
-        return tipoVoto;
-    }
-
-    public boolean isAusente() {
-        return ausente;
-    }
-
-    public Professor getProfessor() {
-        return professor;
-    }
-
-    public String getJustificativa() {
-        return justificativa;
-    }
 }
