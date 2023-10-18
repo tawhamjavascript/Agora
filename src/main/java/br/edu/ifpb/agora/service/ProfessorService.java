@@ -6,6 +6,7 @@ import br.edu.ifpb.agora.repository.ProcessoRepository;
 import br.edu.ifpb.agora.repository.ProfessorRepository;
 import br.edu.ifpb.agora.repository.ReuniaoRepository;
 import br.edu.ifpb.agora.repository.VotoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +61,7 @@ public class ProfessorService {
         return processoRepository.findAllByRelatorId(1L);
     }
 
-
+    @Transactional
     public void votar(Long id, String voto, String justificativa) {
         Processo processo = processoRepository.findById(id).get();
         TipoDecisao tipoDecisao = null;

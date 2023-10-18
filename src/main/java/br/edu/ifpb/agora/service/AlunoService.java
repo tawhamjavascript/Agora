@@ -32,6 +32,8 @@ public class AlunoService {
 
         processo.setStatus(StatusEnum.CRIADO);
 
+        processo.setTipoDecisao(null);
+
         processo.setDataRecepcao(dataRecepcao);
         processoRepository.save(processo);
     }

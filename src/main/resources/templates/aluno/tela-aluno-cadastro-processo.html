@@ -17,12 +17,12 @@
 
   <div class="container">
     <div id="sidebar">
-      <a href="tela-aluno-cadastro-processo.html">Novo Processo</a>
-      <a href="tela-aluno-listagem-processos.html">Listar processos</a>
+      <a th:href="@{/processo/cadastrar}">Novo Processo</a>
+      <a th:href="@{/processo}">Listar processos</a>
       <a href="#">Sair</a>
     </div>
     <div id="main">
-      <h2>Cadastrar Processo</h2>
+      <h2> Salvar processo </h2>
       <form id="form-container" th:action="@{/aluno/processo/cadastrar}" method="post" th:object="${processo}">
         
           <label for="assunto-input" class="form-label">Assunto:</label>
@@ -37,7 +37,7 @@
           <label for="arquivos" class="form-label">Arquivos:</label>
           <input class="form-control" th:field="*{anexos}" type="file" id="arquivos" multiple>
   
-        <button type="submit" class="button">CADASTRAR</button>
+        <button type="submit" class="button"> Salvar </button>
       </form>
     </div>
   </div>

@@ -47,7 +47,6 @@ public class AlunoController {
     public ModelAndView salvarProcesso(Processo processo, ModelAndView modelAndView) {
         alunoService.cadastraNovoProcesso(processo);
         modelAndView.setViewName("redirect:/aluno/processo");
-        modelAndView.addObject("processos", alunoService.consultaProcessos());
         return modelAndView;
 
     }
@@ -63,17 +62,7 @@ public class AlunoController {
     @PostMapping("/processo/consultar")
     public ModelAndView filtrarProcesso(String filtro, String order, ModelAndView modelAndView) {
         modelAndView.addObject("processos", alunoService.filtrarProcesso(filtro, order));
-        modelAndView.setViewName("redirect:/aluno/processo");
+        modelAndView.setViewName("/aluno/tela-aluno-listagem-processos");
         return modelAndView;
     }
-
-
-
-
-
-
-
-
-
-
 }

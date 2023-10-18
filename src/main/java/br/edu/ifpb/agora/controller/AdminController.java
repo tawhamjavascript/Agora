@@ -1,11 +1,9 @@
 package br.edu.ifpb.agora.controller;
 
-import br.edu.ifpb.agora.model.Aluno;
-import br.edu.ifpb.agora.model.Assunto;
-import br.edu.ifpb.agora.model.Curso;
-import br.edu.ifpb.agora.model.Professor;
+import br.edu.ifpb.agora.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -174,5 +172,66 @@ public class AdminController {
         return mav;
     }
 
+
+    @GetMapping("colegiado")
+    public ModelAndView getColegiados(ModelAndView mav) {
+        mav.setViewName("admin/listagem-colegiados");
+        mav.addObject("colegiados", adminService.allColegiados());
+        return mav;
+    }
+
+    @GetMapping("colegiado/{id}")
+    public ModelAndView editarColegiado(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        mav.setViewName("admin/cadastro-colegiados");
+        mav.addObject("colegiado", adminService.getColegiado(id));
+        return mav;
+    }
+
+    @GetMapping("colegiado/cadastrar")
+    public ModelAndView getCadastroColegiado(ModelAndView mav) {
+        mav.setViewName("admin/cadastro-colegiados");
+        mav.addObject("colegiado", new Colegiado());
+        return mav;
+    }
+
+    @PostMapping("colegiado")
+    public ModelAndView saveColegiado(Colegiado colegiado, ModelAndView mav) {
+        if (colegiado.getId() == null) {
+            adminService.salvarColegiado(colegiado);
+            mav.setViewName("redirect:/admin/colegiado/" + colegiado.getId() + "/membros");
+
+        }
+        else {
+            adminService.salvarColegiado(colegiado);
+            mav.setViewName("redirect:/admin/colegiado");
+        }
+        return mav;
+
+    }
+    @GetMapping("colegiado/{id}/membros")
+    public ModelAndView getAddMembros(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        mav.setViewName("admin/adicionar-membro");
+
+        mav.addObject("colegiadoId", id);
+        mav.addObject("professores", adminService.allTeachersOfCourse(id));
+        return mav;
+    }
+
+    @PostMapping("colegiado/membros")
+    public ModelAndView salvarMembro(Long idColegiado, Long idProfessor, ModelAndView mav) {
+        adminService.adicionarMembro(idColegiado, idProfessor);
+        mav.setViewName("redirect:/admin/colegiado/" + idColegiado + "/membros");
+        return mav;
+
+    }
+
+    @DeleteMapping("colegiado/{id}/membros/{idProfessor}")
+    public ModelAndView deletarMembro(@PathVariable(value = "id") Long idColegiado, @PathVariable(value = "idProfessor") Long idProfessor, ModelAndView mav) {
+        adminService.deletarMembro(idColegiado, idProfessor);
+        mav.setViewName("/admin/cadastro-colegiados");
+        mav.addObject("colegiado", adminService.getColegiado(idColegiado));
+        return mav;
+
+    }
 
 }

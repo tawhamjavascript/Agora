@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +23,8 @@ public class AdminService {
 
     @Autowired
     private AssuntoRepository assuntoRepository;
+
+    @Autowired ColegiadoRepository colegiadoRepository;
 
     @Transactional
     public void registerTeacher(Professor professor) {
@@ -41,6 +44,20 @@ public class AdminService {
     public List<Professor> allTeachers() {
 
         return professorRepository.findAll();
+    }
+
+    public List<Professor> allTeachersOfCourse(Long colegiadoId) {
+        Colegiado colegiado = getColegiado(colegiadoId);
+        List<Professor> result = new ArrayList<Professor>();
+
+
+        professorRepository.findAllByCursoId(colegiado.getId()).forEach(professor -> {
+            if (!colegiado.getMembros().contains(professor)) {
+                result.add(professor);
+            }
+        });
+
+        return result;
     }
 
     public Professor getTeacher(Long id) {
@@ -136,5 +153,40 @@ public class AdminService {
         return assuntoRepository.findById(id).orElse(null);
     }
 
+    public List<Colegiado> allColegiados() {
+        return colegiadoRepository.findAll();
+    }
 
+    public Colegiado getColegiado(Long id) {
+        return colegiadoRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public void salvarColegiado(Colegiado colegiado) {
+        colegiadoRepository.save(colegiado);
+    }
+
+    @Transactional
+    public void excluir(Long id) {
+        colegiadoRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void adicionarMembro(Long ColegiadoId, Long professorId) {
+        Colegiado colegiado = colegiadoRepository.findById(ColegiadoId).orElse(null);
+        Professor professor = professorRepository.findById(professorId).orElse(null);
+        colegiado.getMembros().add(professor);
+        professor.setColegiado(colegiado);
+        salvarColegiado(colegiado);
+    }
+
+    @Transactional
+    public void deletarMembro(Long ColegiadoId, Long professorId) {
+        Colegiado colegiado = colegiadoRepository.findById(ColegiadoId).orElse(null);
+        Professor professor = professorRepository.findById(professorId).orElse(null);
+        colegiado.getMembros().remove(professor);
+        professor.setColegiado(null);
+        professorRepository.save(professor);
+        colegiadoRepository.save(colegiado);
+    }
 }
