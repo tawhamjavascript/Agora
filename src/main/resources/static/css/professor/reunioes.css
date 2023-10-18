@@ -45,6 +45,36 @@ select, button {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
+=======
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    text-align: center;
+    padding: 20px;
+    background-color: #f2f2f2;
+}
+
+.icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+}
+
+.username {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.centro {
+    margin: 20px auto;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 table {
@@ -63,4 +93,14 @@ th, td {
 th {
     background-color: #10428C;
     color: white;
+=======
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
 }

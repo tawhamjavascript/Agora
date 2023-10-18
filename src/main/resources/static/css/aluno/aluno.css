@@ -1,0 +1,36 @@
+#search-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#tabela-processos {
+  background: #F1F1F1;
+  color: #0D4085; 
+}
+
+.button {
+  width: 10rem;
+  height: 3rem;
+
+  color: white;
+  font-weight: 700;
+
+  border-radius: 8px;
+  background: linear-gradient(90deg, #50D5FF 0%, #2F64CC 100%);
+}
+
+#novo-processo {
+  text-decoration: none;
+  padding: .8rem 1.5rem;
+
+  color: white;
+  font-weight: 700;
+
+  border-radius: 8px;
+  background: linear-gradient(90deg, #50D5FF 0%, #2F64CC 100%);
+}
+
+#novo-processo:visited {
+  color: white;
+}
