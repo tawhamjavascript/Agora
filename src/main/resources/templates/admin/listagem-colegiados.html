@@ -34,7 +34,6 @@
                 <th scope="col">Portaria</th>
                 <th scope="col">Curso</th>
                 <th scope="col">Alterar</th>
-                <th scope="col">Excluir</th>
               </tr>
             </thead>
             <tbody>
@@ -45,11 +44,6 @@
                   <a th:href="'colegiado/' + ${cole.id}">
                     <img th:src="@{/images/pencil-square.svg}">
                   </a>
-                </td>
-                <td>
-                  <button th:onclick="|deletar(${cole.id})|">
-                    <img th:src="@{/images/trash-2.svg}">
-                  </button>
                 </td>
               </tr>
             </tbody>

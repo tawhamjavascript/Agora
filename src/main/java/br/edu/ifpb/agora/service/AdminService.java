@@ -28,6 +28,13 @@ public class AdminService {
 
     @Transactional
     public void registerTeacher(Professor professor) {
+        if (professor.isCoordenador()) {
+            Professor atualCoordenador = professorRepository.findByCoordenadorTrueAndCursoId(professor.getCurso().getId());
+            if (atualCoordenador != null) {
+                atualCoordenador.setCoordenador(false);
+
+            }
+        }
         professorRepository.save(professor);
     }
 
@@ -50,8 +57,7 @@ public class AdminService {
         Colegiado colegiado = getColegiado(colegiadoId);
         List<Professor> result = new ArrayList<Professor>();
 
-
-        professorRepository.findAllByCursoId(colegiado.getId()).forEach(professor -> {
+        professorRepository.findAllByCursoId(colegiado.getCurso().getId()).forEach(professor -> {
             if (!colegiado.getMembros().contains(professor)) {
                 result.add(professor);
             }
@@ -113,19 +119,6 @@ public class AdminService {
         return cursoRepository.findById(id).orElse(null);
     }
 
-    @Transactional
-    public void setCoordinator(Long id) {
-        
-        Professor professor = professorRepository.findById(id).orElse(null);
-        Professor atualCoordenador = professorRepository.findByCoordenadorTrue();
-        if (professor == null) {
-            return;
-        }
-        atualCoordenador.setCoordenador(false);
-        professor.setCoordenador(true);
-        professorRepository.save(professor);
-        professorRepository.save(atualCoordenador);
-    }
 
     @Transactional
     public void registerSubject(Assunto assunto) {

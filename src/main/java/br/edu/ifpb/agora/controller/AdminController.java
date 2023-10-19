@@ -19,6 +19,13 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+
+    @GetMapping("/home")
+    public ModelAndView getHome(ModelAndView mav) {
+        mav.setViewName("admin/homepage");
+        return mav;
+    }
+
     @GetMapping("/curso")
     public ModelAndView getCursos(ModelAndView mav) {
         mav.setViewName("admin/listagem-cursos");

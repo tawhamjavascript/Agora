@@ -41,7 +41,7 @@
                   <form th:action="@{/admin/colegiado/membros}" method="post">
                     <input type="hidden" th:value="${colegiadoId}" name="idColegiado">
                     <input type="hidden" th:value="${prof.id}" name="idProfessor">
-                    <input type="submit" th:src="@{/images/user-plus.svg}">
+                    <button type="submit"> <img th:src="@{/images/user-plus.svg}" alt="enviar"> </button> 
                   </form>
                 </td>
               </tr>

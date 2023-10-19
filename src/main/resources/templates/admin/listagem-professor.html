@@ -42,7 +42,7 @@
               <tr th:each="prof : ${professores}">
                 <th th:text="${prof.matricula}" scope="row"></th>
                 <td th:text="${prof.nome}"> </td>
-                <td th:text="${prof.coordenador}"> </td>
+                <td th:text="${prof.coordenador ? 'Sim' : 'Não'}"> </td>
                 <td>
                   <a th:href="'professor/' + ${prof.id}" >
                     <img th:src="@{/images/pencil-square.svg}">

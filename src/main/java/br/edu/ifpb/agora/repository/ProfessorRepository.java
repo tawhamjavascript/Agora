@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
-    public Professor findByCoordenadorTrue();
+    Professor findByCoordenadorTrueAndCursoId(Long id);
 
 
 
-    Professor findByMatricula(String login);
+    Professor findByMatricula(String matricula);
 
     List<Professor> findAllByCursoId(Long id);
 }
