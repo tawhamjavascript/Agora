@@ -17,8 +17,8 @@
 
   <div class="container">
     <div id="sidebar">
-      <a th:href="@{/processo/cadastrar}">Novo Processo</a>
-      <a th:href="@{/processo}">Listar processos</a>
+      <a th:href="@{processo/cadastrar}">Novo Processo</a>
+      <a th:href="@{processo}">Listar processos</a>
       <a href="#">Sair</a>
     </div>
 
@@ -66,10 +66,10 @@
             <tbody>
               <tr th:each="processo : ${processos}">
                 <td th:text="${processo.numero}"></td>
-                <td th:text="${processo.dataRecepcao}"></td>
+                <td th:text="${#dates.format(processo.dataRecepcao, 'dd/MMM/yyyy')}"></td>
                 <td th:text="${processo.assunto.nome}"></td>
                 <td th:text="${processo.status.getStatus()}"></td>
-                <td>PDF</td>
+                <td th:text="${processo.anexos.size() > 0 ? 'PDF' : 'Nenhum'}"></td>
               </tr>
             </tbody>
           </table>
