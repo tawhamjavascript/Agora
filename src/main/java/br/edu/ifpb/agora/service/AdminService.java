@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,14 +24,23 @@ public class AdminService {
     @Autowired
     private AssuntoRepository assuntoRepository;
 
+    @Autowired ColegiadoRepository colegiadoRepository;
+
     @Transactional
     public void registerTeacher(Professor professor) {
+        if (professor.isCoordenador()) {
+            Professor atualCoordenador = professorRepository.findByCoordenadorTrueAndCursoId(professor.getCurso().getId());
+            if (atualCoordenador != null) {
+                atualCoordenador.setCoordenador(false);
+
+            }
+        }
         professorRepository.save(professor);
     }
 
     @Transactional
-    public void removeTeacher(Professor professor) {
-        professorRepository.delete(professor);
+    public void removeTeacher(Long id) {
+        professorRepository.delete(professorRepository.findById(id).get());
     }
 
     @Transactional
@@ -38,9 +48,22 @@ public class AdminService {
         professorRepository.save(professor);
     }
 
-    public List<Professor> AllTeachers() {
+    public List<Professor> allTeachers() {
 
         return professorRepository.findAll();
+    }
+
+    public List<Professor> allTeachersOfCourse(Long colegiadoId) {
+        Colegiado colegiado = getColegiado(colegiadoId);
+        List<Professor> result = new ArrayList<Professor>();
+
+        professorRepository.findAllByCursoId(colegiado.getCurso().getId()).forEach(professor -> {
+            if (!colegiado.getMembros().contains(professor)) {
+                result.add(professor);
+            }
+        });
+
+        return result;
     }
 
     public Professor getTeacher(Long id) {
@@ -49,20 +72,21 @@ public class AdminService {
 
     @Transactional
     public void registerStudent(Aluno aluno) {
+        aluno.setAdmin(false);
 
         alunoRepository.save(aluno);
     }
 
     @Transactional
-    public void removeStudent(Aluno aluno) {
-        alunoRepository.delete(aluno);
+    public void removeStudent(Long id) {
+        alunoRepository.delete(alunoRepository.findById(id).get());
     }
     @Transactional
     public void updateStudent(Aluno aluno) {
         alunoRepository.save(aluno);
     }
 
-    public List<Aluno> AllStudent() {
+    public List<Aluno> allStudent() {
         return alunoRepository.findAll();
     }
 
@@ -76,8 +100,8 @@ public class AdminService {
     }
 
     @Transactional
-    public void removeCourse(Curso curso) {
-        cursoRepository.delete(curso);
+    public void removeCourse(Long id) {
+        cursoRepository.delete( cursoRepository.findById(id).get() );
 
     }
 
@@ -86,7 +110,7 @@ public class AdminService {
         cursoRepository.save(curso);
     }
 
-    public List<Curso> AllCourses() {
+    public List<Curso> allCourses() {
 
         return cursoRepository.findAll();
     }
@@ -95,19 +119,6 @@ public class AdminService {
         return cursoRepository.findById(id).orElse(null);
     }
 
-    @Transactional
-    public void setCoordinator(Long id) {
-        
-        Professor professor = professorRepository.findById(id).orElse(null);
-        Professor atualCoordenador = professorRepository.findByCoordenadorTrue();
-        if (professor == null) {
-            return;
-        }
-        atualCoordenador.setCoordenador(false);
-        professor.setCoordenador(true);
-        professorRepository.save(professor);
-        professorRepository.save(atualCoordenador);
-    }
 
     @Transactional
     public void registerSubject(Assunto assunto) {
@@ -116,8 +127,9 @@ public class AdminService {
     }
 
     @Transactional
-    public void removeSubject(Assunto assunto) {
-        assuntoRepository.delete(assunto);
+    public void removeSubject(Long id) {
+
+        assuntoRepository.delete(assuntoRepository.findById(id).get());
     }
 
     @Transactional
@@ -126,7 +138,7 @@ public class AdminService {
         assuntoRepository.save(assunto);
     }
 
-    public List<Assunto> AllSubjects() {
+    public List<Assunto> allSubjects() {
         return this.assuntoRepository.findAll();
     }
 
@@ -134,5 +146,40 @@ public class AdminService {
         return assuntoRepository.findById(id).orElse(null);
     }
 
+    public List<Colegiado> allColegiados() {
+        return colegiadoRepository.findAll();
+    }
 
+    public Colegiado getColegiado(Long id) {
+        return colegiadoRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public void salvarColegiado(Colegiado colegiado) {
+        colegiadoRepository.save(colegiado);
+    }
+
+    @Transactional
+    public void excluir(Long id) {
+        colegiadoRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void adicionarMembro(Long ColegiadoId, Long professorId) {
+        Colegiado colegiado = colegiadoRepository.findById(ColegiadoId).orElse(null);
+        Professor professor = professorRepository.findById(professorId).orElse(null);
+        colegiado.getMembros().add(professor);
+        professor.setColegiado(colegiado);
+        salvarColegiado(colegiado);
+    }
+
+    @Transactional
+    public void deletarMembro(Long ColegiadoId, Long professorId) {
+        Colegiado colegiado = colegiadoRepository.findById(ColegiadoId).orElse(null);
+        Professor professor = professorRepository.findById(professorId).orElse(null);
+        colegiado.getMembros().remove(professor);
+        professor.setColegiado(null);
+        professorRepository.save(professor);
+        colegiadoRepository.save(colegiado);
+    }
 }

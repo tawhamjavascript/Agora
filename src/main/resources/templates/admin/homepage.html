@@ -1,0 +1,63 @@
+<!DOCTYPE html >
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" th:href="@{/css/admin/homepage.css}">
+
+  <title>Homepage Admin</title>
+</head>
+<body>
+  <div id="cabecalho">
+    <div>
+      <img th:src="@{/images/logo-ifpb.svg}" alt="logo do ifpb" id="logo">
+      <h3>IFPB</h3>
+    </div>
+
+    <h2>Homepage do Administrador</h2>
+
+    <div>
+      <p>Username</p>
+      <a href="#" id="logout-button">
+        <img th:src="@{/images/log-out.svg}" alt="logout">
+      </a>
+    </div>
+  </div>
+
+  <div id="container">
+    <div id="top-container">
+      <div></div>
+      <h1>Bem-vindo, Administrador </h1>
+
+    </div>
+
+    <div id="main-container">
+      <a th:href="@{/admin/colegiado}">
+        <img th:src="@{/images/home.svg}" alt="">
+        Colegiado
+      </a>
+      
+      <a th:href="@{/admin/assunto}">
+        <img th:src="@{/images/file-text.svg}" alt="">
+        Assuntos de Processos
+      </a>
+      
+      <a th:href="@{/admin/curso}">
+        <img th:src="@{/images/book-open.svg}">
+        Cursos
+      </a>
+      
+      <a th:href="@{/admin/professor}">
+        <img th:src="@{/images/edit-3.svg}">
+        Professores
+      </a>
+      
+      <a th:href="@{/admin/aluno}">
+        <img th:src="@{/images/user.svg}">
+        Alunos
+      </a>
+    </div>
+  </div>
+</body>
+</html>

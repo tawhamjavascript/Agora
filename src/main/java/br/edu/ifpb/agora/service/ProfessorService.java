@@ -6,6 +6,7 @@ import br.edu.ifpb.agora.repository.ProcessoRepository;
 import br.edu.ifpb.agora.repository.ProfessorRepository;
 import br.edu.ifpb.agora.repository.ReuniaoRepository;
 import br.edu.ifpb.agora.repository.VotoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,25 +53,15 @@ public class ProfessorService {
 
     }
 
-    public List<Reuniao> listarReunioesByStatus(String status) {
-        StatusReuniao statusReuniao = null;
-        if(status.equals("encerrada")) {
-            statusReuniao = StatusReuniao.ENCERRADA;
-        }
-        else if (status.equals("agendada")) {
-            statusReuniao = StatusReuniao.PROGRAMADA;
-        }
-        else {
-            statusReuniao = StatusReuniao.EM_ANDAMENTO;
-        }
-        return reuniaoRepository.AllReunioesByProfessorAndColegiadoAndStatus(1L, statusReuniao);
+    public List<Reuniao> listarReunioesByStatus(StatusReuniao status) {
+        return reuniaoRepository.AllReunioesByProfessorAndColegiadoAndStatus(1L, status);
     }
 
     public List<Processo> listarProcessosDesignados() {
         return processoRepository.findAllByRelatorId(1L);
     }
 
-
+    @Transactional
     public void votar(Long id, String voto, String justificativa) {
         Processo processo = processoRepository.findById(id).get();
         TipoDecisao tipoDecisao = null;
