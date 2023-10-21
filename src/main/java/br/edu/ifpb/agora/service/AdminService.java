@@ -2,6 +2,7 @@ package br.edu.ifpb.agora.service;
 
 import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.repository.*;
+import br.edu.ifpb.agora.util.PasswordUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ public class AdminService {
 
             }
         }
+        professor.setSenha(PasswordUtil.hashPassword(professor.getSenha()));
         professorRepository.save(professor);
     }
 
@@ -73,6 +75,7 @@ public class AdminService {
     @Transactional
     public void registerStudent(Aluno aluno) {
         aluno.setAdmin(false);
+        aluno.setSenha(PasswordUtil.hashPassword(aluno.getSenha()));
 
         alunoRepository.save(aluno);
     }
