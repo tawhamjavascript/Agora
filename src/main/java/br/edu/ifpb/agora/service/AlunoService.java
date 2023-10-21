@@ -27,7 +27,7 @@ public class AlunoService {
         processo.setNumero("" + System.currentTimeMillis());
         Date dataRecepcao = new Date();
 
-        Aluno aluno = alunoRepository.findById(52L).get();
+        Aluno aluno = alunoRepository.findById(6L).get();
         aluno.addProcesso(processo);
 
         processo.setStatus(StatusEnum.CRIADO);
@@ -36,12 +36,14 @@ public class AlunoService {
 
         processo.setInteressado(aluno);
 
+        processo.setCurso(aluno.getCurso());
+
         processo.setDataRecepcao(dataRecepcao);
         processoRepository.save(processo);
     }
 
     public List<Processo> consultaProcessos(){
-        return processoRepository.findAllByInteressadoId(52L);
+        return processoRepository.findAllByInteressadoId(6L);
     }
 
 
@@ -67,28 +69,28 @@ public class AlunoService {
     }
 
     public List<Processo> consultaProcessosPorAssunto(Long id){
-        return processoRepository.findAllByInteressadoIdAndAssuntoId(52L, id);
+        return processoRepository.findAllByInteressadoIdAndAssuntoId(6L, id);
     }
 
     public List<Processo> consultaProcessosPorStatus(StatusEnum status) {
-        return processoRepository.findAllByInteressadoIdAndStatus(52L, status);
+        return processoRepository.findAllByInteressadoIdAndStatus(6L, status);
 
     }
 
     public List<Processo> consultarProcessosPorAssuntoOrdenados(Long id){
-        return processoRepository.findAllByInteressadoIdAndAssuntoIdOrderByDataRecepcaoDesc(52L, id);
+        return processoRepository.findAllByInteressadoIdAndAssuntoIdOrderByDataRecepcaoDesc(6L, id);
 
     }
 
     public List<Processo> consultarProcessosPorStatusOrdenados(StatusEnum status){
-        return processoRepository.findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(52L, status);
+        return processoRepository.findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(6L, status);
 
 
 
     }
 
     public List<Processo> consultarProcessosOrdenados(Aluno aluno){
-        return processoRepository.findAllByInteressadoIdOrderByDataRecepcaoDesc(52L);
+        return processoRepository.findAllByInteressadoIdOrderByDataRecepcaoDesc(6L);
     }
 
     @Transactional

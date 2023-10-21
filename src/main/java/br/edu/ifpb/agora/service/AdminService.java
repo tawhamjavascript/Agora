@@ -58,7 +58,7 @@ public class AdminService {
         List<Professor> result = new ArrayList<Professor>();
 
         professorRepository.findAllByCursoId(colegiado.getCurso().getId()).forEach(professor -> {
-            if (!colegiado.getMembros().contains(professor)) {
+            if (!colegiado.getMembros().contains(professor) && !professor.isCoordenador()) {
                 result.add(professor);
             }
         });
