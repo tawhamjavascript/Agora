@@ -3,11 +3,12 @@ package br.edu.ifpb.agora.controller;
 import br.edu.ifpb.agora.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.edu.ifpb.agora.service.AdminService;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -47,7 +48,11 @@ public class AdminController {
         return mav;
     }
     @PostMapping("/curso")
-    public ModelAndView saveCurso(Curso curso, ModelAndView mav) {
+    public ModelAndView saveCurso(@Valid Curso curso, ModelAndView mav, BindingResult result) {
+        if (result.hasErrors()){
+            mav.setViewName("admin/cadastro-curso");
+            return mav;
+        }
         adminService.addCourse(curso);
         mav.setViewName("redirect:/admin/curso");
         mav.addObject("cursos", adminService.allCourses());
