@@ -1,20 +1,14 @@
 package br.edu.ifpb.agora.controller;
 
 
-import br.edu.ifpb.agora.model.Aluno;
-import br.edu.ifpb.agora.model.StatusEnum;
-import br.edu.ifpb.agora.model.Usuario;
+import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.service.ProfessorService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import br.edu.ifpb.agora.service.CoordenadorService;
 import org.springframework.web.servlet.ModelAndView;
-import br.edu.ifpb.agora.model.Professor;
 
 import java.util.List;
 
@@ -54,9 +48,24 @@ public class CoordenadorController {
     }
 
     @PostMapping("/processo/consultar")
-    public void processosConsultar(String filtro, ModelAndView modelAndView) {
+    public ModelAndView processosConsultar(String filtro, ModelAndView modelAndView, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        modelAndView.setViewName("coordenador/listagem-processos");
+        modelAndView.addObject("processos", coordenadorService.filtro(usuario.getCurso().getId(), filtro));
+        return modelAndView;
+    }
 
+    @GetMapping("/processo/{id}/relator")
+    public ModelAndView getProcesso(@PathVariable("id") Long idProcesso, ModelAndView mav) {
+        mav.setViewName("coordenador/adicionar-relator");
+        mav.addObject("processo", coordenadorService.getProcesso(idProcesso));
+        return mav;
+    }
 
-
+    @PostMapping("/processo/relator")
+    public ModelAndView setRelator(Processo processo, ModelAndView mav) {
+        coordenadorService.salvarProcesso(processo);
+        mav.setViewName("redirect:/coordenador/processo");
+        return mav;
     }
 }

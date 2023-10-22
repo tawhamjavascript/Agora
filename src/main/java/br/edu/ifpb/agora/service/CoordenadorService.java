@@ -2,6 +2,7 @@ package br.edu.ifpb.agora.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.repository.*;
@@ -48,11 +49,37 @@ public class CoordenadorService {
 
     }
 
-    public List<Processo> filtro(String filtro){
-        return null;
+    public List<Processo> filtro(Long cursoId, String filtro){
+        try {
+            Long usuarioId = Long.parseLong(filtro);
+
+            Optional<Professor> professor = professorRepository.findById(usuarioId);
+
+            if (professor.isPresent()) {
+                return processoRepository.findAllByRelatorId(professor.get().getId());
+            }
+            else {
+                return processoRepository.findAllByInteressadoId(usuarioId);
+            }
+
+        } catch (NumberFormatException e) {
+            StatusEnum filtroEnum = StatusEnum.valueOf(filtro);
+            return processoRepository.findAllByCursoIdAndStatus(cursoId, filtroEnum);
+
+        }
 
     }
 
+    public Processo getProcesso(Long idProcesso) {
+        return processoRepository.findById(idProcesso).get();
+    }
+
+    public void salvarProcesso(Processo processo) {
+        Processo processoBD = processoRepository.findById(processo.getId()).get();
+        processoBD.setRelator(processo.getRelator());
+        processoBD.setStatus(StatusEnum.DISTRIBUIDO);
+        processoRepository.save(processoBD);
+    }
 
 //    public List<Processo> listarTodosProcessosDoColegiadoPorStatus(Professor coordenador, Colegiado colegiado, StatusEnum status){
 //        if (coordenador.isCoordenador()){

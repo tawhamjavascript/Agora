@@ -64,7 +64,8 @@
               <tr th:each="processo : ${processos}">
                 <th scope="row" th:text="${processo.numero}"></th>
                 <td th:text="${processo.interessado.nome}"></td>
-                <td th:text="${processo.relator == null ? 'Sem relator' : processo.relator.nome}"></td>
+                <td th:if="${processo.relator == null}"> <a th:href="@{/coordenador/processo/{processoId}/relator(processoId=${processo.id})}"> Adicionar relator </a> </td>
+                <td th:unless="${processo.relator == null}" th:text="${processo.relator.nome}"> </td>
                 <td th:text="${processo.assunto.nome}"></td>
                 <td th:text="${processo.status.getStatus()}"></td>
               </tr>

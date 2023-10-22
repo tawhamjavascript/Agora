@@ -51,4 +51,6 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
     List<Processo> findAllByInteressadoIdOrderByDataRecepcaoDesc(Long id);
 
     List<Processo> findAllByCursoId(Long id);
+
+    List<Processo> findAllByCursoIdAndStatus(Long id, StatusEnum filtroEnum);
 }
