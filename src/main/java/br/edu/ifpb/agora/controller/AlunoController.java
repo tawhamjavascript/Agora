@@ -4,8 +4,10 @@ package br.edu.ifpb.agora.controller;
 import br.edu.ifpb.agora.model.Assunto;
 import br.edu.ifpb.agora.model.Processo;
 import br.edu.ifpb.agora.model.StatusEnum;
+import br.edu.ifpb.agora.model.Usuario;
 import br.edu.ifpb.agora.repository.AssuntoRepository;
 import br.edu.ifpb.agora.service.AlunoService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,24 +46,27 @@ public class AlunoController {
     }
 
     @PostMapping("/processo/cadastrar")
-    public ModelAndView salvarProcesso(Processo processo, ModelAndView modelAndView) {
-        alunoService.cadastraNovoProcesso(processo);
+    public ModelAndView salvarProcesso(Processo processo, ModelAndView modelAndView, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        alunoService.cadastraNovoProcesso(usuario.getId(), processo);
         modelAndView.setViewName("redirect:/aluno/processo");
         return modelAndView;
 
     }
 
     @GetMapping("/processo")
-    public ModelAndView consultarProcessos(ModelAndView mav) {
+    public ModelAndView consultarProcessos(ModelAndView mav, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
         mav.setViewName("aluno/tela-aluno-listagem-processos");
-        mav.addObject("processos", alunoService.consultaProcessos());
+        mav.addObject("processos", alunoService.consultaProcessos(usuario.getId()));
         return mav;
 
     }
 
     @PostMapping("/processo/consultar")
-    public ModelAndView filtrarProcesso(String filtro, String order, ModelAndView modelAndView) {
-        modelAndView.addObject("processos", alunoService.filtrarProcesso(filtro, order));
+    public ModelAndView filtrarProcesso(String filtro, String order, ModelAndView modelAndView, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        modelAndView.addObject("processos", alunoService.filtrarProcesso(usuario.getId(), filtro, order));
         modelAndView.setViewName("/aluno/tela-aluno-listagem-processos");
         return modelAndView;
     }

@@ -36,7 +36,11 @@ public class AdminService {
 
             }
         }
-        professor.setSenha(PasswordUtil.hashPassword(professor.getSenha()));
+        if(professor.getId() != null && professor.getSenha().isEmpty()) {
+            professor.setSenha(professorRepository.findById(professor.getId()).get().getSenha());
+        } else {
+            professor.setSenha(PasswordUtil.hashPassword(professor.getSenha()));
+        }
         professorRepository.save(professor);
     }
 
@@ -75,7 +79,11 @@ public class AdminService {
     @Transactional
     public void registerStudent(Aluno aluno) {
         aluno.setAdmin(false);
-        aluno.setSenha(PasswordUtil.hashPassword(aluno.getSenha()));
+        if (aluno.getId() != null && aluno.getSenha().isEmpty()) {
+            aluno.setSenha(alunoRepository.findById(aluno.getId()).get().getSenha());
+        } else {
+            aluno.setSenha(PasswordUtil.hashPassword(aluno.getSenha()));
+        }
 
         alunoRepository.save(aluno);
     }

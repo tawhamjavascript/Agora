@@ -22,25 +22,6 @@ public class ProfessorController {
     private ProfessorService professorService;
 
 
-    @GetMapping("/login")
-    public ModelAndView login(ModelAndView mav) {
-        mav.setViewName("professor/login");
-        mav.addObject("professor", new Professor());
-        return mav;
-    }
-
-    @PostMapping("/login")
-    public ModelAndView login(Professor professor, ModelAndView mav) {
-        if (professorService.login(professor)) {
-            mav.setViewName("redirect:/professor/home");
-
-        } else {
-            mav.setViewName("professor/login");
-            mav.addObject("professor", professor);
-        }
-        return mav;
-    }
-
     @GetMapping("/home")
     public ModelAndView home(ModelAndView mav) {
         mav.setViewName("professor/home");
