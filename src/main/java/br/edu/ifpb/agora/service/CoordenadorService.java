@@ -27,23 +27,23 @@ public class CoordenadorService {
     @Autowired
     private AlunoRepository alunoRepository;
 
-    public List<Processo> listarTodosProcessosDoColegiado() {
+    public List<Processo> listarTodosProcessosDoColegiado(Long id) {
 
-        Professor coordenador = professorRepository.findById(1L).get();
+        Professor coordenador = professorRepository.findById(id).get();
         return processoRepository.findAllByCursoId(coordenador.getCurso().getId());
 
     }
 
-    public List<Professor> listarTodosProfessoresDoColegiado() {
+    public List<Professor> listarTodosProfessoresDoColegiado(Long id) {
 
-        Professor coordenador = professorRepository.findById(1L).get();
+        Professor coordenador = professorRepository.findById(id).get();
         Colegiado colegiado = colegiadoRepository.findByCursoId(coordenador.getCurso().getId());
         return colegiado.getMembros();
 
     }
 
-    public List<Aluno> listarTodosAlunosProcesso() {
-        return alunoRepository.findAllByAlunoAndProcessDistinct(1L);
+    public List<Aluno> listarTodosAlunosProcesso(Long id) {
+        return alunoRepository.findAllByAlunoAndProcessDistinct(id);
 
 
     }

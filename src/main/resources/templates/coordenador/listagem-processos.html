@@ -14,7 +14,7 @@
   <div id="cabecalho">
     <div></div>
     <div><h3>Sistema Colegialis</h3></div>
-    <div id="nome-usuario"><h3>Username</h3></div>
+    <div id="nome-usuario"><h3 th:text="${session.usuario.nome}"></h3></div>
   </div>
 
   <div class="container">
@@ -22,7 +22,7 @@
 <!--      <a href="#">Criar Sessão</a>-->
       <a th:href="@{coordenador/processo}">Listar Processos</a>
       <a th:href="@{coordenador/relator}">Adicionar relator a processo</a>
-      <a href="#">Sair</a>
+      <a th:href="@{/auth/logout}">Sair</a>
     </div>
 
     <form method="post" th:action="@{/coordenador/processo/consultar}">

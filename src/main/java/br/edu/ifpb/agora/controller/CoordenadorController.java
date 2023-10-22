@@ -3,7 +3,9 @@ package br.edu.ifpb.agora.controller;
 
 import br.edu.ifpb.agora.model.Aluno;
 import br.edu.ifpb.agora.model.StatusEnum;
+import br.edu.ifpb.agora.model.Usuario;
 import br.edu.ifpb.agora.service.ProfessorService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,26 +32,30 @@ public class CoordenadorController {
     }
 
     @ModelAttribute("relatorItens")
-    public List<Professor> getRelator() {
-        return coordenadorService.listarTodosProfessoresDoColegiado();
+    public List<Professor> getRelator(HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        return coordenadorService.listarTodosProfessoresDoColegiado(usuario.getId());
 
     }
 
     @ModelAttribute("alunoItens")
-    public List<Aluno> getAluno() {
-        return coordenadorService.listarTodosAlunosProcesso();
+    public List<Aluno> getAluno(HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        return coordenadorService.listarTodosAlunosProcesso(usuario.getCurso().getId());
 
     }
 
     @GetMapping("/processo")
-    public ModelAndView processos(ModelAndView modelAndView) {
+    public ModelAndView processos(ModelAndView modelAndView, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
         modelAndView.setViewName("coordenador/listagem-processos");
-        modelAndView.addObject("processos", coordenadorService.listarTodosProcessosDoColegiado());
+        modelAndView.addObject("processos", coordenadorService.listarTodosProcessosDoColegiado(usuario.getId()));
         return modelAndView;
     }
 
     @PostMapping("/processo/consultar")
     public void processosConsultar(String filtro, ModelAndView modelAndView) {
+
 
 
     }

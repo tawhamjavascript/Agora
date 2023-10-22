@@ -45,4 +45,12 @@ public class AuthController {
         }
         return mav;
     }
+
+    @GetMapping("/logout")
+    public ModelAndView logout(ModelAndView mav, HttpSession session) {
+        session.invalidate();
+        mav.setViewName("redirect:/auth");
+        return mav;
+    }
+
 }
