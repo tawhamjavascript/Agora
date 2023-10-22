@@ -35,3 +35,7 @@ html, body {
   margin-top: 1.3rem;
   margin-left: 30%;
 }
+
+.more-left {
+  margin-left: .5rem;
+}
