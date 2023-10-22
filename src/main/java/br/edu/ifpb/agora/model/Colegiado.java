@@ -1,6 +1,7 @@
 package br.edu.ifpb.agora.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,11 @@ public class Colegiado {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataFim;
+
+    @NotBlank(message = "Campo obrigatório")
     private String descricao;
+
+    @NotBlank(message = "Campo obrigatório")
     private String portaria;
 
     @OneToOne

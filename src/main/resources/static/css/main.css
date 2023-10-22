@@ -76,3 +76,7 @@ html, body {
   margin-left: 30%;
 
 }
+
+.error {
+  color: red;
+}

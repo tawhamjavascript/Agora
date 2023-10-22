@@ -47,10 +47,12 @@ public class AdminController {
         mav.addObject("curso", adminService.getCourse(id));
         return mav;
     }
+    
     @PostMapping("/curso")
-    public ModelAndView saveCurso(@Valid Curso curso, ModelAndView mav, BindingResult result) {
+    public ModelAndView saveCurso(@Valid Curso curso, BindingResult result, ModelAndView mav) {
         if (result.hasErrors()){
-            mav.setViewName("admin/cadastro-curso");
+            mav.addObject("curso", curso);
+            mav.setViewName("/admin/cadastro-curso");
             return mav;
         }
         adminService.addCourse(curso);
@@ -68,22 +70,27 @@ public class AdminController {
     }
 
 
-    @GetMapping("assunto")
+    @GetMapping("/assunto")
     public ModelAndView getAssuntos(ModelAndView mav) {
         mav.setViewName("admin/listagem-assunto-processo-reuniao");
         mav.addObject("assuntos", adminService.allSubjects());
         return mav;
     }
 
-    @GetMapping("assunto/cadastro")
+    @GetMapping("/assunto/cadastro")
     public ModelAndView getCadastroAssunto(ModelAndView mav) {
         mav.setViewName("admin/cadastro-assunto-processo-reuniao");
         mav.addObject("assunto", new Assunto());
         return mav;
     }
 
-    @PostMapping("assunto")
-    public ModelAndView saveAssunto(Assunto assunto, ModelAndView mav) {
+    @PostMapping("/assunto")
+    public ModelAndView saveAssunto(@Valid Assunto assunto, BindingResult result, ModelAndView mav) {
+        if (result.hasErrors()){
+            mav.setViewName("admin/cadastro-assunto-processo-reuniao");
+            mav.addObject("assunto", assunto);
+            return mav;
+        }
         adminService.registerSubject(assunto);
         mav.setViewName("redirect:/admin/assunto");
         mav.addObject("assuntos", adminService.allSubjects());
@@ -125,7 +132,12 @@ public class AdminController {
     }
 
     @PostMapping("aluno")
-    public ModelAndView saveAluno(Aluno aluno, ModelAndView mav) {
+    public ModelAndView saveAluno(@Valid Aluno aluno, BindingResult result, ModelAndView mav) {
+        if (result.hasErrors()){
+            mav.setViewName("admin/cadastrar-aluno");
+            mav.addObject("aluno", aluno);
+            return mav;
+        }
         adminService.registerStudent(aluno);
         mav.setViewName("redirect:/admin/aluno");
         mav.addObject("alunos", adminService.allStudent());
@@ -162,7 +174,12 @@ public class AdminController {
     }
 
     @PostMapping("professor")
-    public ModelAndView saveProfessor(Professor professor, ModelAndView mav) {
+    public ModelAndView saveProfessor(@Valid Professor professor, BindingResult result, ModelAndView mav) {
+        if (result.hasErrors()){
+            mav.setViewName("admin/cadastro-professor");
+            mav.addObject("aluno", professor);
+            return mav;
+        }
         adminService.registerTeacher(professor);
         mav.setViewName("redirect:/admin/professor");
         mav.addObject("professores", adminService.allTeachers());
@@ -207,7 +224,12 @@ public class AdminController {
     }
 
     @PostMapping("colegiado")
-    public ModelAndView saveColegiado(Colegiado colegiado, ModelAndView mav) {
+    public ModelAndView saveColegiado(@Valid Colegiado colegiado, BindingResult result, ModelAndView mav) {
+        if (result.hasErrors()){
+            mav.setViewName("admin/cadastro-colegiados");
+            mav.addObject("colegiado", colegiado);
+            return mav;
+        }
         if (colegiado.getId() == null) {
             adminService.salvarColegiado(colegiado);
             mav.setViewName("redirect:/admin/colegiado/" + colegiado.getId() + "/membros");
