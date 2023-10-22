@@ -31,7 +31,7 @@ public class Processo {
     @Enumerated(EnumType.ORDINAL)
     private TipoDecisao decisaoRelator;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "assunto_id")
     private Assunto assunto;
 
@@ -48,6 +48,10 @@ public class Processo {
     @ManyToOne
     @JoinColumn(name = "professor_id")
     private Professor relator;
+
+    @ManyToOne
+    @JoinColumn(name = "curso_id")
+    private Curso curso;
 
     @ElementCollection
     private List<byte[]> anexos;

@@ -2,6 +2,7 @@ package br.edu.ifpb.agora.service;
 
 import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.repository.*;
+import br.edu.ifpb.agora.util.PasswordUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,11 @@ public class AdminService {
 
             }
         }
+        if(professor.getId() != null && professor.getSenha().isEmpty()) {
+            professor.setSenha(professorRepository.findById(professor.getId()).get().getSenha());
+        } else {
+            professor.setSenha(PasswordUtil.hashPassword(professor.getSenha()));
+        }
         professorRepository.save(professor);
     }
 
@@ -58,7 +64,7 @@ public class AdminService {
         List<Professor> result = new ArrayList<Professor>();
 
         professorRepository.findAllByCursoId(colegiado.getCurso().getId()).forEach(professor -> {
-            if (!colegiado.getMembros().contains(professor)) {
+            if (!colegiado.getMembros().contains(professor) && !professor.isCoordenador()) {
                 result.add(professor);
             }
         });
@@ -73,6 +79,11 @@ public class AdminService {
     @Transactional
     public void registerStudent(Aluno aluno) {
         aluno.setAdmin(false);
+        if (aluno.getId() != null && aluno.getSenha().isEmpty()) {
+            aluno.setSenha(alunoRepository.findById(aluno.getId()).get().getSenha());
+        } else {
+            aluno.setSenha(PasswordUtil.hashPassword(aluno.getSenha()));
+        }
 
         alunoRepository.save(aluno);
     }
