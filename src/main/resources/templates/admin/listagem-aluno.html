@@ -44,7 +44,7 @@
                 <td th:text="${alu.nome}"></td>
                 <td th:text="${alu.curso.nome}">Tecnologia em Sistemas para Internet</td>
                 <td>
-                  <a th:href="'aluno/' + ${alu.id}">
+                  <a th:href="@{aluno/{id}(id=${alu.id})}">
                     <img th:src="@{/images/pencil-square.svg}">
                   </a>
                 </td>

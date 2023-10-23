@@ -26,7 +26,7 @@
 
 
     <div class="container centro">
-        <form class="filter-form" method="post" th:action="@{/professor/reunioes/filtro}">
+        <form class="filter-form" method="get" th:action="@{/professor/reunioes/filtro}">
             <label for="status-filter">Filtrar por status:</label>
 
             <select id="status-filter" name="filtro">

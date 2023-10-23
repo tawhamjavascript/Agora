@@ -50,7 +50,7 @@ public class AlunoService {
     public List<Processo> filtrarProcesso(Long id, String filtro, String order) {
         try {
             Long assuntoId = Long.parseLong(filtro);
-            if (order == null) {
+            if (order.isBlank()) {
                 return consultaProcessosPorAssunto(id, assuntoId);
             }
             else {
@@ -59,7 +59,7 @@ public class AlunoService {
 
         } catch (NumberFormatException e) {
             StatusEnum filtroEnum = StatusEnum.valueOf(filtro);
-            if (order == null) {
+            if (order.isBlank()) {
                 return consultaProcessosPorStatus(id, filtroEnum);
             }
             else {

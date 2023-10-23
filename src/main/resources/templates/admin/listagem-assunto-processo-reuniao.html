@@ -41,7 +41,7 @@
               <tr th:each="ass : ${assuntos}">
                 <th th:text="${ass.nome}" scope="row"> </th>
                 <td>
-                  <a th:href="'assunto/' + ${ass.id}">
+                  <a th:href="@{assunto/{id}(id = ${ass.id})}">
                     <img th:src="@{/images/pencil-square.svg}">
                   </a>
                 </td>
