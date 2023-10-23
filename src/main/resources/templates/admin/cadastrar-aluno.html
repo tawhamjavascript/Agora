@@ -40,6 +40,7 @@
           
             <label for="telefome">Telefone:</label>
             <input type="text" id="telefome" th:field="*{fone}" class="form-control"/>
+            <p th:if="${#fields.hasErrors('fone')}" th:errorclass="error" th:errors="*{fone}" ></p>
             
             <label for="curso"> Curso: </label>
             <select th:field="*{curso.id}" id="curso" class="form-select mb-2">

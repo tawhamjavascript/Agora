@@ -1,8 +1,8 @@
 package br.edu.ifpb.agora.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,11 +25,11 @@ public class Processo {
     private byte[] parecer;
 
     @NotBlank(message="Campo obrigatório!")
-    @Max(500)
+    @Size(max = 500)
     private String textoRelator;
 
     @NotBlank(message="Campo obrigatório!")
-    @Max(500)
+    @Size(max = 500)
     private String textoAluno;
 
     @Enumerated(EnumType.STRING)
