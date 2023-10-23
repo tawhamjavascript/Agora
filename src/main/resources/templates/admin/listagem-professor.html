@@ -44,7 +44,7 @@
                 <td th:text="${prof.nome}"> </td>
                 <td th:text="${prof.coordenador ? 'Sim' : 'Não'}"> </td>
                 <td>
-                  <a th:href="'professor/' + ${prof.id}" >
+                  <a th:href="@{professor/{id}(id=${prof.id})}">
                     <img th:src="@{/images/pencil-square.svg}">
                   </a>
                 </td>

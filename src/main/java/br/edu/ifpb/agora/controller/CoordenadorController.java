@@ -47,8 +47,8 @@ public class CoordenadorController {
         return modelAndView;
     }
 
-    @PostMapping("/processo/consultar")
-    public ModelAndView processosConsultar(String filtro, ModelAndView modelAndView, HttpSession session) {
+    @GetMapping("/processo/consultar")
+    public ModelAndView processosConsultar(@RequestParam(name = "filtro") String filtro, ModelAndView modelAndView, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         modelAndView.setViewName("coordenador/listagem-processos");
         modelAndView.addObject("processos", coordenadorService.filtro(usuario.getCurso().getId(), filtro));
