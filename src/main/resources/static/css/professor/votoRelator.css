@@ -1,0 +1,44 @@
+body {
+    font-family: 'Sunflower', sans-serif;
+    background-color: #F1F1F1;
+    color: #10428C;
+}
+
+.header {
+    background-color: #10428C;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.header .icon {
+    font-size: 24px;
+    float: left;
+    margin-right: 20px;
+}
+
+.vote-form {
+    text-align: center;
+    margin: 20px;
+}
+
+.vote-radio {
+    margin: 10px;
+}
+
+textarea {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+button {
+    background: linear-gradient(to right, #50D5FF, #2F64CC);
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

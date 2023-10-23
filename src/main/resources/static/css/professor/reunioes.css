@@ -45,7 +45,6 @@ select, button {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
-=======
     font-family: Arial, sans-serif;
 }
 
@@ -93,13 +92,11 @@ th, td {
 th {
     background-color: #10428C;
     color: white;
-=======
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-th,
-td {
+th, td {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: left;
