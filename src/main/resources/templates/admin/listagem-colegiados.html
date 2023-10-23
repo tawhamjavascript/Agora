@@ -41,7 +41,7 @@
                 <th th:text="${cole.portaria}">3121213213</th>
                 <td th:text="${cole.curso.nome}">Sistemas para Internet</td>
                 <td>
-                  <a th:href="'colegiado/' + ${cole.id}">
+                  <a th:href="@{colegiado/{id}(id = ${cole.id})}">
                     <img th:src="@{/images/pencil-square.svg}">
                   </a>
                 </td>

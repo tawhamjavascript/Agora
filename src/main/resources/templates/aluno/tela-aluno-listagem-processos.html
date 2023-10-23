@@ -17,13 +17,13 @@
 
   <div class="container">
     <div id="sidebar">
-      <a th:href="@{processo/cadastrar}">Novo Processo</a>
-      <a th:href="@{processo}">Listar processos</a>
+      <a th:href="@{cadastrar}">Novo Processo</a>
+      <a th:href="@{/aluno/processo}">Listar processos</a>
       <a th:href="@{/auth/logout}">Logout</a>
     </div>
 
     <div id="main">
-      <form method="post" th:action="@{/aluno/processo/consultar}">
+      <form method="get" th:action="@{/aluno/processo/consultar}">
 
         <div id="search-input">
           <select name="filtro" id="select-table">

@@ -20,12 +20,11 @@
   <div class="container">
     <div id="sidebar">
 <!--      <a href="#">Criar Sessão</a>-->
-      <a th:href="@{coordenador/processo}">Listar Processos</a>
-      <a th:href="@{coordenador/relator}">Adicionar relator a processo</a>
+      <a th:href="@{/coordenador/processo}"> Listar Processos </a>
       <a th:href="@{/auth/logout}">Sair</a>
     </div>
 
-    <form method="post" th:action="@{/coordenador/processo/consultar}">
+    <form method="get" th:action="@{/coordenador/processo/consultar}">
       <label for="filtro">Filtrar por:</label>
       <select class="form-select" name="filtro" id="filtro">
         <optgroup label="Status processo">
