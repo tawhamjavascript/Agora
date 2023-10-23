@@ -16,22 +16,20 @@
 <body>
     <div class="header">
         <div class="icon">
-            <a href="home.html">&#9665; </a>
+            <a th:href="@{/professor/home}">&#9665; </a>
         </div>
         <h1>Reuniões</h1>
     </div>
 
-    <div class="container username">
-        <p>[username do professor]</p>
-    </div>
+
 
 
 
     <div class="container centro">
-        <form class="filter-form" method="post" th:action="@{professor/reunioes/filtro}">
+        <form class="filter-form" method="post" th:action="@{/professor/reunioes/filtro}">
             <label for="status-filter">Filtrar por status:</label>
 
-            <select id="status-filter" name="status">
+            <select id="status-filter" name="filtro">
                 <option th:each="status : ${statusItens}" th:value="${status}" th:text="${status.getStatus()}"> </option>
 
             </select>
@@ -42,13 +40,13 @@
             <thead>
                 <tr>
                     <th>Data</th>
-                    <th>#Processos</th>
+                    <th>Processos</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="reuniao : ${reunioes}">
-                    <td th:text="${reuniao.getDataReuniao()}"></td>
+                    <td th:text="${#dates.format(reuniao.getDataReuniao(), 'dd-MMM-yyyy')}"></td>
                     <td th:text="${reuniao.getProcessos().size()}"></td>
                     <td th:text="${reuniao.getStatus()}"></td>
                 </tr>
