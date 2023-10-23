@@ -54,7 +54,7 @@ public class AuthService {
         Professor professor = professorRepository.findByMatricula(matricula);
         if (professor != null && PasswordUtil.checkPass(senha, professor.getSenha())) {
             Map<Usuario, String> result =  new HashMap<>();
-            result.put(professor, "/professor/processo");
+            result.put(professor, "/professor/home");
             return result;
         }
         else {

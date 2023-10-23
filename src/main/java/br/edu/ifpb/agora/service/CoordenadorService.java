@@ -78,6 +78,7 @@ public class CoordenadorService {
         Processo processoBD = processoRepository.findById(processo.getId()).get();
         processoBD.setRelator(processo.getRelator());
         processoBD.setStatus(StatusEnum.DISTRIBUIDO);
+        processoBD.setDataDistribuicao(new Date());
         processoRepository.save(processoBD);
     }
 
