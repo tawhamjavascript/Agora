@@ -177,7 +177,7 @@ public class AdminController {
     public ModelAndView saveProfessor(@Valid Professor professor, BindingResult result, ModelAndView mav) {
         if (result.hasErrors()){
             mav.setViewName("admin/cadastro-professor");
-            mav.addObject("aluno", professor);
+            mav.addObject("professor", professor);
             return mav;
         }
         adminService.registerTeacher(professor);
