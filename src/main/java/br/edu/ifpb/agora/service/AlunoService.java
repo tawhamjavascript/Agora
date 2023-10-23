@@ -23,11 +23,11 @@ public class AlunoService {
     private ProcessoRepository processoRepository;
 
     @Transactional
-    public void cadastraNovoProcesso(Processo processo){
+    public void cadastraNovoProcesso(Long id, Processo processo){
         processo.setNumero("" + System.currentTimeMillis());
         Date dataRecepcao = new Date();
 
-        Aluno aluno = alunoRepository.findById(52L).get();
+        Aluno aluno = alunoRepository.findById(id).get();
         aluno.addProcesso(processo);
 
         processo.setStatus(StatusEnum.CRIADO);
@@ -36,59 +36,61 @@ public class AlunoService {
 
         processo.setInteressado(aluno);
 
+        processo.setCurso(aluno.getCurso());
+
         processo.setDataRecepcao(dataRecepcao);
         processoRepository.save(processo);
     }
 
-    public List<Processo> consultaProcessos(){
-        return processoRepository.findAllByInteressadoId(52L);
+    public List<Processo> consultaProcessos(Long id){
+        return processoRepository.findAllByInteressadoId(id);
     }
 
 
-    public List<Processo> filtrarProcesso(String filtro, String order) {
+    public List<Processo> filtrarProcesso(Long id, String filtro, String order) {
         try {
             Long assuntoId = Long.parseLong(filtro);
             if (order == null) {
-                return consultaProcessosPorAssunto(assuntoId);
+                return consultaProcessosPorAssunto(id, assuntoId);
             }
             else {
-                return consultarProcessosPorAssuntoOrdenados(assuntoId);
+                return consultarProcessosPorAssuntoOrdenados(id, assuntoId);
             }
 
         } catch (NumberFormatException e) {
             StatusEnum filtroEnum = StatusEnum.valueOf(filtro);
             if (order == null) {
-                return consultaProcessosPorStatus(filtroEnum);
+                return consultaProcessosPorStatus(id, filtroEnum);
             }
             else {
-                return consultarProcessosPorStatusOrdenados(filtroEnum);
+                return consultarProcessosPorStatusOrdenados(id, filtroEnum);
             }
         }
     }
 
-    public List<Processo> consultaProcessosPorAssunto(Long id){
-        return processoRepository.findAllByInteressadoIdAndAssuntoId(52L, id);
+    public List<Processo> consultaProcessosPorAssunto(Long idAluno, Long id){
+        return processoRepository.findAllByInteressadoIdAndAssuntoId(idAluno, id);
     }
 
-    public List<Processo> consultaProcessosPorStatus(StatusEnum status) {
-        return processoRepository.findAllByInteressadoIdAndStatus(52L, status);
-
-    }
-
-    public List<Processo> consultarProcessosPorAssuntoOrdenados(Long id){
-        return processoRepository.findAllByInteressadoIdAndAssuntoIdOrderByDataRecepcaoDesc(52L, id);
+    public List<Processo> consultaProcessosPorStatus(Long id, StatusEnum status) {
+        return processoRepository.findAllByInteressadoIdAndStatus(id, status);
 
     }
 
-    public List<Processo> consultarProcessosPorStatusOrdenados(StatusEnum status){
-        return processoRepository.findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(52L, status);
+    public List<Processo> consultarProcessosPorAssuntoOrdenados(Long idAluno, Long id){
+        return processoRepository.findAllByInteressadoIdAndAssuntoIdOrderByDataRecepcaoDesc(idAluno, id);
+
+    }
+
+    public List<Processo> consultarProcessosPorStatusOrdenados(Long id, StatusEnum status){
+        return processoRepository.findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(id, status);
 
 
 
     }
 
     public List<Processo> consultarProcessosOrdenados(Aluno aluno){
-        return processoRepository.findAllByInteressadoIdOrderByDataRecepcaoDesc(52L);
+        return processoRepository.findAllByInteressadoIdOrderByDataRecepcaoDesc(6L);
     }
 
     @Transactional

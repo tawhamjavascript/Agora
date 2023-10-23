@@ -27,39 +27,34 @@ public class ProfessorService {
     @Autowired
     private ReuniaoRepository reuniaoRepository;
 
-    public List<Processo> listarProcessosDesignados(Professor professor){
+    public List<Processo> listarProcessosDesignados(Usuario professor){
         return processoRepository.findAllByRelatorId(professor.getId());
     }
 
-    public void votar(Voto voto) {
-        votoRepository.save(voto);
-    }
-
-    public boolean login(Professor professor) {
-        Professor professorBD = professorRepository.findByMatricula(professor.getMatricula());
-        boolean valido = false;
-
-        if(professorBD != null) {
-            if (professor.getSenha().equals(professorBD.getSenha())) {
-                valido = true;
-            }
-        }
-        return valido;
+    @Transactional
+    public void votar(Processo processo) {
+        Processo processpBD = processoRepository.findById(processo.getId()).get();
+        processpBD.setTipoDecisao(processo.getTipoDecisao());
+        processpBD.setTextoRelator(processo.getTextoRelator());
+        processoRepository.save(processpBD);
 
     }
 
-    public List<Reuniao> listarReunioes() {
-        return reuniaoRepository.AllReunioesByProfessorAndColegiado(1L);
+
+    public List<Reuniao> listarReunioes(Usuario professor) {
+        return reuniaoRepository.AllReunioesByProfessorAndColegiado(professor.getId());
 
     }
 
-    public List<Reuniao> listarReunioesByStatus(StatusReuniao status) {
-        return reuniaoRepository.AllReunioesByProfessorAndColegiadoAndStatus(1L, status);
+    public List<Reuniao> listarReunioesByStatus(Usuario professor, StatusReuniao status) {
+        return reuniaoRepository.AllReunioesByProfessorAndColegiadoAndStatus(professor.getId(), status);
     }
 
-    public List<Processo> listarProcessosDesignados() {
-        return processoRepository.findAllByRelatorId(1L);
+
+    public Processo buscarProcesso(Long id) {
+        return processoRepository.findById(id).get();
     }
+
 
     @Transactional
     public void votar(Long id, String voto, String justificativa) {

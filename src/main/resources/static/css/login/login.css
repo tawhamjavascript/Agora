@@ -1,0 +1,41 @@
+html, body {
+  color: #0D4085; 
+}
+
+#login-container {
+  width: 40rem;
+  height: 30rem;
+
+  margin: auto;
+}
+
+#login-container h2 {
+  margin-left: 40%;
+}
+
+.radio-group {
+  margin-top: .5rem; 
+}
+
+#login-container input {
+  margin-left: .3rem; 
+}
+
+#login-container button {
+  background: linear-gradient(90deg, #50D5FF 0%, #2F64CC 100%);
+  color: white;
+  width: 15rem;
+  height: 2.5rem;
+  border-radius: 30px;
+  border-style: none;
+
+  font-size: larger;
+  font-weight: bold;
+
+  margin-top: 1.3rem;
+  margin-left: 30%;
+}
+
+.more-left {
+  margin-left: .5rem;
+}

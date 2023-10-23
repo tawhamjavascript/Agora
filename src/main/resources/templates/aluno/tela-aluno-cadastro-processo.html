@@ -12,14 +12,14 @@
   <div id="cabecalho">
     <div></div>
     <div><h3>PESSOAL</h3></div>
-    <div id="nome-aluno"> <h3>Username </h3></div>
+    <div id="nome-aluno"> <h3 th:text="${session.usuario.nome}"> </h3></div>
   </div>
 
   <div class="container">
     <div id="sidebar">
       <a th:href="@{/aluno/processo/cadastrar}"> Novo Processo </a>
       <a th:href="@{/aluno/processo}"> Listar processos </a>
-      <a href="#">Sair</a>
+      <a th:href="@{/auth/logout}">Logout</a>
     </div>
     <div id="main">
       <h2> Salvar processo </h2>

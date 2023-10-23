@@ -23,7 +23,7 @@
     <div id="sidebar">
         <a th:href="@{/admin/aluno/cadastro}">Incluir Novo</a>
         <a th:href="@{/admin/aluno}">Listar Alunos</a>
-        <a th:href="@{/admin/home}">Sair</a>
+        <a th:href="@{/admin/home}">Home</a>
     </div>
 
     <div id="main">
@@ -58,7 +58,8 @@
           
           
             <label for="senha">Senha:</label>
-            <input type="password" id="senha" th:field="*{senha}" class="form-control"></input>
+
+            <input type="password" id="senha" th:field="*{senha}" class="form-control"/>
             <p th:if="${#fields.hasErrors('senha')}" th:errorclass="error" th:errors="*{senha}" ></p>
           
           <button type="submit" class="button-style">Salvar</button>
