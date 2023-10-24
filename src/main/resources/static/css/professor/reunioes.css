@@ -17,6 +17,15 @@ body {
     margin-right: 20px;
 }
 
+#logout-button {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    filter: invert(100%);
+ 
+ }
+
+
 .username {
     text-align: center;
     font-weight: bold;
