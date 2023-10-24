@@ -44,16 +44,10 @@ html, body {
 }
 
 #top-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  text-align: center;
 
   width: 100%;
 }
-
-#top-container h1 {
-  margin-left: 10rem;
-} 
 
 #main-container {
   display: flex;
