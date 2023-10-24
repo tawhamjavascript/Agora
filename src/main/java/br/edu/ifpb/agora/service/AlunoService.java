@@ -48,6 +48,10 @@ public class AlunoService {
 
 
     public List<Processo> filtrarProcesso(Long id, String filtro, String order) {
+        if (filtro.isBlank()) {
+            return consultaProcessos(id);
+
+        }
         try {
             Long assuntoId = Long.parseLong(filtro);
             if (order.isBlank()) {

@@ -64,7 +64,7 @@ public class AlunoController {
     }
 
     @GetMapping("/processo/consultar")
-    public ModelAndView filtrarProcesso(@RequestParam(name = "filtro") String filtro, @RequestParam(name = "order", defaultValue = "") String order, ModelAndView modelAndView, HttpSession session) {
+    public ModelAndView filtrarProcesso(@RequestParam(name = "filtro", defaultValue = "") String filtro, @RequestParam(name = "order", defaultValue = "") String order, ModelAndView modelAndView, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         modelAndView.addObject("processos", alunoService.filtrarProcesso(usuario.getId(), filtro, order));
         modelAndView.setViewName("/aluno/tela-aluno-listagem-processos");

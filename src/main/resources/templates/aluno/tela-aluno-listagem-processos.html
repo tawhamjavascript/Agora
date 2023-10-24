@@ -17,7 +17,7 @@
 
   <div class="container">
     <div id="sidebar">
-      <a th:href="@{cadastrar}">Novo Processo</a>
+      <a th:href="@{/aluno/processo/cadastrar}">Novo Processo</a>
       <a th:href="@{/aluno/processo}">Listar processos</a>
       <a th:href="@{/auth/logout}">Logout</a>
     </div>
@@ -35,6 +35,10 @@
             <optgroup label="Assunto do processo">
                 <option th:each="assunto : ${assuntoItens}" th:value="${assunto.id}" th:text="${assunto.nome}">
                 </option>
+            </optgroup>
+
+            <optgroup label="Sem filtro">
+              <option value=""> Sem fiiltro </option>
             </optgroup>
           </select>
 

@@ -36,7 +36,10 @@
                     <td th:text="${processo.numero}"></td>
                     <td th:text="${processo.assunto.nome}"></td>
                     <td th:text="${processo.status.getStatus()}"></td>
-                    <td><a href="" target="_blank">Ver Documento</a></td>
+                    <td th:if="${processo.anexos.size() == 0}" > Sem documentos </td>
+                    <td th:unless="${processo.anexos.size() == 0}">
+                        <a href="#">Ver Documento</a>
+                    </td>
                     <td th:if="${processo.decisaoRelator == null}">
                         <a th:href="@{/professor/processo/{id}(id=${processo.id})}">Votar</a>
                     </td>
@@ -47,5 +50,4 @@
         </table>
     </div>
 </body>
-
 </html>

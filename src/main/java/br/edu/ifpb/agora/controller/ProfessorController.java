@@ -47,7 +47,6 @@ public class ProfessorController {
 
     @GetMapping("/reunioes/filtro")
     public ModelAndView reunioesByStatus(@RequestParam(name = "filtro") StatusReuniao filtro, HttpSession session, ModelAndView mav) {
-        System.out.println(filtro.getStatus());
         Usuario professor = (Usuario) session.getAttribute("usuario");
         mav.setViewName("redirect:/professor/reunioes");
         mav.addObject("reunioes", professorService.listarReunioesByStatus(professor, filtro));

@@ -21,16 +21,16 @@
         <h1>Reuniões</h1>
     </div>
 
-
-
-
-
     <div class="container centro">
         <form class="filter-form" method="get" th:action="@{/professor/reunioes/filtro}">
             <label for="status-filter">Filtrar por status:</label>
 
+
             <select id="status-filter" name="filtro">
-                <option th:each="status : ${statusItens}" th:value="${status}" th:text="${status.getStatus()}"> </option>
+                <optgroup label="Status processo">
+                    <option th:each="status : ${statusItens}" th:value="${status}" th:text="${status.getStatus()}"> </option>
+                </optgroup>
+
 
             </select>
             <button type="submit">Filtrar</button>

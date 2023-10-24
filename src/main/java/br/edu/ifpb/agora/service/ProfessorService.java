@@ -47,6 +47,9 @@ public class ProfessorService {
     }
 
     public List<Reuniao> listarReunioesByStatus(Usuario professor, StatusReuniao status) {
+        if (status.equals(StatusReuniao.SEM_FILTRO)) {
+            return listarReunioes(professor);
+        }
         return reuniaoRepository.AllReunioesByProfessorAndColegiadoAndStatus(professor.getId(), status);
     }
 

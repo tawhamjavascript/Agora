@@ -50,6 +50,11 @@ public class CoordenadorService {
     }
 
     public List<Processo> filtro(Long cursoId, String filtro){
+        if (filtro.isBlank()) {
+            return processoRepository.findAllByCursoId(cursoId);
+
+
+        }
         try {
             Long usuarioId = Long.parseLong(filtro);
 

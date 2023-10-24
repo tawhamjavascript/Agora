@@ -23,13 +23,11 @@
         <p>Bem-vindo, <span th:text="${session.usuario.nome}"></span></p>
     </div>
 
-    <div class="username">
-        <p><span th:text="${usernameDoProfessor}"></span></p>
-    </div>
 
     <div class="conteudo">
         <a class="button" href="processos.html" th:href="@{/professor/processos}">Processos</a>
         <a class="button" href="reunioes.html" th:href="@{/professor/reunioes}">Reuniões</a>
+        <a class="button" th:href="@{/auth/logout}">Logout</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>

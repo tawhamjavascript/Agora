@@ -39,6 +39,10 @@
           <option th:each="relator : ${relatorItens}" th:value="${relator.id}" th:text="${relator.nome}"> </option>
         </optgroup>
 
+        <optgroup label="Sem filtro">
+          <option value=""> Sem filtro </option>
+        </optgroup>
+
       </select>
 
       <input type="submit" value="submit"/>
