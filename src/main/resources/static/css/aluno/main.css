@@ -60,3 +60,7 @@ html, body {
   
   gap: 1rem;
 }
+
+.error {
+  color: red;
+}

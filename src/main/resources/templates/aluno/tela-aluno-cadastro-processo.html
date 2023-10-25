@@ -33,7 +33,7 @@
         
           <label for="descricao-input" class="form-label">Descrição:</label>
           <input type="text" class="form-control" th:field="*{textoAluno}" id="descricao-input">
-          <p th:if="${#fields.hasErrors('textoAluno')}" th:errorclass="error" th:errors="*{textoAluno}" ></p>
+          <p th:if="${#fields.hasErrors('textoAluno')}" th:errorclass="error" th:errors="*{textoAluno}"></p>
         
           <label for="arquivos" class="form-label">Arquivos:</label>
           <input class="form-control" th:field="*{anexos}" type="file" id="arquivos" multiple>
