@@ -1,3 +1,36 @@
+#main {
+  width: 50%;
+}
+
+#main form {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+#filter-input {
+  background: linear-gradient(90deg, #50D5FF 0%, #2F64CC 100%);
+  color: white;
+  width: 5rem;
+  height: 2rem;
+  border-radius: 8px;
+
+  font-size: medium;
+  font-weight: bold;
+}
+
+#select-table {
+  background: linear-gradient(90deg, #50D5FF 0%, #2F64CC 100%);
+  color: white;
+  width: 5rem;
+  height: 2rem;
+  border-radius: 8px;
+  border-style: none;
+
+  font-size: medium;
+  font-weight: bold;
+}
+
 #search-input {
   display: flex;
   align-items: center;
