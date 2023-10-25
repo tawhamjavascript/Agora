@@ -22,6 +22,14 @@ body {
     margin: 20px 0;
 }
 
+#logout-button {
+   position: absolute;
+   top: 15px;
+   right: 10px;
+   filter: invert(100%);
+
+}
+
 .button {
     background: linear-gradient(to right, #50D5FF, #2F64CC);
     color: white;

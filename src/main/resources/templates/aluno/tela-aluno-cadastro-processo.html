@@ -9,7 +9,7 @@
   <title>Tela Aluno</title>
 </head>
 <body>
-  <div id="cabecalho">
+   <div id="cabecalho"> 
     <div></div>
     <div><h3>PESSOAL</h3></div>
     <div id="nome-aluno"> <h3 th:text="${session.usuario.nome}"> </h3></div>
@@ -21,7 +21,7 @@
       <a th:href="@{/aluno/processo}"> Listar processos </a>
       <a th:href="@{/auth/logout}">Logout</a>
     </div>
-    <div id="main">
+    <div id="main"> 
       <h2> Salvar processo </h2>
       <form id="form-container" th:action="@{/aluno/processo/cadastrar}" method="post" th:object="${processo}">
         
@@ -33,6 +33,7 @@
         
           <label for="descricao-input" class="form-label">Descrição:</label>
           <input type="text" class="form-control" th:field="*{textoAluno}" id="descricao-input">
+          <p th:if="${#fields.hasErrors('textoAluno')}" th:errorclass="error" th:errors="*{textoAluno}" ></p>
         
           <label for="arquivos" class="form-label">Arquivos:</label>
           <input class="form-control" th:field="*{anexos}" type="file" id="arquivos" multiple>

@@ -1,6 +1,8 @@
 package br.edu.ifpb.agora.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,8 +23,13 @@ public class Processo {
     private Date dataDistribuicao;
     private Date dataParecer;
     private byte[] parecer;
+
+
+    @Size(min = 0, max = 500, message = "O texto deve ter no máximo 500 caracteres")
     private String textoRelator;
 
+    @NotBlank(message = "O texto não pode ser vazio")
+    @Size(min = 6, max = 500, message = "O texto deve ter entre 6 e 500 caracteres")
     private String textoAluno;
 
     @Enumerated(EnumType.STRING)

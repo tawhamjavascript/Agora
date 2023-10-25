@@ -36,8 +36,16 @@ public class AdminService {
 
             }
         }
-        if(professor.getId() != null && professor.getSenha().isEmpty()) {
-            professor.setSenha(professorRepository.findById(professor.getId()).get().getSenha());
+        if(professor.getId() != null) {
+            Professor professorBD = professorRepository.findById(professor.getId()).get();
+
+            if (PasswordUtil.checkPass(professor.getSenha(), professorBD.getSenha())) {
+                professor.setSenha(professorBD.getSenha());
+
+            } else {
+                professor.setSenha(PasswordUtil.hashPassword(professor.getSenha()));
+            }
+
         } else {
             professor.setSenha(PasswordUtil.hashPassword(professor.getSenha()));
         }
@@ -79,8 +87,16 @@ public class AdminService {
     @Transactional
     public void registerStudent(Aluno aluno) {
         aluno.setAdmin(false);
-        if (aluno.getId() != null && aluno.getSenha().isEmpty()) {
-            aluno.setSenha(alunoRepository.findById(aluno.getId()).get().getSenha());
+        if (aluno.getId() != null) {
+            Aluno alunoBD = alunoRepository.findById(aluno.getId()).get();
+
+            if (PasswordUtil.checkPass(aluno.getSenha(), alunoBD.getSenha())) {
+                aluno.setSenha(alunoBD.getSenha());
+
+            } else {
+                aluno.setSenha(PasswordUtil.hashPassword(aluno.getSenha()));
+            }
+
         } else {
             aluno.setSenha(PasswordUtil.hashPassword(aluno.getSenha()));
         }

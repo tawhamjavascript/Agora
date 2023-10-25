@@ -36,6 +36,7 @@
           
           <label for="titulo">Título:</label>
           <input type="text" id="titulo" th:field="*{nome}" class="form-control"/>
+          <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}" ></p>
 
           <button type="submit" class="button-style"> Salvar </button>
         </form>

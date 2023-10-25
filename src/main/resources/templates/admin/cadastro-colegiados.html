@@ -36,26 +36,28 @@
 
             <label for="datainicio">Data de início:</label>
             <input type="date" id="datainicio" th:field="*{dataInicio}" class="form-control"/>
+            <p th:if="${#fields.hasErrors('dataInicio')}" th:errorclass="error" th:errors="*{dataInicio}" ></p>
           
           
             <label for="datafim">Data de fim:</label>
             <input type="date" id="datafim" th:field="*{dataFim}" class="form-control"/>
+            <p th:if="${#fields.hasErrors('dataFim')}" th:errorclass="error" th:errors="*{dataFim}" ></p>
           
           
             <label for="descricao">Descrição:</label>
             <input type="text" id="descricao" th:field="*{descricao}" class="form-control"/>
-          
+            <p th:if="${#fields.hasErrors('descricao')}" th:errorclass="error" th:errors="*{descricao}" ></p>
           
             <label for="portaria">Portaria:</label>
             <input type="text" id="portaria" th:field="*{portaria}" class="form-control"/>
-          
+            <p th:if="${#fields.hasErrors('portaria')}" th:errorclass="error" th:errors="*{portaria}" ></p>
           
             <label for="curso"> Curso </label>
             <select th:field="*{curso.id}" id="curso" class="form-select mb-2">
                 <option th:each="curso : ${cursoItems}" th:value="${curso.id}" th:text="${curso.nome}" />
 
             </select>
-            <table class="table" id="tabela" th:if="${colegiado.id != null && colegiado.membros.size() > 0}">
+            <table class="table" id="tabela" th:if="${colegiado.id != null && colegiado.membros != null && colegiado.membros.size() > 0}">
                 <thead>
                     <tr>
                         <th scope="col">nome do professor </th>

@@ -68,6 +68,14 @@ tr:nth-child(odd) {
     background-color: #D9D9D9;
 }
 
+#logout-button {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    filter: invert(100%);
+ 
+ }
+
 a {
     color: #10428C;
     text-decoration: none;

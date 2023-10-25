@@ -14,22 +14,24 @@
 
   <div id="login-container">
     <h2>Login</h2>
+    <p th:if="${mensagem != ''}" class="error-message" th:text="${mensagem}"> </p>
+
     <form th:action="@{auth}" method="post">
       <label for="matricula">Matrícula:</label>
-      <input type="text" name="matricula" class="form-control" id="matricula">
+      <input type="text" name="matricula" class="form-control" id="matricula" required>
 
       <label for="senha">Senha:</label>
-      <input type="password" name="senha" class="form-control" id="senha">
+      <input type="password" name="senha" class="form-control" id="senha" required>
 
       <label for="professor" class="form-check-label radio-group">Professor:</label>
-      <input type="radio" id="professor" class="radio-group" name="usuario" value="professor">
+      <input type="radio" id="professor" class="radio-group" name="usuario" value="professor" required>
 
       <label for="aluno" class="form-check-label radio-group more-left">Aluno:</label>
-      <input type="radio" id="aluno" name="usuario" class="radio-group" value="aluno">
+      <input type="radio" id="aluno" name="usuario" class="radio-group" value="aluno" required>
       
 
       <label for="coordenador" class="form-check-label radio-group more-left">Coordenador:</label>
-      <input type="radio" id="coordenador" name="usuario" class="radio-group" value="coordenador"> <br>
+      <input type="radio" id="coordenador" name="usuario" class="radio-group" value="coordenador" required> <br>
 
 
       <button type="submit" id="send-button">Enviar</button>

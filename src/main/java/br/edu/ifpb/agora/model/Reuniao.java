@@ -1,6 +1,7 @@
 package br.edu.ifpb.agora.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,8 @@ public class Reuniao {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @FutureOrPresent(message = "A data da reunião deve ser no presente ou no futuro")
     private Date dataReuniao;
 
     @Enumerated(EnumType.ORDINAL)

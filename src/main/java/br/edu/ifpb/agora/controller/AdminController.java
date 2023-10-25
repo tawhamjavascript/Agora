@@ -3,11 +3,12 @@ package br.edu.ifpb.agora.controller;
 import br.edu.ifpb.agora.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.edu.ifpb.agora.service.AdminService;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -46,8 +47,14 @@ public class AdminController {
         mav.addObject("curso", adminService.getCourse(id));
         return mav;
     }
+    
     @PostMapping("/curso")
-    public ModelAndView saveCurso(Curso curso, ModelAndView mav) {
+    public ModelAndView saveCurso(@Valid Curso curso, BindingResult result, ModelAndView mav) {
+        if (result.hasErrors()){
+            mav.addObject("curso", curso);
+            mav.setViewName("/admin/cadastro-curso");
+            return mav;
+        }
         adminService.addCourse(curso);
         mav.setViewName("redirect:/admin/curso");
         mav.addObject("cursos", adminService.allCourses());
@@ -63,36 +70,41 @@ public class AdminController {
     }
 
 
-    @GetMapping("assunto")
+    @GetMapping("/assunto")
     public ModelAndView getAssuntos(ModelAndView mav) {
         mav.setViewName("admin/listagem-assunto-processo-reuniao");
         mav.addObject("assuntos", adminService.allSubjects());
         return mav;
     }
 
-    @GetMapping("assunto/cadastro")
+    @GetMapping("/assunto/cadastro")
     public ModelAndView getCadastroAssunto(ModelAndView mav) {
         mav.setViewName("admin/cadastro-assunto-processo-reuniao");
         mav.addObject("assunto", new Assunto());
         return mav;
     }
 
-    @PostMapping("assunto")
-    public ModelAndView saveAssunto(Assunto assunto, ModelAndView mav) {
+    @PostMapping("/assunto")
+    public ModelAndView saveAssunto(@Valid Assunto assunto, BindingResult result, ModelAndView mav) {
+        if (result.hasErrors()){
+            mav.setViewName("admin/cadastro-assunto-processo-reuniao");
+            mav.addObject("assunto", assunto);
+            return mav;
+        }
         adminService.registerSubject(assunto);
         mav.setViewName("redirect:/admin/assunto");
         mav.addObject("assuntos", adminService.allSubjects());
         return mav;
     }
 
-    @GetMapping("assunto/{id}")
+    @GetMapping("/assunto/{id}")
     public ModelAndView editAssunto(@PathVariable(value = "id") Long id, ModelAndView mav) {
         mav.setViewName("admin/cadastro-assunto-processo-reuniao");
         mav.addObject("assunto", adminService.getSubject(id));
         return mav;
     }
 
-    @DeleteMapping("assunto/{id}")
+    @DeleteMapping("/assunto/{id}")
     public ModelAndView deleteAssunto(@PathVariable(value = "id") Long id, ModelAndView mav) {
         adminService.removeSubject(id);
         mav.setViewName("redirect:/admin/assunto");
@@ -105,36 +117,41 @@ public class AdminController {
         return adminService.allCourses();
     }
 
-    @GetMapping("aluno")
+    @GetMapping("/aluno")
     public ModelAndView getAlunos(ModelAndView mav) {
         mav.setViewName("admin/listagem-aluno");
         mav.addObject("alunos", adminService.allStudent());
         return mav;
     }
 
-    @GetMapping("aluno/cadastro")
+    @GetMapping("/aluno/cadastro")
     public ModelAndView getCadastroAluno(ModelAndView mav) {
         mav.setViewName("admin/cadastrar-aluno");
         mav.addObject("aluno", new Aluno());
         return mav;
     }
 
-    @PostMapping("aluno")
-    public ModelAndView saveAluno(Aluno aluno, ModelAndView mav) {
+    @PostMapping("/aluno")
+    public ModelAndView saveAluno(@Valid Aluno aluno, BindingResult result, ModelAndView mav) {
+        if (result.hasErrors()){
+            mav.setViewName("admin/cadastrar-aluno");
+            mav.addObject("aluno", aluno);
+            return mav;
+        }
         adminService.registerStudent(aluno);
         mav.setViewName("redirect:/admin/aluno");
         mav.addObject("alunos", adminService.allStudent());
         return mav;
     }
 
-    @GetMapping("aluno/{id}")
+    @GetMapping("/aluno/{id}")
     public ModelAndView editAluno(@PathVariable(value = "id") Long id, ModelAndView mav) {
         mav.setViewName("admin/cadastrar-aluno");
         mav.addObject("aluno", adminService.getStudent(id));
         return mav;
     }
 
-    @DeleteMapping("aluno/{id}")
+    @DeleteMapping("/aluno/{id}")
     public ModelAndView deleteAluno(@PathVariable(value = "id") Long id, ModelAndView mav) {
         adminService.removeStudent(id);
         mav.setViewName("redirect:/admin/aluno");
@@ -142,36 +159,41 @@ public class AdminController {
         return mav;
     }
 
-    @GetMapping("professor")
+    @GetMapping("/professor")
     public ModelAndView getProfessores(ModelAndView mav) {
         mav.setViewName("admin/listagem-professor");
         mav.addObject("professores", adminService.allTeachers());
         return mav;
     }
 
-    @GetMapping("professor/cadastro")
+    @GetMapping("/professor/cadastro")
     public ModelAndView getCadastroProfessor(ModelAndView mav) {
         mav.setViewName("admin/cadastro-professor");
         mav.addObject("professor", new Professor());
         return mav;
     }
 
-    @PostMapping("professor")
-    public ModelAndView saveProfessor(Professor professor, ModelAndView mav) {
+    @PostMapping("/professor")
+    public ModelAndView saveProfessor(@Valid Professor professor, BindingResult result, ModelAndView mav) {
+        if (result.hasErrors()){
+            mav.setViewName("admin/cadastro-professor");
+            mav.addObject("professor", professor);
+            return mav;
+        }
         adminService.registerTeacher(professor);
         mav.setViewName("redirect:/admin/professor");
         mav.addObject("professores", adminService.allTeachers());
         return mav;
     }
 
-    @GetMapping("professor/{id}")
+    @GetMapping("/professor/{id}")
     public ModelAndView editProfessor(@PathVariable(value = "id") Long id, ModelAndView mav) {
         mav.setViewName("admin/cadastro-professor");
         mav.addObject("professor", adminService.getTeacher(id));
         return mav;
     }
 
-    @DeleteMapping("professor/{id}")
+    @DeleteMapping("/professor/{id}")
     public ModelAndView deleteProfessor(@PathVariable(value = "id") Long id, ModelAndView mav) {
         adminService.removeTeacher(id);
         mav.setViewName("redirect:/admin/professor");
@@ -180,29 +202,36 @@ public class AdminController {
     }
 
 
-    @GetMapping("colegiado")
+    @GetMapping("/colegiado")
     public ModelAndView getColegiados(ModelAndView mav) {
         mav.setViewName("admin/listagem-colegiados");
         mav.addObject("colegiados", adminService.allColegiados());
         return mav;
     }
 
-    @GetMapping("colegiado/{id}")
+    @GetMapping("/colegiado/{id}")
     public ModelAndView editarColegiado(@PathVariable(value = "id") Long id, ModelAndView mav) {
         mav.setViewName("admin/cadastro-colegiados");
         mav.addObject("colegiado", adminService.getColegiado(id));
         return mav;
     }
 
-    @GetMapping("colegiado/cadastrar")
+    @GetMapping("/colegiado/cadastrar")
     public ModelAndView getCadastroColegiado(ModelAndView mav) {
         mav.setViewName("admin/cadastro-colegiados");
         mav.addObject("colegiado", new Colegiado());
         return mav;
     }
 
-    @PostMapping("colegiado")
-    public ModelAndView saveColegiado(Colegiado colegiado, ModelAndView mav) {
+    @PostMapping("/colegiado")
+    public ModelAndView saveColegiado(@Valid Colegiado colegiado, BindingResult result, ModelAndView mav) {
+        if (result.hasErrors()){
+            Colegiado colegiadoBD = adminService.getColegiado(colegiado.getId());
+            colegiado.setMembros(colegiadoBD.getMembros());
+            mav.setViewName("admin/cadastro-colegiados");
+            mav.addObject("colegiado",colegiado);
+            return mav;
+        }
         if (colegiado.getId() == null) {
             adminService.salvarColegiado(colegiado);
             mav.setViewName("redirect:/admin/colegiado/" + colegiado.getId() + "/membros");
@@ -215,7 +244,7 @@ public class AdminController {
         return mav;
 
     }
-    @GetMapping("colegiado/{id}/membros")
+    @GetMapping("/colegiado/{id}/membros")
     public ModelAndView getAddMembros(@PathVariable(value = "id") Long id, ModelAndView mav) {
         mav.setViewName("admin/adicionar-membro");
 
@@ -224,7 +253,7 @@ public class AdminController {
         return mav;
     }
 
-    @PostMapping("colegiado/membros")
+    @PostMapping("/colegiado/membros")
     public ModelAndView salvarMembro(Long idColegiado, Long idProfessor, ModelAndView mav) {
         adminService.adicionarMembro(idColegiado, idProfessor);
         mav.setViewName("redirect:/admin/colegiado/" + idColegiado + "/membros");
@@ -232,7 +261,7 @@ public class AdminController {
 
     }
 
-    @DeleteMapping("colegiado/{id}/membros/{idProfessor}")
+    @DeleteMapping("/colegiado/{id}/membros/{idProfessor}")
     public ModelAndView deletarMembro(@PathVariable(value = "id") Long idColegiado, @PathVariable(value = "idProfessor") Long idProfessor, ModelAndView mav) {
         adminService.deletarMembro(idColegiado, idProfessor);
         mav.setViewName("/admin/cadastro-colegiados");
