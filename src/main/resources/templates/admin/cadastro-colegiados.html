@@ -36,10 +36,12 @@
 
             <label for="datainicio">Data de início:</label>
             <input type="date" id="datainicio" th:field="*{dataInicio}" class="form-control"/>
+            <p th:if="${#fields.hasErrors('dataInicio')}" th:errorclass="error" th:errors="*{dataInicio}" ></p>
           
           
             <label for="datafim">Data de fim:</label>
             <input type="date" id="datafim" th:field="*{dataFim}" class="form-control"/>
+            <p th:if="${#fields.hasErrors('dataFim')}" th:errorclass="error" th:errors="*{dataFim}" ></p>
           
           
             <label for="descricao">Descrição:</label>
@@ -55,7 +57,7 @@
                 <option th:each="curso : ${cursoItems}" th:value="${curso.id}" th:text="${curso.nome}" />
 
             </select>
-            <table class="table" id="tabela" th:if="${colegiado.id != null && colegiado.membros.size() > 0}">
+            <table class="table" id="tabela" th:if="${colegiado.id != null && colegiado.membros != null && colegiado.membros.size() > 0}">
                 <thead>
                     <tr>
                         <th scope="col">nome do professor </th>

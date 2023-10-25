@@ -22,23 +22,23 @@ public class Usuario {
 
     @NotBlank(message="Campo obrigatório")
     @Size(min = 3, max = 40)
-    @Pattern(regexp = "[a-zA-ZÀ-ÖØ-öø-ÿ\s]+")
+    @Pattern(regexp = "[a-zA-ZÀ-ÖØ-öø-ÿ\s]+", message = "Nome inválido")
     private String nome;
 
     @NotBlank(message="Campo obrigatório")
-    @Pattern(regexp = "[0-9]{11}")
+    @Pattern(regexp = "[0-9]{11}" , message = "Telefone inválido")
     private String fone;
     
     @NotBlank(message="Campo obrigatório")
-    @Pattern(regexp = "[0-9]{11}")
+    @Pattern(regexp = "[0-9]{11}" , message = "Matrícula inválida")
     private String matricula;
     
     @NotBlank(message="Campo obrigatório")
-    @Email
+    @Email(message = "Email inválido")
     private String login;
 
     @NotBlank(message="Campo obrigatório")
-    @Size(min = 3, max = 60)
+    @Size(min = 3, max = 60, message = "Senha deve ter entre 3 e 60 caracteres")
     private String senha;
 
     private boolean admin;

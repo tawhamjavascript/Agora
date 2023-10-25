@@ -23,19 +23,20 @@ public class AuthController {
 
     @GetMapping
     public ModelAndView getForm(ModelAndView mav) {
+        mav.addObject("mensagem", "");
         mav.setViewName("login/login");
         return mav;
     }
 
     @PostMapping
     public ModelAndView login(String matricula, String senha, String usuario, ModelAndView mav,
-                              HttpSession session, RedirectAttributes redirectAttts) {
+                              HttpSession session) {
 
         Map<Usuario, String> usuarioBD = authService.login(matricula, senha, usuario);
 
         if (usuarioBD == null) {
-            mav.setViewName("redirect:/auth");
-            redirectAttts.addFlashAttribute("mensagem", "Usuário ou senha inválidos");
+            mav.setViewName("login/login");
+            mav.addObject("mensagem", "Usuário ou senha inválidos");
 
         } else {
             Usuario usuarioLogado = (Usuario) usuarioBD.keySet().toArray()[0];

@@ -24,12 +24,12 @@ public class Processo {
     private Date dataParecer;
     private byte[] parecer;
 
-    @NotBlank(message="Campo obrigatório!")
-    @Size(max = 500)
+
+    @Size(min = 0, max = 500, message = "O texto deve ter no máximo 500 caracteres")
     private String textoRelator;
 
-    @NotBlank(message="Campo obrigatório!")
-    @Size(max = 500)
+    @NotBlank(message = "O texto não pode ser vazio")
+    @Size(min = 6, max = 500, message = "O texto deve ter entre 6 e 500 caracteres")
     private String textoAluno;
 
     @Enumerated(EnumType.STRING)

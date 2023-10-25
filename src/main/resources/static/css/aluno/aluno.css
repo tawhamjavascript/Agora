@@ -34,3 +34,13 @@
 #novo-processo:visited {
   color: white;
 }
+
+.error-message {
+  color: #721c24; /* Cor de texto vermelha do Bootstrap */
+  background-color: #f8d7da; /* Cor de fundo vermelha clara do Bootstrap */
+  border: 1px solid #f5c6cb; /* Cor da borda do Bootstrap */
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px; /* Borda arredondada do Bootstrap */
+
+}

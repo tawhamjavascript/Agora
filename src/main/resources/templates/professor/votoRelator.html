@@ -26,15 +26,17 @@
         <input type="hidden" name="id" th:field="*{id}" />
 
         <label>
-            Deferido <input type="radio" th:value="${decisaoItens.get(0)}" class="vote-radio" th:field="*{decisaoRelator}" />
+            Deferido <input type="radio" th:value="${decisaoItens.get(0)}" class="vote-radio" th:field="*{decisaoRelator}" required />
         </label>
         <label>
             Indeferido <input type="radio" class="vote-radio" th:field="*{decisaoRelator}"
-                th:value="${decisaoItens.get(1)}" />
+                th:value="${decisaoItens.get(1)}" required />
         </label>
 
         <textarea name="justificativa" th:field="*{textoRelator}" th:value="${processo.textoRelator}"
-            placeholder="Digite sua justificativa"></textarea>
+            placeholder="Digite sua justificativa" maxlength="500"></textarea>
+
+
         <button type="submit"> Votar </button>
     </form>
 </body>

@@ -21,7 +21,7 @@ public class Assunto {
     private Long id;
 
     @NotBlank(message = "Campo Obrigatório!")
-    @Size(min=3, max = 40)
+    @Size(min=3, max = 40, message = "O nome deve ter entre 3 e 40 caracteres!")
     private String nome;
 
 

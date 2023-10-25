@@ -8,9 +8,11 @@ import br.edu.ifpb.agora.model.Usuario;
 import br.edu.ifpb.agora.repository.AssuntoRepository;
 import br.edu.ifpb.agora.service.AlunoService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -46,7 +48,13 @@ public class AlunoController {
     }
 
     @PostMapping("/processo/cadastrar")
-    public ModelAndView salvarProcesso(Processo processo, ModelAndView modelAndView, HttpSession session) {
+    public ModelAndView salvarProcesso(@Valid Processo processo, BindingResult result, ModelAndView modelAndView, HttpSession session) {
+        if (result.hasErrors()) {
+            modelAndView.setViewName("aluno/tela-aluno-cadastro-processo");
+            modelAndView.addObject("processo", processo);
+            return modelAndView;
+
+        }
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         alunoService.cadastraNovoProcesso(usuario.getId(), processo);
         modelAndView.setViewName("redirect:/aluno/processo");
