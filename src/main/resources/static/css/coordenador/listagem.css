@@ -1,6 +1,29 @@
+#main form {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+#main form select,
+#main form input {
+  background: linear-gradient(90deg, #50D5FF 0%, #2F64CC 100%);
+  color: white;
+  width: 5rem;
+  height: 2rem;
+  border-radius: 8px;
+
+  font-size: medium;
+  font-weight: bold;
+}
+
+#main form select {
+  border-style: none;
+}
+
 #tabela {
   background: #F1F1F1;
   color: #0D4085; 
 
   width: 50vw;
+  margin-top: .5rem;
 }
