@@ -226,8 +226,11 @@ public class AdminController {
     @PostMapping("/colegiado")
     public ModelAndView saveColegiado(@Valid Colegiado colegiado, BindingResult result, ModelAndView mav) {
         if (result.hasErrors()){
-            Colegiado colegiadoBD = adminService.getColegiado(colegiado.getId());
-            colegiado.setMembros(colegiadoBD.getMembros());
+            if(colegiado.getId() != null) {
+                Colegiado colegiadoBD = adminService.getColegiado(colegiado.getId());
+                colegiado.setMembros(colegiadoBD.getMembros());
+            }
+
             mav.setViewName("admin/cadastro-colegiados");
             mav.addObject("colegiado",colegiado);
             return mav;

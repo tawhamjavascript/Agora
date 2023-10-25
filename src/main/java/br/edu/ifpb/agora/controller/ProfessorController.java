@@ -72,7 +72,7 @@ public class ProfessorController {
     }
 
     @PostMapping("/processo")
-    public ModelAndView processoVotar(Processo processo, ModelAndView mav) {
+    public ModelAndView processoVotar(Processo processo,ModelAndView mav) {
         professorService.votar(processo);
         mav.setViewName("redirect:/professor/processos");
         return mav;

@@ -36,6 +36,8 @@
         <textarea name="justificativa" th:field="*{textoRelator}" th:value="${processo.textoRelator}"
             placeholder="Digite sua justificativa" maxlength="500"></textarea>
 
+        <p th:if="${#fields.hasErrors('textoRelator')}" th:errorclass="error" th:errors="*{textoRelator}"></p>
+
 
         <button type="submit"> Votar </button>
     </form>

@@ -33,7 +33,7 @@ public class Colegiado {
     private Date dataFim;
 
     @NotBlank(message = "Campo obrigatório")
-    @Size(min = 5, max = 500, message = "O nome deve ter entre 5 e 500 caracteres")
+    @Size(min = 5, max = 500, message = "A descrição deve ter entre 5 e 500 caracteres")
     private String descricao;
 
     @NotBlank(message = "Campo obrigatório")
