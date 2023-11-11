@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+
 public class Professor extends Usuario{
     
     @ManyToOne

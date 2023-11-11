@@ -19,6 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 
+
+
 public class Colegiado {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

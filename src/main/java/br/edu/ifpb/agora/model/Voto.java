@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 
+
 public class Voto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+
 public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -16,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 
-
 public class Aluno extends Usuario {
     @OneToMany(mappedBy = "interessado")
     private List<Processo> processos;

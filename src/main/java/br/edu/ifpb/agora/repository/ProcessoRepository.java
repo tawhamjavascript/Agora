@@ -7,9 +7,11 @@ import br.edu.ifpb.agora.model.StatusEnum;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository("processoRepository")
 public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 
     public List<Processo> findAllByInteressadoId(Long id);

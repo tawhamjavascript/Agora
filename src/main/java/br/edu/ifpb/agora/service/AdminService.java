@@ -1,6 +1,8 @@
 package br.edu.ifpb.agora.service;
 
 import br.edu.ifpb.agora.model.*;
+import br.edu.ifpb.agora.padraoProjeto.simpleFactory.FactoryObjectTemplate;
+import br.edu.ifpb.agora.padraoProjeto.templateMethod.UserTemplate;
 import br.edu.ifpb.agora.repository.*;
 import br.edu.ifpb.agora.util.PasswordUtil;
 import jakarta.transaction.Transactional;
@@ -29,27 +31,9 @@ public class AdminService {
 
     @Transactional
     public void registerTeacher(Professor professor) {
-        if (professor.isCoordenador()) {
-            Professor atualCoordenador = professorRepository.findByCoordenadorTrueAndCursoId(professor.getCurso().getId());
-            if (atualCoordenador != null) {
-                atualCoordenador.setCoordenador(false);
+        UserTemplate userTemplate = FactoryObjectTemplate.create("professor", professorRepository);
 
-            }
-        }
-        if(professor.getId() != null) {
-            Professor professorBD = professorRepository.findById(professor.getId()).get();
-
-            if (PasswordUtil.checkPass(professor.getSenha(), professorBD.getSenha())) {
-                professor.setSenha(professorBD.getSenha());
-
-            } else {
-                professor.setSenha(PasswordUtil.hashPassword(professor.getSenha()));
-            }
-
-        } else {
-            professor.setSenha(PasswordUtil.hashPassword(professor.getSenha()));
-        }
-        professorRepository.save(professor);
+        userTemplate.hashPassword(professor);
     }
 
     @Transactional
@@ -86,22 +70,8 @@ public class AdminService {
 
     @Transactional
     public void registerStudent(Aluno aluno) {
-        aluno.setAdmin(false);
-        if (aluno.getId() != null) {
-            Aluno alunoBD = alunoRepository.findById(aluno.getId()).get();
-
-            if (PasswordUtil.checkPass(aluno.getSenha(), alunoBD.getSenha())) {
-                aluno.setSenha(alunoBD.getSenha());
-
-            } else {
-                aluno.setSenha(PasswordUtil.hashPassword(aluno.getSenha()));
-            }
-
-        } else {
-            aluno.setSenha(PasswordUtil.hashPassword(aluno.getSenha()));
-        }
-
-        alunoRepository.save(aluno);
+        UserTemplate userTemplate = FactoryObjectTemplate.create("aluno", alunoRepository);
+        userTemplate.hashPassword(aluno);
     }
 
     @Transactional
