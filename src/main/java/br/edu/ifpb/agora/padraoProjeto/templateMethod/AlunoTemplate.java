@@ -15,10 +15,6 @@ public class AlunoTemplate extends UserTemplate {
         this.alunoRepository = alunoRepository;
     }
 
-
-
-
-
     public void verifyCoordenador(Usuario usuario) {
         // TODO Auto-generated method stub
 

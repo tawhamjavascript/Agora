@@ -17,11 +17,8 @@ public class FactoryObjectTemplate {
             return new ProfessorTemplate((ProfessorRepository) repository);
 
         } else {
-
             return new AlunoTemplate((AlunoRepository) repository);
 
         }
     }
-
-
 }
