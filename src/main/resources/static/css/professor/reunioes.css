@@ -1,14 +1,20 @@
-body {
-    font-family: 'Sunflower', sans-serif;
-    background-color: #F1F1F1;
-    color: #10428C;
+html, body {
+    color: #0D4085
 }
 
 .header {
-    background-color: #10428C;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #10428C;
+    box-shadow: 0px .8px .8px rgba(0, 0, 0, 0.5);
+    height: 3rem;
+}
+
+
+.header h3 {
+    margin-top: .8rem;
+    font-weight: bolder;
 }
 
 .header .icon {
@@ -32,10 +38,6 @@ body {
     margin: 20px 0;
 }
 
-.centro {
-    text-align: center;
-    margin: 20px;
-}
 
 .filter-form {
     margin: 10px;
@@ -57,17 +59,24 @@ select, button {
     font-family: Arial, sans-serif;
 }
 
-.header {
-    text-align: center;
-    padding: 20px;
-    background-color: #f2f2f2;
-}
+
 
 .icon {
-    position: absolute;
-    top: 20px;
-    left: 20px;
     font-size: 24px;
+    display: inline;
+    color: #10428C;
+    text-decoration: none;
+    background: #F1F1F1;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 30px;
+    border-style: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
 }
 
 .username {
@@ -77,36 +86,36 @@ select, button {
 }
 
 .centro {
-    margin: 20px auto;
+    margin: 30px auto;
     width: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+ 
+}
+
+
+#tabela {
+    padding: 20px;
+    background: #F1F1F1;
+    color: #0D4085;
+    margin: 20px auto;
+    width: 80%;
+
 }
 
 table {
     width: 100%;
     background-color: white;
     border-collapse: collapse;
-    margin: auto; /* Centraliza a tabela */
+    margin: auto;
 }
 
-th, td {
-    border: 1px solid #10428C;
+
+th,td {
+    /* border: 1px solid #ccc; */
     padding: 10px;
     text-align: left;
-}
+} 
 
-th {
-    background-color: #10428C;
-    color: white;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
-}

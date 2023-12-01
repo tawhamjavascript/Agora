@@ -1,14 +1,27 @@
+html,
 body {
-    font-family: 'Sunflower', sans-serif;
-    background-color: #F1F1F1;
-    color: #10428C;
+    /* font-family: 'Sunflower', sans-serif; */
+    /* background-color: #F1F1F1; */
+    color: #0D4085;
 }
 
 .header {
-    background-color: #10428C;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #10428C;
+    box-shadow: 0px .8px .8px rgba(0, 0, 0, 0.5);
+    height: 3rem;
+}
+
+
+.header h3 {
+    margin-top: .8rem;
+    font-weight: bolder;
+}
+
+#nome-professor {
+    margin-right: .5rem;
 }
 
 .divider {
@@ -23,12 +36,16 @@ body {
 }
 
 #logout-button {
-   position: absolute;
-   top: 15px;
-   right: 10px;
-   filter: invert(100%);
-
-}
+    background: #F1F1F1;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 30px;
+    border-style: none;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
 .button {
     background: linear-gradient(to right, #50D5FF, #2F64CC);
@@ -42,3 +59,38 @@ body {
 .conteudo {
     text-align: center;
 }
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    margin-top: 3rem;
+    gap: 8rem;
+  }
+
+  #sidebar {
+    display: flex;
+    flex-direction: row;
+    gap: 6rem;
+    margin-right: 6.5rem;
+  }
+  
+  #sidebar a {
+    margin-bottom: 2rem;
+  
+    width: 10rem;
+    height: 3rem;
+  
+    color: black;
+    font-weight: 700;
+    font-size: large;
+    text-decoration: none;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    border-radius: 8px;
+    background: #F1F1F1;
+  }

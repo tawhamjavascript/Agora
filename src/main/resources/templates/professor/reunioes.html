@@ -15,13 +15,20 @@
 
 <body>
     <div class="header">
-        <div class="icon">
-            <a th:href="@{/professor/home}">&#9665; </a>
+        <div>
+            <a class="icon" th:href="@{/professor/home}">&#9665; </a>
         </div>
-        <h1>Reuniões</h1>
-        <a th:href="@{/auth/logout}" id="logout-button">
-            <img th:src="@{/images/log-out.svg}" alt="logout">
-        </a>
+        <div>
+            <h3>PROFESSOR</h3>
+        </div>
+        <div id="nome-professor">
+            <h3 th:text="${session.usuario.nome}"></h3>
+
+            <!-- <a th:href="@{/auth/logout}" id="logout-button">
+                <img th:src="@{/images/log-out.svg}" alt="logout">
+            </a> -->
+        </div>
+
     </div>
 
     <div class="container centro">
@@ -39,7 +46,7 @@
             <button type="submit">Filtrar</button>
         </form>
 
-        <table>
+        <table id="tabela">
             <thead>
                 <tr>
                     <th>Data</th>
