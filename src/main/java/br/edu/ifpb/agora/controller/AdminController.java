@@ -44,15 +44,29 @@ public class AdminController {
 
     @GetMapping("/curso")
     public ModelAndView getCursos(ModelAndView mav) {
+        pathTo.put("incluir", "/admin/curso/cadastro");
+        pathTo.put("listar", "/admin/curso");        
+        pathTo.put("home", "/admin/home");
+
         mav.setViewName("admin/listagem-cursos");
         mav.addObject("cursos", adminService.allCourses());
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("listagem"));
         return mav;
     }
 
     @GetMapping("/curso/cadastro")
     public ModelAndView getCadastro(ModelAndView mav) {
+        pathTo.put("incluir", "/admin/curso/cadastro");
+        pathTo.put("listar", "/admin/curso");
+        pathTo.put("home", "/admin/home");
+
         mav.setViewName("admin/cadastro-curso");
         mav.addObject("curso", new Curso());
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("cadastro"));
         return mav;
     }
 
@@ -87,15 +101,29 @@ public class AdminController {
 
     @GetMapping("/assunto")
     public ModelAndView getAssuntos(ModelAndView mav) {
+        pathTo.put("incluir", "/admin/assunto/cadastro");
+        pathTo.put("listar", "/admin/assunto");        
+        pathTo.put("home", "/admin/home");
+
         mav.setViewName("admin/listagem-assunto-processo-reuniao");
         mav.addObject("assuntos", adminService.allSubjects());
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("listagem"));
         return mav;
     }
 
     @GetMapping("/assunto/cadastro")
     public ModelAndView getCadastroAssunto(ModelAndView mav) {
+        pathTo.put("incluir", "/admin/assunto/cadastro");
+        pathTo.put("listar", "/admin/assunto");
+        pathTo.put("home", "/admin/home");
+
         mav.setViewName("admin/cadastro-assunto-processo-reuniao");
         mav.addObject("assunto", new Assunto());
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("cadastro"));
         return mav;
     }
 
@@ -243,8 +271,15 @@ public class AdminController {
 
     @GetMapping("/colegiado")
     public ModelAndView getColegiados(ModelAndView mav) {
+        pathTo.put("incluir", "/admin/colegiado/cadastro");
+        pathTo.put("listar", "/admin/colegiado");        
+        pathTo.put("home", "/admin/home");
+
         mav.setViewName("admin/listagem-colegiados");
         mav.addObject("colegiados", adminService.allColegiados());
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("listagem"));
         return mav;
     }
 
@@ -257,8 +292,15 @@ public class AdminController {
 
     @GetMapping("/colegiado/cadastrar")
     public ModelAndView getCadastroColegiado(ModelAndView mav) {
+        pathTo.put("incluir", "/admin/colegiado/cadastro");
+        pathTo.put("listar", "/admin/colegiado");        
+        pathTo.put("home", "/admin/home");
+
         mav.setViewName("admin/cadastro-colegiados");
         mav.addObject("colegiado", new Colegiado());
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("cadastro"));
         return mav;
     }
 
