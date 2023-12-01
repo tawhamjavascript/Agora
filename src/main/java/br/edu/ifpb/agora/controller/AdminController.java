@@ -10,12 +10,26 @@ import org.springframework.web.servlet.ModelAndView;
 import br.edu.ifpb.agora.service.AdminService;
 import jakarta.validation.Valid;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 
 public class AdminController {
+
+    private HashMap<String, String> pathTo = new HashMap<String, String>();    
+
+    private List<String> getPath(String page) {
+        if(page.equals("cadastro")) {
+            return Arrays.asList("/css/main.css", "/css/admin/admin.css", "/css/admin/cadastro.css", "/css/admin/listagem.css");
+        } else if (page.equals("listagem")) {
+            return Arrays.asList("/css/main.css", "/css/admin/admin.css", "/css/admin/listagem.css");
+        }
+        return Arrays.asList("/css/admin/homepage.css");
+    }
 
     @Autowired
     private AdminService adminService;
@@ -24,6 +38,7 @@ public class AdminController {
     @GetMapping("/home")
     public ModelAndView getHome(ModelAndView mav) {
         mav.setViewName("admin/homepage");
+        mav.addObject("stylePaths", getPath(""));
         return mav;
     }
 
@@ -161,15 +176,25 @@ public class AdminController {
 
     @GetMapping("/professor")
     public ModelAndView getProfessores(ModelAndView mav) {
+        pathTo.put("incluir", "/admin/professor/cadastro");
+        pathTo.put("listar", "/admin/professor");        
+        pathTo.put("home", "/admin/home");
         mav.setViewName("admin/listagem-professor");
         mav.addObject("professores", adminService.allTeachers());
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("listagem"));
         return mav;
     }
 
     @GetMapping("/professor/cadastro")
     public ModelAndView getCadastroProfessor(ModelAndView mav) {
+        pathTo.put("incluir", "/admin/professor/cadastro");
+        pathTo.put("listar", "/admin/professor");        
+        pathTo.put("home", "/admin/home");
         mav.setViewName("admin/cadastro-professor");
         mav.addObject("professor", new Professor());
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("cadastro"));
         return mav;
     }
 
