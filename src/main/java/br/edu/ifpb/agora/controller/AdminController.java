@@ -134,15 +134,29 @@ public class AdminController {
 
     @GetMapping("/aluno")
     public ModelAndView getAlunos(ModelAndView mav) {
+        pathTo.put("incluir", "/admin/aluno/cadastro");
+        pathTo.put("listar", "/admin/aluno");
+        pathTo.put("home", "/admin/home");
+
         mav.setViewName("admin/listagem-aluno");
         mav.addObject("alunos", adminService.allStudent());
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("listagem"));
         return mav;
     }
 
     @GetMapping("/aluno/cadastro")
     public ModelAndView getCadastroAluno(ModelAndView mav) {
+        pathTo.put("incluir", "/admin/aluno/cadastro");
+        pathTo.put("listar", "/admin/aluno");
+        pathTo.put("home", "/admin/home");
+
         mav.setViewName("admin/cadastrar-aluno");
         mav.addObject("aluno", new Aluno());
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("cadastro"));
         return mav;
     }
 
