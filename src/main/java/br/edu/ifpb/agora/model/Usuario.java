@@ -46,4 +46,8 @@ public class Usuario {
     @JoinColumn(name="curso_id")
     private Curso curso;
 
+    @OneToOne
+    @JoinColumn(name = "username")
+    private User user;
+
 }
