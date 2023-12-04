@@ -3,6 +3,36 @@
 }
 
 
+#sidebar-sessao {
+  display: flex;
+  flex-direction: column;
+  align-self:flex-start;
+  margin-top: 4.8rem;
+}
+
+#sidebar-sessao a {
+  margin-bottom: 2rem;
+
+  width: 15rem;
+  height: 5rem;
+
+  color: black;
+  font-weight: 700;
+  font-size: large;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+  background: #F1F1F1;
+
+  font-size: 1.7rem;
+  text-align: center;
+  
+}
+
 #form-register {
   background: #F1F1F1;
 
