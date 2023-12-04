@@ -1,3 +1,8 @@
+.container {
+  justify-content: center;
+}
+
+
 #form-register {
   background: #F1F1F1;
 
@@ -32,3 +37,87 @@
   text-decoration: none;
 }
 
+
+#form-register-sessao {
+  background: #F1F1F1;
+
+  height: auto;
+  width: 95rem;
+
+  border-radius: 16px;
+
+  color: #0D4085;
+  font-size: 20px;
+  
+  padding: 10px;
+}
+
+#form-register-sessao a {
+  background: linear-gradient(90deg, #50D5FF 0%, #2F64CC 100%);
+  color: white;
+  width: 15rem;
+  height: 3rem;
+  border-radius: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: large;
+  font-weight: bold;
+
+  margin-top: 2rem;
+  margin-left: 30%;
+
+  text-decoration: none;
+}
+
+.form-tabela {
+  display: flex;
+  margin-bottom: 9rem;
+  margin-right: 3rem;
+
+}
+
+#form-register-sessao .form-control {
+  width: 40%;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  color: black;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+  border-radius: 8px;
+}
+
+th {
+  background-color: #ffffff;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(odd) {
+  background-color: #ffffff; 
+}
+
+.button-style {
+  height: 7.5rem;
+  margin-left: 5rem;
+}
+
+#button-cadastrar-sessao {
+  height: 3rem;
+
+}
+
+#button-x {
+  margin: 2rem;
+}
