@@ -109,6 +109,19 @@
 
 }
 
+.form-tabela-conducao {
+  display: flex;
+  margin-bottom: 4rem;
+  margin-right: 3rem;
+}
+
+.form-tabela textarea {
+  margin-top: 10px; /* Ajuste conforme necessário */
+  width: 100%;
+  display: block;
+  clear: both;
+}
+
 #form-register-sessao .form-control {
   width: 40%;
 }
@@ -151,3 +164,13 @@ tr:nth-child(odd) {
 #button-x {
   margin: 2rem;
 }
+
+.tabela-sessao th, td{
+  text-align: center;
+}
+
+.observacoes{
+  margin-top: 10px;
+  clear: both;
+}
+
