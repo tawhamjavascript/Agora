@@ -271,7 +271,7 @@ public class AdminController {
 
     @GetMapping("/colegiado")
     public ModelAndView getColegiados(ModelAndView mav) {
-        pathTo.put("incluir", "/admin/colegiado/cadastro");
+        pathTo.put("incluir", "/admin/colegiado/cadastrar");
         pathTo.put("listar", "/admin/colegiado");        
         pathTo.put("home", "/admin/home");
 
@@ -290,10 +290,9 @@ public class AdminController {
         return mav;
     }
 
-    @GetMapping("/colegiado/cadastro")
+    @GetMapping("/colegiado/cadastrar")
     public ModelAndView getCadastroColegiado(ModelAndView mav) {
-        System.out.println("jsdfksjdfhskdf");
-        pathTo.put("incluir", "/admin/colegiado/cadastro");
+        pathTo.put("incluir", "/admin/colegiado/cadastrar");
         pathTo.put("listar", "/admin/colegiado");        
         pathTo.put("home", "/admin/home");
 
@@ -301,7 +300,7 @@ public class AdminController {
         mav.addObject("colegiado", new Colegiado());
 
         mav.addObject("caminho", pathTo);
-        mav.addObject("stylePaths", getPath("listagem"));
+        mav.addObject("stylePaths", getPath("cadastro"));
         return mav;
     }
 
