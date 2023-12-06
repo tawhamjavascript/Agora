@@ -49,9 +49,11 @@
                   </a>
                 </td>
                 <td>
-                  <button th:onclick="|deletar(${alu.id})|">
-                    <img th:src="@{/images/trash-2.svg}">
-                  </button>
+                  <form th:action="@{aluno/deletar/{id}(id=${alu.id})}">
+                    <button class="btn btn-primary btn-sm" type="submit">
+                      <img th:src="@{/images/trash-2.svg}">
+                    </button>
+                  </form>
                 </td>
               </tr>
             </tbody>

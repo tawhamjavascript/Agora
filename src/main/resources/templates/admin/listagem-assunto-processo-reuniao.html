@@ -46,9 +46,11 @@
                   </a>
                 </td>
                 <td>
-                  <button th:onclick="|deletar(${ass.id})|">
-                    <img th:src="@{/images/trash-2.svg}">
-                  </button>
+                  <form th:action="@{assunto/deletar/{id}(id=${ass.id})}">
+                    <button class="btn btn-primary btn-sm" type="submit">
+                      <img th:src="@{/images/trash-2.svg}">
+                    </button>
+                  </form>
                 </td>
               </tr>
             </tbody>

@@ -46,7 +46,7 @@ public class Usuario {
     @JoinColumn(name="curso_id")
     private Curso curso;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username")
     private User user;
 

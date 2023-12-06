@@ -39,7 +39,7 @@ public class AgoraSecurityConfig {
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/aluno/**").hasRole("ALUNO")
                 .requestMatchers("/coordenador/**").hasRole("COORDENADOR")
-                .requestMatchers("/professor/**").hasAnyRole("ADMIN", "PROFESSOR")
+                .requestMatchers("/professor/**").hasRole("PROFESSOR")
                 .anyRequest().authenticated())
 
             .formLogin((form) -> form
@@ -59,7 +59,7 @@ public class AgoraSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails admin = User.withUsername("admin").password(passwordEncoder().encode("admin")).roles("admin").build();
+        UserDetails admin = User.withUsername("admin").password(passwordEncoder().encode("admin")).roles("ADMIN").build();
 
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
         if(!users.userExists(admin.getUsername())) {

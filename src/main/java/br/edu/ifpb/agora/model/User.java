@@ -2,7 +2,7 @@ package br.edu.ifpb.agora.model;
 
 import java.util.List;
 
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -24,8 +24,13 @@ public class User {
     private String password;
     private Boolean enabled;
 
-    @OneToMany(mappedBy = "username")
+    @OneToMany(mappedBy = "username", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Authority> authorities;
+
+    public User (String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
     
 }

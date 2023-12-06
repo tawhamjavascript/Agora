@@ -49,9 +49,11 @@
                   </a>
                 </td>
                 <td>
-                  <button th:onclick="|deletar(${prof.id})|">
-                    <img th:src="@{/images/trash-2.svg}">
-                  </button>
+                  <form th:action="@{professor/deletar/{id}(id=${prof.id})}">
+                    <button class="btn btn-primary btn-sm" type="submit">
+                      <img th:src="@{/images/trash-2.svg}">
+                    </button>
+                  </form>
                 </td>
               </tr>
             </tbody>
@@ -61,15 +63,5 @@
   </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script>
-      function deletar(id) {
-        fetch(`${window.location.href}/${id}` , {
-          method: 'DELETE',
-        })
-                .then(() => {
-                  window.location.reload();
-                })
-      }
-    </script>
 </body>
 </html>

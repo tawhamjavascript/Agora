@@ -2,6 +2,7 @@ package br.edu.ifpb.agora.model;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -24,7 +25,17 @@ public class Authority {
 
     @ManyToOne
     @JoinColumn(name = "username", referencedColumnName = "username", insertable = false, updatable = false)
+    private User username;
+    
+    @Column(name = "authority", insertable = false, updatable = false)
     private String authority;
+
+    public Authority(User user, String authority) {
+        Authority.AuthorityId id = new Authority.AuthorityId(user.getUsername(), authority);
+        this.id = id;
+        this.username = user;
+        this.authority = authority;
+    }
 
     @Embeddable
     @Data
