@@ -290,8 +290,9 @@ public class AdminController {
         return mav;
     }
 
-    @GetMapping("/colegiado/cadastrar")
+    @GetMapping("/colegiado/cadastro")
     public ModelAndView getCadastroColegiado(ModelAndView mav) {
+        System.out.println("jsdfksjdfhskdf");
         pathTo.put("incluir", "/admin/colegiado/cadastro");
         pathTo.put("listar", "/admin/colegiado");        
         pathTo.put("home", "/admin/home");
@@ -300,7 +301,7 @@ public class AdminController {
         mav.addObject("colegiado", new Colegiado());
 
         mav.addObject("caminho", pathTo);
-        mav.addObject("stylePaths", getPath("cadastro"));
+        mav.addObject("stylePaths", getPath("listagem"));
         return mav;
     }
 
