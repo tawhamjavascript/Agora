@@ -15,9 +15,10 @@
 <body>
     <div class="header">
         <h1>Homepage do Professor</h1>
-        <a th:href="@{/auth/logout}" id="logout-button">
-            <img th:src="@{/images/log-out.svg}" alt="logout">
-        </a>
+        <form class="form-inline my-2 my-lg-0" th:action="@{/auth/logout}" method="POST">
+            <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="logout">
+            </input>
+        </form>
     </div>
 
     
@@ -25,7 +26,7 @@
     <div class="divider"></div>
 
     <div class="msg-bmvndo">
-        <p>Bem-vindo, <span th:text="${session.usuario.nome}"></span></p>
+        <p>Bem-vindo, <span sec:authentication="name"></span></p>
     </div>
 
 

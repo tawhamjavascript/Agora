@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -30,10 +31,9 @@ public class ProfessorController {
 
 
     @GetMapping("/reunioes")
-    public ModelAndView reunioes(ModelAndView mav, HttpSession session) {
-        Usuario professor = (Usuario) session.getAttribute("usuario");
+    public ModelAndView reunioes(ModelAndView mav, Principal user) {
         mav.setViewName("professor/reunioes");
-        mav.addObject("reunioes", professorService.listarReunioes(professor));
+        mav.addObject("reunioes", professorService.listarReunioes(user));
         return mav;
     }
 
@@ -48,18 +48,17 @@ public class ProfessorController {
     }
 
     @GetMapping("/reunioes/filtro")
-    public ModelAndView reunioesByStatus(@RequestParam(name = "filtro") StatusReuniao filtro, HttpSession session, ModelAndView mav) {
-        Usuario professor = (Usuario) session.getAttribute("usuario");
+    public ModelAndView reunioesByStatus(@RequestParam(name = "filtro") StatusReuniao filtro, Principal user, ModelAndView mav) {
         mav.setViewName("redirect:/professor/reunioes");
-        mav.addObject("reunioes", professorService.listarReunioesByStatus(professor, filtro));
+        mav.addObject("reunioes", professorService.listarReunioesByStatus(user, filtro));
         return mav;
     }
 
     @GetMapping("/processos")
-    public ModelAndView processos(ModelAndView mav, HttpSession session) {
-        Usuario professor = (Usuario) session.getAttribute("usuario");
+    public ModelAndView processos(ModelAndView mav, Principal principal) {
+
         mav.setViewName("professor/processos");
-        mav.addObject("processos", professorService.listarProcessosDesignados(professor));
+        mav.addObject("processos", professorService.listarProcessosDesignados(principal));
         return mav;
     }
 

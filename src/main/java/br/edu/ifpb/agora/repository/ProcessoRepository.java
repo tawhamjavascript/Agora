@@ -26,6 +26,7 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 
     public List<Processo> findAllByInteressadoMatriculaOrderByDataRecepcaoDesc(String matricula);
 
+    public List<Processo> findAllByRelatorMatricula(String matricula);
     // termina aqui consultas JPA atualizadas com spring security
 
 
