@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -48,33 +49,30 @@ public class AlunoController {
     }
 
     @PostMapping("/processo/cadastrar")
-    public ModelAndView salvarProcesso(@Valid Processo processo, BindingResult result, ModelAndView modelAndView, HttpSession session) {
+    public ModelAndView salvarProcesso(@Valid Processo processo, BindingResult result, ModelAndView modelAndView, Principal principal) {
         if (result.hasErrors()) {
             modelAndView.setViewName("aluno/tela-aluno-cadastro-processo");
             modelAndView.addObject("processo", processo);
             return modelAndView;
 
         }
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        alunoService.cadastraNovoProcesso(usuario.getId(), processo);
+        alunoService.cadastraNovoProcesso(principal, processo);
         modelAndView.setViewName("redirect:/aluno/processo");
         return modelAndView;
 
     }
 
     @GetMapping("/processo")
-    public ModelAndView consultarProcessos(ModelAndView mav, HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
+    public ModelAndView consultarProcessos(ModelAndView mav, Principal principal) {
         mav.setViewName("aluno/tela-aluno-listagem-processos");
-        mav.addObject("processos", alunoService.consultaProcessos(usuario.getId()));
+        mav.addObject("processos", alunoService.consultaProcessos(principal));
         return mav;
 
     }
 
     @GetMapping("/processo/consultar")
-    public ModelAndView filtrarProcesso(@RequestParam(name = "filtro", defaultValue = "") String filtro, @RequestParam(name = "order", defaultValue = "") String order, ModelAndView modelAndView, HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        modelAndView.addObject("processos", alunoService.filtrarProcesso(usuario.getId(), filtro, order));
+    public ModelAndView filtrarProcesso(@RequestParam(name = "filtro", defaultValue = "") String filtro, @RequestParam(name = "order", defaultValue = "") String order, ModelAndView modelAndView, Principal principal) {
+        modelAndView.addObject("processos", alunoService.filtrarProcesso(principal, filtro, order));
         modelAndView.setViewName("/aluno/tela-aluno-listagem-processos");
         return modelAndView;
     }
