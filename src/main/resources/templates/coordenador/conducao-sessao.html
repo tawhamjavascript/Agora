@@ -12,15 +12,9 @@
     <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
     <link rel="stylesheet" th:href="@{/css/admin/cadastro.css}">
 
-
-
-
     <link rel="stylesheet" href="../../static/css/main.css">
     <link rel="stylesheet" href="../../static/css/admin/admin.css">
     <link rel="stylesheet" href="../../static/css/admin/cadastro.css">
-
-
-
 
     <title>Coordenador</title>
 </head>
@@ -52,22 +46,6 @@
             <form action="">
 
                 <div id="form-register-sessao">
-                    <!-- 
-          <label for="identificador" class="col-form-label">Identificador de Sessão:</label>
-          <input type="text" id="identificador" class="form-control" />
-          <p></p>
-
-          <label for="identificador">Data:</label>
-          <input type="text" id="identificador" class="form-control" />
-          <p></p>
-
-          <label for="identificador">Hora:</label>
-          <input type="text" id="identificador" class="form-control" />
-          <p></p> -->
-
-
-
-
 
                     <label class="col-form-label">Pauta da Sessão:</label>
                     <div class="form-tabela-conducao">
@@ -92,7 +70,7 @@
                             </tbody>
                         </table>
 
-                        <button type="submit" class="button-style"> Adicionar Processos </button>
+                        <button type="submit" class="button-style"> Finalizar Sessão</button>
 
                     </div>
 
@@ -113,16 +91,10 @@
                             </tbody>
                         </table>
 
-
-
-
-
                     </div>
 
-                    <h3>Processo <p th:text="${}"></p>
-                    </h3>
-                    <h3>[ASSUNTO]<p th:text="${}"></p>
-                    </h3>
+                    <h3 class="text-center mt-2">Processo <p th:text="${}"></p></h3>
+                    <h3 class="text-center mt-2">[ASSUNTO]<p th:text="${}"></p></h3>
 
 
                     <label for="" class="col-form-label">Votação:</label>
@@ -147,31 +119,30 @@
                             </tbody>
                         </table>
 
-
-
-
-                        
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-inferior d-flex flex-column">
                         <label for="observacoes" class="col-form-label">Observações:</label>
-                        <textarea class="form-control" id="observacoes" rows="4"></textarea>
-                      </div>
-                    
-                      <div class="form-group">
+                        <div>
+                            <textarea class="form-control" id="observacoes" cols="200" rows="4"></textarea>
+                        </div>
+
                         <label for="anexos" class="col-form-label">Anexos:</label>
-                        <textarea class="form-control" id="anexos" rows="4"></textarea>
-                        <input type="file" class="form-control" id="fileInput" name="fileInput" multiple>
-                      </div>
-
-
-                      <div>
-                        <h3>Resultado:</h3>
-                        <p th:text=""></p>
-                      </div>
-
-                    <button type="submit" class="button-style mx-auto d-block"
-                        id="button-cadastrar-sessao">Salvar Resultado da Votação</button>
+                        <div>
+                            <textarea class="form-control" id="anexos" cols="200" rows="4"></textarea>
+                            <input type="file" class="form-control" id="fileInput" name="fileInput" multiple>
+                        </div>
+    
+    
+                        <div>
+                            <h3>Resultado:</h3>
+                            <p th:text=""></p>
+                        </div>
+    
+                        <button type="submit" class="button-style mx-auto d-block" id="button-cadastrar-sessao">Salvar
+                            Resultado da Votação</button>
+                    </div>
+                    
 
                 </div>
             </form>
