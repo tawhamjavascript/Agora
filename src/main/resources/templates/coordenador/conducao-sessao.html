@@ -93,8 +93,10 @@
 
                     </div>
 
-                    <h3 class="text-center mt-2">Processo <p th:text="${}"></p></h3>
-                    <h3 class="text-center mt-2">[ASSUNTO]<p th:text="${}"></p></h3>
+                    <h3 class="text-center mt-2">Processo <p th:text="${}"></p>
+                    </h3>
+                    <h3 class="text-center mt-2">[ASSUNTO]<p th:text="${}"></p>
+                    </h3>
 
 
                     <label for="" class="col-form-label">Votação:</label>
@@ -132,20 +134,67 @@
                             <textarea class="form-control" id="anexos" cols="200" rows="4"></textarea>
                             <input type="file" class="form-control" id="fileInput" name="fileInput" multiple>
                         </div>
-    
-    
+
+
                         <div>
                             <h3>Resultado:</h3>
                             <p th:text=""></p>
                         </div>
-    
+
                         <button type="submit" class="button-style mx-auto d-block" id="button-cadastrar-sessao">Salvar
                             Resultado da Votação</button>
                     </div>
-                    
+
 
                 </div>
             </form>
+
+            <!-- 
+                    MENSAGEM ! ! ! !! 
+
+            -->
+
+            <!-- <div class="message">
+          <p th:text="{NUMERO PROCESSO AQUI}">O resultado do processo de Nº foi salvo com sucesso!</p>
+          <img src="../../static/images/check.svg" alt="check"> 
+         </div> -->
+
+
+          <!-- 
+                    MENSAGEM ! ! ! !! 
+
+            -->
+
+
+
+            <!-- <div class="message" >
+                <p>Após finalizada a sessão, nenhuma informação poderá ser alterada. Você realmente deseja finalizar?</p>
+                <div id="message-confirm">
+                    <div id="message-confirm-sim">
+                        <h3>Sim</h4>
+                    </div>
+    
+                    <div id="message-confirm-nao">
+                        <h3>Não</h3>
+                    </div>
+
+                </div>
+
+            </div> -->
+
+             <!-- 
+                    MENSAGEM ! ! ! !! 
+
+            -->
+
+            <!-- <div class="message">
+          <p>Sessão finalizada com sucesso!</p>
+          <img src="../../static/images/check.svg" alt="check"> 
+      </div> -->
+
+
+
+
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

@@ -159,7 +159,7 @@ tr:nth-child(odd) {
 }
 
 #button-cadastrar-sessao {
-  height: 3rem;
+  height: 5rem;
 
 }
 
@@ -199,7 +199,34 @@ td {
   margin: 0;
   font-size: 18px;
 }
+
+
+
+
+
 /* 
 .message img {
   transform: scale(1.5);
 } */
+
+#message-confirm {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  color: white;
+}
+
+#message-confirm-sim {
+  border-radius: 16px;
+  background: #3C5B3B;
+  padding: .8rem 1rem;
+}
+
+
+
+#message-confirm-nao {
+  border-radius: 16px;
+  background: #E35050;
+  padding: .8rem 1rem;
+}
