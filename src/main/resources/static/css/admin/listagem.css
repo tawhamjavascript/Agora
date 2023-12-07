@@ -44,3 +44,23 @@ td, th {
 #main {
   width: 90%;
 }
+
+.message {
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 16px;
+  background: #F1F1F1;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 15rem;
+}
+
+.message p {
+  font-weight: bold;
+  margin: 0;
+  font-size: 18px;
+}
+
+.message img {
+  transform: scale(.8);
+}

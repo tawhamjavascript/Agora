@@ -6,7 +6,7 @@
 #sidebar-sessao {
   display: flex;
   flex-direction: column;
-  align-self:flex-start;
+  align-self: flex-start;
   margin-top: 4.8rem;
 }
 
@@ -30,7 +30,7 @@
 
   font-size: 1.7rem;
   text-align: center;
-  
+
 }
 
 #form-register {
@@ -43,7 +43,7 @@
 
   color: #0D4085;
   font-size: 20px;
-  
+
   padding: 10px;
 }
 
@@ -78,7 +78,7 @@
 
   color: #0D4085;
   font-size: 20px;
-  
+
   padding: 10px;
 }
 
@@ -116,7 +116,8 @@
 }
 
 .form-tabela textarea {
-  margin-top: 10px; /* Ajuste conforme necessário */
+  margin-top: 10px;
+  /* Ajuste conforme necessário */
   width: 100%;
   display: block;
   clear: both;
@@ -132,7 +133,8 @@ table {
   color: black;
 }
 
-th, td {
+th,
+td {
   border: 1px solid black;
   padding: 8px;
   text-align: left;
@@ -148,7 +150,7 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(odd) {
-  background-color: #ffffff; 
+  background-color: #ffffff;
 }
 
 .button-style {
@@ -165,11 +167,12 @@ tr:nth-child(odd) {
   margin: 2rem;
 }
 
-.tabela-sessao th, td{
+.tabela-sessao th,
+td {
   text-align: center;
 }
 
-.observacoes{
+.observacoes {
   margin-top: 10px;
   clear: both;
 }
@@ -179,3 +182,24 @@ tr:nth-child(odd) {
   flex-direction: column;
   align-items: center;
 }
+
+
+.message {
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 16px;
+  background: #F1F1F1;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 15rem;
+}
+
+.message p {
+  font-weight: bold;
+  margin: 0;
+  font-size: 18px;
+}
+/* 
+.message img {
+  transform: scale(1.5);
+} */
