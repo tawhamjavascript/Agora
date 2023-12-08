@@ -241,3 +241,15 @@ td {
   background: #E35050;
   padding: .8rem 1rem;
 }
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  font-size: 1.15rem;
+  background-color: #fff;
+  /* border: 1px solid #caced1; */
+  border: 1px solid #caced1;
+  border-radius: 0.25rem;
+  color: #000;
+  cursor: pointer;
+}
