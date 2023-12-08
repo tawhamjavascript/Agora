@@ -125,25 +125,26 @@
 
                     <div class="form-inferior d-flex flex-column">
                         <label for="observacoes" class="col-form-label">Observações:</label>
-                        <div>
+                        <div class="form-item">
                             <textarea class="form-control" id="observacoes" cols="200" rows="4"></textarea>
                         </div>
-
-                        <label for="anexos" class="col-form-label">Anexos:</label>
-                        <div>
-                            <textarea class="form-control" id="anexos" cols="200" rows="4"></textarea>
-                            <input type="file" class="form-control" id="fileInput" name="fileInput" multiple>
+                    
+                        <div class="form-item d-flex justify-content-center align-items-center" id="anexo">
+                            <label for="anexos" class="col-form-label">Anexos:</label>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <input type="file" class="form-control" id="fileInput" name="fileInput" multiple>
+                            </div>
                         </div>
-
-
+                    
                         <div>
                             <h3>Resultado:</h3>
                             <p th:text=""></p>
                         </div>
-
+                    
                         <button type="submit" class="button-style mx-auto d-block" id="button-cadastrar-sessao">Salvar
                             Resultado da Votação</button>
                     </div>
+                    
 
 
                 </div>

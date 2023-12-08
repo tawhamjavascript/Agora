@@ -183,6 +183,17 @@ td {
   align-items: center;
 }
 
+.form-item {
+  display: flex;
+  justify-content: center;
+}
+
+#anexo {
+  flex-direction: column;
+  align-content: center;
+  margin-bottom: 3rem;
+}
+
 
 .message {
   text-align: center;
