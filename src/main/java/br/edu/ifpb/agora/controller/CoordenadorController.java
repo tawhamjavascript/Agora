@@ -10,11 +10,20 @@ import org.springframework.web.bind.annotation.*;
 import br.edu.ifpb.agora.service.CoordenadorService;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
 @RequestMapping("/coordenador")
 public class CoordenadorController {
+
+    private HashMap<String, String> pathTo = new HashMap<String, String>();    
+
+    private List<String> getPath() {
+        return Arrays.asList("/css/main.css", "/css/coordenador/listagem.css");
+    }
+
 
     @Autowired
     private CoordenadorService coordenadorService;
@@ -41,17 +50,29 @@ public class CoordenadorController {
 
     @GetMapping("/processo")
     public ModelAndView processos(ModelAndView modelAndView, HttpSession session) {
+        pathTo.put("listar", "/coordenador/processo");
+        pathTo.put("logout", "/auth/logout");
+
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         modelAndView.setViewName("coordenador/listagem-processos");
         modelAndView.addObject("processos", coordenadorService.listarTodosProcessosDoColegiado(usuario.getId()));
+
+        modelAndView.addObject("caminho", pathTo);
+        modelAndView.addObject("stylePaths", getPath());
         return modelAndView;
     }
 
     @GetMapping("/processo/consultar")
     public ModelAndView processosConsultar(@RequestParam(name = "filtro") String filtro, ModelAndView modelAndView, HttpSession session) {
+        pathTo.put("listar", "/coordenador/processo");
+        pathTo.put("logout", "/auth/logout");
+
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         modelAndView.setViewName("coordenador/listagem-processos");
         modelAndView.addObject("processos", coordenadorService.filtro(usuario.getCurso().getId(), filtro));
+    
+        modelAndView.addObject("caminho", pathTo);
+        modelAndView.addObject("stylePaths", getPath());
         return modelAndView;
     }
 
