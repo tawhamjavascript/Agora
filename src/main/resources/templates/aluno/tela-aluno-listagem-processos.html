@@ -70,7 +70,13 @@
                 <td th:text="${#dates.format(processo.dataRecepcao, 'dd/MMM/yyyy')}"></td>
                 <td th:text="${processo.assunto.nome}"></td>
                 <td th:text="${processo.status.getStatus()}"></td>
-                <td th:text="${processo.anexos.size() > 0 ? 'PDF' : 'Nenhum'}"></td>
+                <td>
+                  <ul>
+                    <li th:each="anexo : ${processo.getAnexos()}"> 
+                      <a th:href="@{${anexo.getUrl()}}" th:text="${anexo.getNome()}">  </a>
+                    </li>
+                  </ul>
+                </td>
               </tr>
             </tbody>
           </table>

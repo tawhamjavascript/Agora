@@ -40,9 +40,12 @@
                     <td th:text="${processo.numero}"></td>
                     <td th:text="${processo.assunto.nome}"></td>
                     <td th:text="${processo.status.getStatus()}"></td>
-                    <td th:if="${processo.anexos.size() == 0}" > Sem documentos </td>
-                    <td th:unless="${processo.anexos.size() == 0}">
-                        <a href="#">Ver Documento</a>
+                    <td>  
+                        <ul>
+                            <li th:each="anexo : ${processo.getAnexos()}"> 
+                              <a th:href="@{${anexo.getUrl()}}" th:text="${anexo.getNome()}"></a>
+                            </li>
+                        </ul>
                     </td>
                     <td th:if="${processo.decisaoRelator == null}">
                         <a th:href="@{/professor/processo/{id}(id=${processo.id})}">Votar</a>

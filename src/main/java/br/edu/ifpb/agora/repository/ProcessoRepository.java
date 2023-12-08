@@ -1,15 +1,21 @@
 package br.edu.ifpb.agora.repository;
 
 import br.edu.ifpb.agora.model.Aluno;
+import br.edu.ifpb.agora.model.Documento;
 import br.edu.ifpb.agora.model.Processo;
 import br.edu.ifpb.agora.model.Professor;
 import br.edu.ifpb.agora.model.StatusEnum;
+import jakarta.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Transactional
+@Repository
 public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 
     // consultas JPA atualizadas com spring security
@@ -27,6 +33,7 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
     public List<Processo> findAllByInteressadoMatriculaOrderByDataRecepcaoDesc(String matricula);
 
     public List<Processo> findAllByRelatorMatricula(String matricula);
+
     // termina aqui consultas JPA atualizadas com spring security
 
 

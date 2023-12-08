@@ -27,6 +27,7 @@ public class AlunoService {
     public void cadastraNovoProcesso(Principal user, Processo processo){
         processo.setNumero("" + System.currentTimeMillis());
         Date dataRecepcao = new Date();
+     
 
         Aluno aluno = alunoRepository.findByMatricula(user.getName());
         aluno.addProcesso(processo);
@@ -42,6 +43,7 @@ public class AlunoService {
         processo.setDataRecepcao(dataRecepcao);
         processoRepository.save(processo);
     }
+
 
     public List<Processo> consultaProcessos(Principal user){
         return processoRepository.findAllByInteressadoMatricula(user.getName());
@@ -94,11 +96,5 @@ public class AlunoService {
 
     public List<Processo> consultarProcessosOrdenados(String matricula){
         return processoRepository.findAllByInteressadoMatriculaOrderByDataRecepcaoDesc(matricula);
-    }
-
-    @Transactional
-    public void adicionarAnexo(Processo processo, byte[] anexo) {
-        processo.addAnexos(anexo);
-        processoRepository.save(processo);
     }
 }

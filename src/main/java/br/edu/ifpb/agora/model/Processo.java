@@ -22,7 +22,10 @@ public class Processo {
     private Date dataRecepcao;
     private Date dataDistribuicao;
     private Date dataParecer;
-    private byte[] parecer;
+
+    @OneToOne
+    @JoinColumn(name = "id_parecer")
+    private Documento parecer;
 
 
     @Size(min = 0, max = 500, message = "O texto deve ter no máximo 500 caracteres")
@@ -60,11 +63,11 @@ public class Processo {
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
-    @ElementCollection
-    private List<byte[]> anexos;
+    @OneToMany(mappedBy = "processo")
+    private List<Documento> anexos;
 
-    public void addAnexos(byte[] anexo) {
-        this.anexos.add(anexo);
+    public void addAnexos(Documento documento) {
+        this.anexos.add(documento);
     }
 
     public void addVoto(Voto voto) {
