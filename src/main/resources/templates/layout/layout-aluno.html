@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt_BR" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+  <meta th:insert="~{/fragments/base-aluno :: headfiles(${title})}">
+</head>
+<body>
+  <div th:replace="~{/fragments/base-aluno :: header(${titleHeader})}"></div>
+
+  <div class="container">
+    <div th:replace="~{/fragments/base-aluno :: navmenu}"></div>
+
+    <div layout:fragment="content"></div>
+  </div>
+
+</body>
+</html>

@@ -72,8 +72,14 @@ public class AdminController {
 
     @GetMapping("/curso/{id}")
     public ModelAndView editCurso(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        pathTo.put("incluir", "/admin/curso/cadastro");
+        pathTo.put("listar", "/admin/curso");        
+        pathTo.put("home", "/admin/home");
+
         mav.setViewName("admin/cadastro-curso");
         mav.addObject("curso", adminService.getCourse(id));
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("cadastro"));
         return mav;
     }
     
@@ -142,8 +148,15 @@ public class AdminController {
 
     @GetMapping("/assunto/{id}")
     public ModelAndView editAssunto(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        pathTo.put("incluir", "/admin/assunto/cadastro");
+        pathTo.put("listar", "/admin/assunto");        
+        pathTo.put("home", "/admin/home");
+
         mav.setViewName("admin/cadastro-assunto-processo-reuniao");
         mav.addObject("assunto", adminService.getSubject(id));
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("cadastro"));
         return mav;
     }
 
@@ -203,8 +216,15 @@ public class AdminController {
 
     @GetMapping("/aluno/{id}")
     public ModelAndView editAluno(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        pathTo.put("incluir", "/admin/aluno/cadastro");
+        pathTo.put("listar", "/admin/aluno");
+        pathTo.put("home", "/admin/home");
+
         mav.setViewName("admin/cadastrar-aluno");
         mav.addObject("aluno", adminService.getStudent(id));
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("cadastro"));
         return mav;
     }
 
@@ -242,6 +262,9 @@ public class AdminController {
 
     @PostMapping("/professor")
     public ModelAndView saveProfessor(@Valid Professor professor, BindingResult result, ModelAndView mav) {
+        pathTo.put("incluir", "/admin/professor/cadastro");
+        pathTo.put("listar", "/admin/professor");        
+        pathTo.put("home", "/admin/home");
         if (result.hasErrors()){
             mav.setViewName("admin/cadastro-professor");
             mav.addObject("professor", professor);
@@ -250,13 +273,19 @@ public class AdminController {
         adminService.registerTeacher(professor);
         mav.setViewName("redirect:/admin/professor");
         mav.addObject("professores", adminService.allTeachers());
+        mav.addObject("caminho", pathTo);
         return mav;
     }
 
     @GetMapping("/professor/{id}")
     public ModelAndView editProfessor(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        pathTo.put("incluir", "/admin/professor/cadastro");
+        pathTo.put("listar", "/admin/professor");        
+        pathTo.put("home", "/admin/home");
         mav.setViewName("admin/cadastro-professor");
         mav.addObject("professor", adminService.getTeacher(id));
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("cadastro"));
         return mav;
     }
 
@@ -285,8 +314,13 @@ public class AdminController {
 
     @GetMapping("/colegiado/{id}")
     public ModelAndView editarColegiado(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        pathTo.put("incluir", "/admin/colegiado/cadastrar");
+        pathTo.put("listar", "/admin/colegiado");        
+        pathTo.put("home", "/admin/home");
         mav.setViewName("admin/cadastro-colegiados");
         mav.addObject("colegiado", adminService.getColegiado(id));
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("cadastro"));
         return mav;
     }
 
