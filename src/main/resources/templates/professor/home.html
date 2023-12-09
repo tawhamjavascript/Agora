@@ -14,30 +14,9 @@
 </head>
 
 <body>
-    <div layout:fragment="content">
-        <div class="header">
-            <div></div>
-            <div>
-                <h3>PROFESSOR</h3>
-            </div>
-            <div id="nome-professor">
-                <h3 th:text="${session.usuario.nome}"></h3>
+    <div>
 
-                <!-- <a th:href="@{/auth/logout}" id="logout-button">
-                <img th:src="@{/images/log-out.svg}" alt="logout">
-            </a> -->
-            </div>
-
-        </div>
-
-
-
-        <!-- <div class="divider"></div> -->
-
-        <!-- <div class="msg-bmvndo">
-        <p>Bem-vindo, <span th:text="${session.usuario.nome}"></span></p>
-    </div> -->
-
+    <div th:replace="~{/fragments/base-professor :: header(${titleHeader})}"></div>
 
         <div class="container">
             <div id="sidebar">
@@ -45,9 +24,6 @@
                 <a href="reunioes.html" th:href="@{/professor/reunioes}">Reuniões</a>
                 <a th:href="@{/auth/logout}">Logout</a>
             </div>
-
-
-
 
         </div>
     </div>

@@ -10,7 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -19,6 +20,20 @@ public class ProfessorController {
 
     @Autowired
     private ProfessorService professorService;
+
+
+    // private HashMap<String, String> pathTo = new HashMap<String, String>();    
+
+    // private List<String> getPath(String page) {
+    // if(page.equals("cadastro")) {
+    //         return Arrays.asList("/css/aluno/main.css", "/css/aluno/cadastro-processo-aluno.css");
+    //     } else if (page.equals("listagem")) {
+    //         return Arrays.asList("/css/aluno/main.css", "/css/aluno/aluno.css");
+    //     }
+    //     return Arrays.asList("/css/aluno/main.css");
+    // }
+
+
 
 
     @GetMapping("/home")
