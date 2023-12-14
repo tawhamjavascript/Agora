@@ -1,25 +1,39 @@
+html,
 body {
-    font-family: 'Sunflower', sans-serif;
-    background-color: #F1F1F1;
-
+    color: #0D4085;
 }
 
 .header {
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #10428C;
+    box-shadow: 0px .8px .8px rgba(0, 0, 0, 0.5);
+    height: 3rem;
+}
 
-    background-color: #10428C;
-    color: white;
-    padding: 10px;
+
+.header h3 {
+    margin-top: .8rem;
+    font-weight: bolder;
 }
 
 .icon {
     font-size: 24px;
     display: inline;
-}
-
-.icon a {
-    color: white;
+    color: #10428C;
     text-decoration: none;
+    background: #F1F1F1;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 30px;
+    border-style: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
 }
 
 .icon a:hover {
@@ -29,7 +43,11 @@ body {
 .tabela {
     margin: 20px;
     padding: 20px;
-    background-color: #f2f2f2;
+    background: #F1F1F1;
+    color: #0D4085;
+    margin: 20px auto;
+    width: 80%;
+
 }
 
 .icon {
@@ -39,18 +57,15 @@ body {
     font-size: 24px;
 }
 
-.tabela {
-    margin: 20px auto;
-    width: 80%;
-}
 
 table {
     width: 100%;
-    border-collapse: collapse;
-    background-color: white;
+    /* border-collapse: collapse;
+    background-color: white; */
 }
-
-th, td {
+/*
+th,
+td {
     text-align: center;
     padding: 10px;
 }
@@ -66,15 +81,15 @@ tr:nth-child(even) {
 
 tr:nth-child(odd) {
     background-color: #D9D9D9;
-}
+} */
 
 #logout-button {
     position: absolute;
     top: 15px;
     right: 10px;
     filter: invert(100%);
- 
- }
+
+}
 
 a {
     color: #10428C;
@@ -111,11 +126,11 @@ button[type="submit"]:hover {
     margin-top: 20px;
 }
 
-th, td {
-    border: 1px solid #ccc;
+ th,td {
+    /* border: 1px solid #ccc; */
     padding: 10px;
     text-align: left;
-}
+} 
 
 .form {
     display: flex;

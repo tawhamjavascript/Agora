@@ -13,44 +13,40 @@
 </head>
 
 <body>
-    <div class="header">
-        <div class="icon">
-            <a th:href="@{/professor/home}">&#9665; </a>
-        </div>
-        <h1>Processos</h1>
-        <a th:href="@{/auth/logout}" id="logout-button">
-            <img th:src="@{/images/log-out.svg}" alt="logout">
-        </a>
-    </div>
+    <div>
+       
+        <div th:replace="~{/fragments/base-professor :: header(${titleHeader})}"></div>
 
-    <div class="tabela">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nº</th>
-                    <th>Assunto</th>
-                    <th>Status</th>
-                    <th>Documento</th>
-                    <th>Votar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="processo : ${processos}" th:object="${processo}">
-                    <td th:text="${processo.numero}"></td>
-                    <td th:text="${processo.assunto.nome}"></td>
-                    <td th:text="${processo.status.getStatus()}"></td>
-                    <td th:if="${processo.anexos.size() == 0}" > Sem documentos </td>
-                    <td th:unless="${processo.anexos.size() == 0}">
-                        <a href="#">Ver Documento</a>
-                    </td>
-                    <td th:if="${processo.decisaoRelator == null}">
-                        <a th:href="@{/professor/processo/{id}(id=${processo.id})}">Votar</a>
-                    </td>
-                    <td th:unless="${processo.decisaoRelator == null}" th:text="${processo.decisaoRelator}">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="tabela">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Assunto</th>
+                        <th>Status</th>
+                        <th>Documento</th>
+                        <th>Votar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="processo : ${processos}" th:object="${processo}">
+                        <td th:text="${processo.numero}"></td>
+                        <td th:text="${processo.assunto.nome}"></td>
+                        <td th:text="${processo.status.getStatus()}"></td>
+                        <td th:if="${processo.anexos.size() == 0}"> Sem documentos </td>
+                        <td th:unless="${processo.anexos.size() == 0}">
+                            <a href="#">Ver Documento</a>
+                        </td>
+                        <td th:if="${processo.decisaoRelator == null}">
+                            <a th:href="@{/professor/processo/{id}(id=${processo.id})}">Votar</a>
+                        </td>
+                        <td th:unless="${processo.decisaoRelator == null}" th:text="${processo.decisaoRelator}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
+
 </html>
