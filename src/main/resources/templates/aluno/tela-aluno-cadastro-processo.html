@@ -32,7 +32,6 @@
           <label for="assunto-input" class="form-label">Assunto:</label>
           <select class="form-select" th:field="*{assunto.id}">
               <option th:each="ass : ${assuntoItens}" th:value="${ass.id}" th:text="${ass.nome}"></option>
-
           </select> 
         
           <label for="descricao-input" class="form-label">Descrição:</label>

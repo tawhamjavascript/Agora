@@ -53,6 +53,21 @@ html, body {
   background: #F1F1F1;
 }
 
+#sidebar input {
+  width: 10rem;
+  height: 3rem;
+
+  color: black;
+  font-weight: 700;
+  font-size: large;
+  text-decoration: none;
+
+  border-radius: 8px;
+  background: #F1F1F1;
+
+  border: none;
+}
+
 #main {
   display: flex;
   flex-direction: column;

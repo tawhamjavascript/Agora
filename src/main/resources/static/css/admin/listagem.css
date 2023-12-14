@@ -7,3 +7,10 @@
 
   width: 38vw;
 }
+
+#tabela button {
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
