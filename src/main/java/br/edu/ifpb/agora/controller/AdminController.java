@@ -31,9 +31,13 @@ public class AdminController {
     }
 
     @GetMapping("/curso")
-    public ModelAndView getCursos(ModelAndView mav) {
+    public ModelAndView getCursos(ModelAndView mav,@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Curso> cursos = adminService.allCourses(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(cursos.getNumber() + 1, cursos.getTotalElements(), cursos.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         mav.setViewName("admin/listagem-cursos");
-        mav.addObject("cursos", adminService.allCourses());
+        mav.addObject("cursos", cursos);
         return mav;
     }
 
