@@ -5,6 +5,8 @@ import br.edu.ifpb.agora.repository.*;
 import br.edu.ifpb.agora.util.PasswordUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -113,7 +115,11 @@ public class AdminService {
         alunoRepository.save(aluno);
     }
 
-    public List<Aluno> allStudent() {
+    public Page<Aluno> allStudent(Pageable page) {
+        return alunoRepository.findAll(page);
+    }
+
+    public List<Aluno> allStudent(){
         return alunoRepository.findAll();
     }
 
@@ -138,8 +144,11 @@ public class AdminService {
     }
 
     public List<Curso> allCourses() {
-
         return cursoRepository.findAll();
+    }
+
+    public Page<Curso> allCourses(Pageable p){
+        return cursoRepository.findAll(p);
     }
 
     public Curso getCourse(Long id) {

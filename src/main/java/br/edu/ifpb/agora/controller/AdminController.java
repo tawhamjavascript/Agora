@@ -2,6 +2,9 @@ package br.edu.ifpb.agora.controller;
 
 import br.edu.ifpb.agora.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -118,9 +121,13 @@ public class AdminController {
     }
 
     @GetMapping("/aluno")
-    public ModelAndView getAlunos(ModelAndView mav) {
+    public ModelAndView getAlunos(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page -1 , size);
+        Page<Aluno> pageAlunos = adminService.allStudent(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(pageAlunos.getNumber() + 1, pageAlunos.getTotalElements(), pageAlunos.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         mav.setViewName("admin/listagem-aluno");
-        mav.addObject("alunos", adminService.allStudent());
+        mav.addObject("alunos", pageAlunos);
         return mav;
     }
 
