@@ -226,4 +226,8 @@ public class AdminService {
     public Page<Professor> allTeachers(Pageable paging) {
         return this.professorRepository.findAll(paging);
     }
+
+    public Page<Colegiado> allColegiados(Pageable paging) {
+        return this.colegiadoRepository.findAll(paging);
+    }
 }

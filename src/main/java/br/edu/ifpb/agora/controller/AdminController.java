@@ -222,9 +222,13 @@ public class AdminController {
 
 
     @GetMapping("/colegiado")
-    public ModelAndView getColegiados(ModelAndView mav) {
+    public ModelAndView getColegiados(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Colegiado> colegiados = adminService.allColegiados(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(colegiados.getNumber() + 1, colegiados.getTotalElements(), colegiados.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         mav.setViewName("admin/listagem-colegiados");
-        mav.addObject("colegiados", adminService.allColegiados());
+        mav.addObject("colegiados", colegiados);
         return mav;
     }
 
