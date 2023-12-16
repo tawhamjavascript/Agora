@@ -1,15 +1,26 @@
 body {
-    font-family: 'Sunflower', sans-serif;
-    background-color: #F1F1F1;
-    color: #10428C;
+
+    color: #0D4085;
 }
 
 .header {
-    background-color: #10428C;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #10428C;
+    box-shadow: 0px .8px .8px rgba(0, 0, 0, 0.5);
+    height: 3rem;
 }
+
+.header h3 {
+    margin-top: .8rem;
+    font-weight: bolder;
+}
+
+.middle-div {
+    margin-left: 10rem;
+}
+
 
 .header .icon {
     font-size: 24px;
@@ -50,4 +61,57 @@ button {
     margin: 10px 0;
     border-radius: 4px; /* Borda arredondada do Bootstrap */
 
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #sidebar a {
+    margin-bottom: 2rem;
+    width: 10rem;
+    height: 3rem;
+    color: black;
+    font-weight: 700;
+    font-size: large;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    border-radius: 8px;
+    background: #F1F1F1;
+  }
+
+  #sidebar input {
+    width: 10rem;
+    height: 3rem;
+  
+    color: black;
+    font-weight: 700;
+    font-size: large;
+    text-decoration: none;
+  
+    border-radius: 8px;
+    background: #F1F1F1;
+  
+    border: none;
+  }
+
+
+a {
+    text-decoration: none;
+    color: black;
+    background: #F1F1F1;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: .1rem;
+
+}
+
+a:hover {
+   color: black;
 }

@@ -13,15 +13,9 @@
 
 <body>
 <div>
-    <div class="header">
-      <div class="icon">
-        <a th:href="@{/professor/processos}">&#9665; </a>
-    </div>
-        <h1>Votação do Processo</h1>
-    </div>
-
-   
-
+    <div th:replace="~{/fragments/base-professor :: header('Votação')}"></div>
+    
+    
     <form class="vote-form" method="post" th:action="@{/professor/processo}" th:object="${processo}">
         <input type="hidden" name="id" th:field="*{id}" />
 
@@ -38,9 +32,10 @@
 
         <p th:if="${#fields.hasErrors('textoRelator')}" th:errorclass="error" th:errors="*{textoRelator}"></p>
 
-
+        <a th:href="@{/professor/processos}">Retroceder</a>
         <button type="submit"> Votar </button>
     </form>
+    
 </div>
 </body>
 

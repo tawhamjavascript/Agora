@@ -16,9 +16,11 @@
 <body>
     <div>
 
-        <div th:replace="~{/fragments/base-professor :: header(${titleHeader})}"></div>
+        <div th:replace="~{/fragments/base-professor :: header('Reuniões do Professor')}"></div>
+
+        <div th:replace="~{/fragments/base-professor :: menu}"></div>
         
-        <div class="container centro">
+        <div class="centro">
             <form class="filter-form" method="get" th:action="@{/professor/reunioes/filtro}">
                 <label for="status-filter">Filtrar por status:</label>
 

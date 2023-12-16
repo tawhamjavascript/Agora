@@ -60,6 +60,10 @@ body {
     text-align: center;
 }
 
+.middle-div {
+  margin-left: 10rem;
+}
+
 .container {
     display: flex;
     align-items: center;

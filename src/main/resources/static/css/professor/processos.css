@@ -140,3 +140,52 @@ button[type="submit"]:hover {
 .btn-votar {
     margin-right: 10px;
 }
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    margin-top: 3rem;
+    gap: 8rem;
+  }
+
+  #sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #sidebar a {
+    margin-bottom: 2rem;
+    width: 10rem;
+    height: 3rem;
+    color: black;
+    font-weight: 700;
+    font-size: large;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    border-radius: 8px;
+    background: #F1F1F1;
+  }
+
+  #sidebar input {
+    width: 10rem;
+    height: 3rem;
+  
+    color: black;
+    font-weight: 700;
+    font-size: large;
+    text-decoration: none;
+  
+    border-radius: 8px;
+    background: #F1F1F1;
+  
+    border: none;
+  }
+
+  .middle-div {
+    margin-left: 10rem;
+}
