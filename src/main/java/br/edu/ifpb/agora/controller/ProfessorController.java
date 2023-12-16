@@ -1,13 +1,13 @@
 package br.edu.ifpb.agora.controller;
 
 import br.edu.ifpb.agora.model.*;
-import br.edu.ifpb.agora.service.AdminService;
 import br.edu.ifpb.agora.service.ProfessorService;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,10 +30,14 @@ public class ProfessorController {
 
 
     @GetMapping("/reunioes")
-    public ModelAndView reunioes(ModelAndView mav, HttpSession session) {
+    public ModelAndView reunioes(ModelAndView mav, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
         Usuario professor = (Usuario) session.getAttribute("usuario");
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Reuniao> reunioes = professorService.listarReunioes(professor, paging);
+        NavPage navPage = NavPageBuilder.newNavPage(reunioes.getNumber() + 1, reunioes.getTotalElements(), reunioes.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         mav.setViewName("professor/reunioes");
-        mav.addObject("reunioes", professorService.listarReunioes(professor));
+        mav.addObject("reunioes", reunioes);
         return mav;
     }
 
@@ -56,10 +60,14 @@ public class ProfessorController {
     }
 
     @GetMapping("/processos")
-    public ModelAndView processos(ModelAndView mav, HttpSession session) {
+    public ModelAndView processos(ModelAndView mav, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
         Usuario professor = (Usuario) session.getAttribute("usuario");
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Processo> processos = professorService.listarProcessosDesignados(professor, paging);
+        NavPage navPage = NavPageBuilder.newNavPage(processos.getNumber() +1, processos.getTotalElements(), processos.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         mav.setViewName("professor/processos");
-        mav.addObject("processos", professorService.listarProcessosDesignados(professor));
+        mav.addObject("processos", processos);
         return mav;
     }
 
