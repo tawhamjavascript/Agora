@@ -64,3 +64,10 @@ td, th {
 .message img {
   transform: scale(.8);
 }
+
+#tabela button {
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}

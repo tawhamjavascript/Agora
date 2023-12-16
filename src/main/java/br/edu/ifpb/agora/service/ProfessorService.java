@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -27,8 +28,9 @@ public class ProfessorService {
     @Autowired
     private ReuniaoRepository reuniaoRepository;
 
-    public List<Processo> listarProcessosDesignados(Usuario professor){
-        return processoRepository.findAllByRelatorId(professor.getId());
+    public List<Processo> listarProcessosDesignados(Principal user){
+
+        return processoRepository.findAllByRelatorMatricula(user.getName());
     }
 
     @Transactional
@@ -41,14 +43,16 @@ public class ProfessorService {
     }
 
 
-    public List<Reuniao> listarReunioes(Usuario professor) {
+    public List<Reuniao> listarReunioes(Principal user) {
+        Professor professor = professorRepository.findByMatricula(user.getName());
         return reuniaoRepository.AllReunioesByProfessorAndColegiado(professor.getId());
 
     }
 
-    public List<Reuniao> listarReunioesByStatus(Usuario professor, StatusReuniao status) {
+    public List<Reuniao> listarReunioesByStatus(Principal user, StatusReuniao status) {
+        Professor professor = professorRepository.findByMatricula(user.getName());
         if (status.equals(StatusReuniao.SEM_FILTRO)) {
-            return listarReunioes(professor);
+            return listarReunioes(user);
         }
         return reuniaoRepository.AllReunioesByProfessorAndColegiadoAndStatus(professor.getId(), status);
     }

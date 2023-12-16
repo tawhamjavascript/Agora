@@ -1,5 +1,6 @@
 package br.edu.ifpb.agora.service;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -28,28 +29,30 @@ public class CoordenadorService {
     @Autowired
     private AlunoRepository alunoRepository;
 
-    public List<Processo> listarTodosProcessosDoColegiado(Long id) {
+    public List<Processo> listarTodosProcessosDoColegiado(Principal user) {
 
-        Professor coordenador = professorRepository.findById(id).get();
+        Professor coordenador = professorRepository.findByMatricula(user.getName());
         return processoRepository.findAllByCursoId(coordenador.getCurso().getId());
 
     }
 
-    public List<Professor> listarTodosProfessoresDoColegiado(Long id) {
+    public List<Professor> listarTodosProfessoresDoColegiado(Principal user) {
 
-        Professor coordenador = professorRepository.findById(id).get();
+        Professor coordenador = professorRepository.findByMatricula(user.getName());
         Colegiado colegiado = colegiadoRepository.findByCursoId(coordenador.getCurso().getId());
         return colegiado.getMembros();
 
     }
 
-    public List<Aluno> listarTodosAlunosProcesso(Long id) {
-        return alunoRepository.findAllByAlunoAndProcessDistinct(id);
+    public List<Aluno> listarTodosAlunosProcesso(Principal user) {
+        Professor coordenador = professorRepository.findByMatricula(user.getName());
+        return alunoRepository.findAllByAlunoAndProcessDistinct(coordenador.getCurso().getId());
 
 
     }
 
-    public List<Processo> filtro(Long cursoId, String filtro){
+    public List<Processo> filtro(Principal user, String filtro){
+        Long cursoId = professorRepository.findByMatricula(user.getName()).getCurso().getId();
         if (filtro.isBlank()) {
             return processoRepository.findAllByCursoId(cursoId);
 

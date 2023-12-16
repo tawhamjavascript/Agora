@@ -14,19 +14,18 @@
 </head>
 
 <body>
-    <div>
 
     <div th:replace="~{/fragments/base-professor :: header(${titleHeader})}"></div>
 
-        <div class="container">
-            <div id="sidebar">
-                <a href="processos.html" th:href="@{/professor/processos}">Processos</a>
-                <a href="reunioes.html" th:href="@{/professor/reunioes}">Reuniões</a>
-                <a th:href="@{/auth/logout}">Logout</a>
-            </div>
-
+    <div class="container">
+        <div id="sidebar">
+            <a href="processos.html" th:href="@{/professor/processos}">Processos</a>
+            <a href="reunioes.html" th:href="@{/professor/reunioes}">Reuniões</a>
+            <form th:action="@{/auth/logout}" method="POST">
+                <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="logout">
+                </input>
+            </form>
         </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
 </body>

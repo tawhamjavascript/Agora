@@ -2,13 +2,17 @@ package br.edu.ifpb.agora.service;
 
 import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.repository.*;
-import br.edu.ifpb.agora.util.PasswordUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import org.springframework.beans.BeanUtils;
 
 @Service
 public class AdminService {
@@ -27,34 +31,93 @@ public class AdminService {
 
     @Autowired ColegiadoRepository colegiadoRepository;
 
+    @Autowired AuthorityRepository authorityRepository;
+
+    @Autowired UserRepository userRepository;
+
     @Transactional
     public void registerTeacher(Professor professor) {
+        professor.setAdmin(false);
+        PasswordEncoder hash = new BCryptPasswordEncoder();
         if (professor.isCoordenador()) {
             Professor atualCoordenador = professorRepository.findByCoordenadorTrueAndCursoId(professor.getCurso().getId());
-            if (atualCoordenador != null) {
+            System.out.println(atualCoordenador);
+            if (atualCoordenador != null && professor.getId() != atualCoordenador.getId()) {
                 atualCoordenador.setCoordenador(false);
+                List<Authority> authorities = atualCoordenador.getUser().getAuthorities();
+                for(int i = 0; i < authorities.size(); i++) {
+                    System.out.println("Entrando no for que verifica se tem o role_coordenador ");
 
+                    if(authorities.get(i).getAuthority().equals("ROLE_COORDENADOR")) {
+                        System.out.println("Entrando no if que verifica se tem o role_coordenador");
+                        
+                        authorityRepository.delete(authorities.remove(i));
+                        userRepository.save(atualCoordenador.getUser());
+                    }
+
+                }
             }
+            
         }
-        if(professor.getId() != null) {
-            Professor professorBD = professorRepository.findById(professor.getId()).get();
+        if (professor.getId() == null) {
+            System.out.println("o id é nulo");
+            String passwordEncrypt = hash.encode((CharSequence)professor.getSenha());
+            User user = new User(professor.getMatricula(), passwordEncrypt);
+            user.setEnabled(true);
 
-            if (PasswordUtil.checkPass(professor.getSenha(), professorBD.getSenha())) {
-                professor.setSenha(professorBD.getSenha());
-
-            } else {
-                professor.setSenha(PasswordUtil.hashPassword(professor.getSenha()));
+            List<Authority> authorities = new ArrayList<Authority>(2);
+            authorities.add(new Authority(user, "ROLE_PROFESSOR"));
+            if (professor.isCoordenador()) {
+                authorities.add(new Authority(user, "ROLE_COORDENADOR"));
             }
+            user.setAuthorities(authorities);
+            professor.setUser(user);
+            professorRepository.save(professor);
 
-        } else {
-            professor.setSenha(PasswordUtil.hashPassword(professor.getSenha()));
         }
-        professorRepository.save(professor);
+        
+        else {
+            System.out.println("Professor existe no banco");
+            Professor professorBD = professorRepository.findByMatricula(professor.getMatricula());
+            
+            System.out.println(" " + professorBD.isCoordenador() + " " + professor.isCoordenador());
+            
+            if(!professorBD.isCoordenador() && professor.isCoordenador()) {
+                System.out.println("Professor no BD não é coordenador");
+                User user = professorBD.getUser();
+                user.getAuthorities().add(new Authority(user, "ROLE_COORDENADOR"));
+            }
+            else if (professorBD.isCoordenador() && !professor.isCoordenador()) {
+                System.out.println("Professor no BD é coordenador");
+                User user = professorBD.getUser();
+                List<Authority> authorities = user.getAuthorities();
+                for(int i = 0; i < authorities.size(); i++) {
+                    if(authorities.get(i).getAuthority().equals("ROLE_COORDENADOR")) {
+                        System.out.println("retirando flag de coordenador");
+                        authorityRepository.delete(authorities.remove(i));
+                        userRepository.save(user);
+                    }
+                    
+                }
+                user.getAuthorities().forEach((authority) -> System.out.println(authority));
+                
+            }
+            
+            BeanUtils.copyProperties(professor, professorBD, "senha", "processos", "matricula", "user", "colegiado", "votos");
+            boolean matchPassword = hash.matches(professor.getSenha(), professorBD.getSenha());
+            if (!matchPassword) {
+                String passwordEncrypt = hash.encode(professor.getSenha());
+                professorBD.setSenha(passwordEncrypt);
+            }
+            professorRepository.save(professorBD);
+        }
     }
 
     @Transactional
     public void removeTeacher(Long id) {
-        professorRepository.delete(professorRepository.findById(id).get());
+        Professor professor = professorRepository.findById(id).get();
+        professor.getUser().setEnabled(false);
+        professorRepository.delete(professor);
     }
 
     @Transactional
@@ -87,26 +150,33 @@ public class AdminService {
     @Transactional
     public void registerStudent(Aluno aluno) {
         aluno.setAdmin(false);
-        if (aluno.getId() != null) {
-            Aluno alunoBD = alunoRepository.findById(aluno.getId()).get();
+        PasswordEncoder hash = new BCryptPasswordEncoder();
+        if (aluno.getId() == null) {
+            String passwordEncrypt = hash.encode((CharSequence)aluno.getSenha());
+            User user = new User(aluno.getMatricula(), passwordEncrypt);
+            user.setEnabled(true);
+            user.setAuthorities(Collections.singletonList(new Authority(user, "ROLE_ALUNO")));
+            aluno.setUser(user);
+            alunoRepository.save(aluno);
 
-            if (PasswordUtil.checkPass(aluno.getSenha(), alunoBD.getSenha())) {
-                aluno.setSenha(alunoBD.getSenha());
-
-            } else {
-                aluno.setSenha(PasswordUtil.hashPassword(aluno.getSenha()));
-            }
-
-        } else {
-            aluno.setSenha(PasswordUtil.hashPassword(aluno.getSenha()));
         }
 
-        alunoRepository.save(aluno);
+        else {
+            Aluno alunoBD = alunoRepository.findByMatricula(aluno.getMatricula());
+            BeanUtils.copyProperties(aluno, alunoBD, "senha", "processos", "matricula", "user");
+            boolean matchPassword = hash.matches(aluno.getSenha(), alunoBD.getSenha());
+            if (!matchPassword) {
+                String passwordEncrypt = hash.encode(aluno.getSenha());
+                alunoBD.setSenha(passwordEncrypt);
+            }
+            alunoRepository.save(alunoBD);
+        }
     }
-
     @Transactional
     public void removeStudent(Long id) {
-        alunoRepository.delete(alunoRepository.findById(id).get());
+        Aluno aluno = alunoRepository.findById(id).get();
+        aluno.getUser().setEnabled(false);
+        alunoRepository.delete(aluno);
     }
     @Transactional
     public void updateStudent(Aluno aluno) {
@@ -183,7 +253,15 @@ public class AdminService {
 
     @Transactional
     public void salvarColegiado(Colegiado colegiado) {
-        colegiadoRepository.save(colegiado);
+        if (colegiado.getId() == null) {
+            colegiadoRepository.save(colegiado);
+
+        }
+        else {
+            Colegiado colegiadoBD = colegiadoRepository.findById(colegiado.getId()).get();
+            BeanUtils.copyProperties(colegiado, colegiadoBD, "reunioes", "curso");
+        
+        }
     }
 
     @Transactional

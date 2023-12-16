@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -35,27 +36,25 @@ public class CoordenadorController {
     }
 
     @ModelAttribute("relatorItens")
-    public List<Professor> getRelator(HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        return coordenadorService.listarTodosProfessoresDoColegiado(usuario.getId());
+    public List<Professor> getRelator(Principal user) {
+        return coordenadorService.listarTodosProfessoresDoColegiado(user);
 
     }
 
     @ModelAttribute("alunoItens")
-    public List<Aluno> getAluno(HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        return coordenadorService.listarTodosAlunosProcesso(usuario.getCurso().getId());
+    public List<Aluno> getAluno(Principal principal) {
+        
+        return coordenadorService.listarTodosAlunosProcesso(principal);
 
     }
 
     @GetMapping("/processo")
-    public ModelAndView processos(ModelAndView modelAndView, HttpSession session) {
+    public ModelAndView processos(ModelAndView modelAndView, Principal principal) {
         pathTo.put("listar", "/coordenador/processo");
         pathTo.put("logout", "/auth/logout");
 
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
         modelAndView.setViewName("coordenador/listagem-processos");
-        modelAndView.addObject("processos", coordenadorService.listarTodosProcessosDoColegiado(usuario.getId()));
+        modelAndView.addObject("processos", coordenadorService.listarTodosProcessosDoColegiado(principal));
 
         modelAndView.addObject("caminho", pathTo);
         modelAndView.addObject("stylePaths", getPath());
@@ -63,14 +62,13 @@ public class CoordenadorController {
     }
 
     @GetMapping("/processo/consultar")
-    public ModelAndView processosConsultar(@RequestParam(name = "filtro") String filtro, ModelAndView modelAndView, HttpSession session) {
+    public ModelAndView processosConsultar(@RequestParam(name = "filtro") String filtro, ModelAndView modelAndView, Principal principal) {
         pathTo.put("listar", "/coordenador/processo");
         pathTo.put("logout", "/auth/logout");
 
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
         modelAndView.setViewName("coordenador/listagem-processos");
-        modelAndView.addObject("processos", coordenadorService.filtro(usuario.getCurso().getId(), filtro));
-    
+        modelAndView.addObject("processos", coordenadorService.filtro(principal, filtro));
+
         modelAndView.addObject("caminho", pathTo);
         modelAndView.addObject("stylePaths", getPath());
         return modelAndView;

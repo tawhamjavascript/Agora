@@ -18,7 +18,7 @@
         <h3 th:text="${titleHeader}"></h3>
     </div>
     <div id="nome-professor">
-        <h3 th:text="${session.usuario.nome}"></h3>
+        <h3 sec:authentication="name"></h3>
     </div>
 </div>
 

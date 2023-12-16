@@ -96,7 +96,7 @@ public class AdminController {
         return mav;
     }
 
-    @DeleteMapping("/curso/{id}")
+    @GetMapping("/curso/deletar/{id}")
     public ModelAndView deleteCurso(@PathVariable(value = "id") Long id, ModelAndView mav) {
         adminService.removeCourse(id);
         mav.setViewName("redirect:/admin/curso");
@@ -160,7 +160,7 @@ public class AdminController {
         return mav;
     }
 
-    @DeleteMapping("/assunto/{id}")
+    @GetMapping("/assunto/deletar/{id}")
     public ModelAndView deleteAssunto(@PathVariable(value = "id") Long id, ModelAndView mav) {
         adminService.removeSubject(id);
         mav.setViewName("redirect:/admin/assunto");
@@ -228,7 +228,7 @@ public class AdminController {
         return mav;
     }
 
-    @DeleteMapping("/aluno/{id}")
+    @GetMapping("/aluno/deletar/{id}")
     public ModelAndView deleteAluno(@PathVariable(value = "id") Long id, ModelAndView mav) {
         adminService.removeStudent(id);
         mav.setViewName("redirect:/admin/aluno");
@@ -289,7 +289,7 @@ public class AdminController {
         return mav;
     }
 
-    @DeleteMapping("/professor/{id}")
+    @GetMapping("/professor/deletar/{id}")
     public ModelAndView deleteProfessor(@PathVariable(value = "id") Long id, ModelAndView mav) {
         adminService.removeTeacher(id);
         mav.setViewName("redirect:/admin/professor");

@@ -1,5 +1,6 @@
 package br.edu.ifpb.agora.service;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -23,11 +24,12 @@ public class AlunoService {
     private ProcessoRepository processoRepository;
 
     @Transactional
-    public void cadastraNovoProcesso(Long id, Processo processo){
+    public void cadastraNovoProcesso(Principal user, Processo processo){
         processo.setNumero("" + System.currentTimeMillis());
         Date dataRecepcao = new Date();
+     
 
-        Aluno aluno = alunoRepository.findById(id).get();
+        Aluno aluno = alunoRepository.findByMatricula(user.getName());
         aluno.addProcesso(processo);
 
         processo.setStatus(StatusEnum.CRIADO);
@@ -42,64 +44,57 @@ public class AlunoService {
         processoRepository.save(processo);
     }
 
-    public List<Processo> consultaProcessos(Long id){
-        return processoRepository.findAllByInteressadoId(id);
+
+    public List<Processo> consultaProcessos(Principal user){
+        return processoRepository.findAllByInteressadoMatricula(user.getName());
     }
 
 
-    public List<Processo> filtrarProcesso(Long id, String filtro, String order) {
+    public List<Processo> filtrarProcesso(Principal user, String filtro, String order) {
         if (filtro.isBlank()) {
-            return consultaProcessos(id);
+            return consultaProcessos(user);
 
         }
         try {
             Long assuntoId = Long.parseLong(filtro);
             if (order.isBlank()) {
-                return consultaProcessosPorAssunto(id, assuntoId);
+                return consultaProcessosPorAssunto(user.getName(), assuntoId);
             }
             else {
-                return consultarProcessosPorAssuntoOrdenados(id, assuntoId);
+                return consultarProcessosPorAssuntoOrdenados(user.getName(), assuntoId);
             }
 
         } catch (NumberFormatException e) {
             StatusEnum filtroEnum = StatusEnum.valueOf(filtro);
             if (order.isBlank()) {
-                return consultaProcessosPorStatus(id, filtroEnum);
+                return consultaProcessosPorStatus(user.getName(), filtroEnum);
             }
             else {
-                return consultarProcessosPorStatusOrdenados(id, filtroEnum);
+                return consultarProcessosPorStatusOrdenados(user.getName(), filtroEnum);
             }
         }
     }
 
-    public List<Processo> consultaProcessosPorAssunto(Long idAluno, Long id){
-        return processoRepository.findAllByInteressadoIdAndAssuntoId(idAluno, id);
+    public List<Processo> consultaProcessosPorAssunto(String matricula, Long id){
+        return processoRepository.findAllByInteressadoMatriculaAndAssuntoId(matricula, id);
     }
 
-    public List<Processo> consultaProcessosPorStatus(Long id, StatusEnum status) {
-        return processoRepository.findAllByInteressadoIdAndStatus(id, status);
-
-    }
-
-    public List<Processo> consultarProcessosPorAssuntoOrdenados(Long idAluno, Long id){
-        return processoRepository.findAllByInteressadoIdAndAssuntoIdOrderByDataRecepcaoDesc(idAluno, id);
+    public List<Processo> consultaProcessosPorStatus(String matricula, StatusEnum status) {
+        return processoRepository.findAllByInteressadoMatriculaAndStatus(matricula, status);
 
     }
 
-    public List<Processo> consultarProcessosPorStatusOrdenados(Long id, StatusEnum status){
-        return processoRepository.findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(id, status);
-
-
+    public List<Processo> consultarProcessosPorAssuntoOrdenados(String matricula, Long id){
+        return processoRepository.findAllByInteressadoMatriculaAndAssuntoIdOrderByDataRecepcaoDesc(matricula, id);
 
     }
 
-    public List<Processo> consultarProcessosOrdenados(Aluno aluno){
-        return processoRepository.findAllByInteressadoIdOrderByDataRecepcaoDesc(6L);
+    public List<Processo> consultarProcessosPorStatusOrdenados(String matricula, StatusEnum status){
+        return processoRepository.findAllByInteressadoMatriculaAndStatusOrderByDataRecepcaoDesc(matricula, status);
+
     }
 
-    @Transactional
-    public void adicionarAnexo(Processo processo, byte[] anexo) {
-        processo.addAnexos(anexo);
-        processoRepository.save(processo);
+    public List<Processo> consultarProcessosOrdenados(String matricula){
+        return processoRepository.findAllByInteressadoMatriculaOrderByDataRecepcaoDesc(matricula);
     }
 }

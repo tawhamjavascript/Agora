@@ -13,11 +13,14 @@
 <div id="cabecalho" th:fragment="header(titleHeader)">
   <div></div>
   <div><h3 th:text="${titleHeader}"></h3></div>
-  <div id="nome-aluno"><h3 th:text="${session.usuario.nome}"></h3></div>
+  <div id="nome-aluno"> <h3 sec:authentication="name"> </h3></div>
 </div>
 
 <div id="sidebar" th:fragment="navmenu">
   <a th:href="@{${caminho['novoProcesso']}}">Novo Processos</a>
   <a th:href="@{${caminho['listar']}}">Listar Processos</a>
-  <a th:href="@{${caminho['logout']}}">Logout</a>
+  <form class="form-inline my-2 my-lg-0" th:action="@{/auth/logout}" method="POST">
+    <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="logout">
+    </input>
+  </form>
 </div>

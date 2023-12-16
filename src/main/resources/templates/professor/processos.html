@@ -14,6 +14,16 @@
 
 <body>
     <div>
+        <!-- <div class="header">
+            <div class="icon">
+                <a th:href="@{/professor/home}">&#9665; </a>
+            </div>
+            <h1>Processos</h1>
+            <form class="form-inline my-2 my-lg-0" th:action="@{/auth/logout}" method="POST">
+                <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="logout">
+                </input>
+            </form>
+        </div> -->
        
         <div th:replace="~{/fragments/base-professor :: header(${titleHeader})}"></div>
 
