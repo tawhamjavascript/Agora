@@ -218,4 +218,8 @@ public class AdminService {
         professorRepository.save(professor);
         colegiadoRepository.save(colegiado);
     }
+
+    public Page<Assunto> allSubjects(Pageable paging) {
+        return this.assuntoRepository.findAll(paging);
+    }
 }

@@ -31,7 +31,7 @@ public class AdminController {
     }
 
     @GetMapping("/curso")
-    public ModelAndView getCursos(ModelAndView mav,@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+    public ModelAndView getCursos(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
         Pageable paging = PageRequest.of(page -1, size);
         Page<Curso> cursos = adminService.allCourses(paging);
         NavPage navPage = NavPageBuilder.newNavPage(cursos.getNumber() + 1, cursos.getTotalElements(), cursos.getTotalPages(), size);
@@ -78,9 +78,13 @@ public class AdminController {
 
 
     @GetMapping("/assunto")
-    public ModelAndView getAssuntos(ModelAndView mav) {
+    public ModelAndView getAssuntos(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Assunto> assuntos = adminService.allSubjects(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(assuntos.getNumber() + 1, assuntos.getTotalElements(), assuntos.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         mav.setViewName("admin/listagem-assunto-processo-reuniao");
-        mav.addObject("assuntos", adminService.allSubjects());
+        mav.addObject("assuntos", assuntos);
         return mav;
     }
 
