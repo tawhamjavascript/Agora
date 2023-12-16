@@ -175,9 +175,13 @@ public class AdminController {
     }
 
     @GetMapping("/professor")
-    public ModelAndView getProfessores(ModelAndView mav) {
+    public ModelAndView getProfessores(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Professor> professores = adminService.allTeachers(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(professores.getNumber() + 1, professores.getTotalElements(), professores.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         mav.setViewName("admin/listagem-professor");
-        mav.addObject("professores", adminService.allTeachers());
+        mav.addObject("professores", professores);
         return mav;
     }
 

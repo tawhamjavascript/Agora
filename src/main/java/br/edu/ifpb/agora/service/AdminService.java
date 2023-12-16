@@ -222,4 +222,8 @@ public class AdminService {
     public Page<Assunto> allSubjects(Pageable paging) {
         return this.assuntoRepository.findAll(paging);
     }
+
+    public Page<Professor> allTeachers(Pageable paging) {
+        return this.professorRepository.findAll(paging);
+    }
 }
