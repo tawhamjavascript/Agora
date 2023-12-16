@@ -5,6 +5,8 @@ import br.edu.ifpb.agora.model.Processo;
 import br.edu.ifpb.agora.model.Professor;
 import br.edu.ifpb.agora.model.StatusEnum;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,6 +15,7 @@ import java.util.List;
 public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 
     public List<Processo> findAllByInteressadoId(Long id);
+    public Page<Processo> findAllByInteressadoId(Long id, Pageable p);
 
     public List<Processo> findAllByInteressadoIdAndAssuntoId(Long id, Long idAssunto);
 
