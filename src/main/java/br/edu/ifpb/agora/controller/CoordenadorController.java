@@ -2,9 +2,11 @@ package br.edu.ifpb.agora.controller;
 
 
 import br.edu.ifpb.agora.model.*;
-import br.edu.ifpb.agora.service.ProfessorService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import br.edu.ifpb.agora.service.CoordenadorService;
@@ -40,10 +42,14 @@ public class CoordenadorController {
     }
 
     @GetMapping("/processo")
-    public ModelAndView processos(ModelAndView modelAndView, HttpSession session) {
+    public ModelAndView processos(ModelAndView modelAndView, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Processo> processos = coordenadorService.listarTodosProcessosDoColegiado(usuario.getId(), paging);
+        NavPage navPage = NavPageBuilder.newNavPage(processos.getNumber() + 1, processos.getTotalElements(), processos.getTotalPages(), size);
+        modelAndView.addObject("navPage", navPage);
         modelAndView.setViewName("coordenador/listagem-processos");
-        modelAndView.addObject("processos", coordenadorService.listarTodosProcessosDoColegiado(usuario.getId()));
+        modelAndView.addObject("processos", processos);
         return modelAndView;
     }
 
