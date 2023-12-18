@@ -2,6 +2,12 @@ package br.edu.ifpb.agora.service;
 
 import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.repository.*;
+import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.AdicionarProfessorHandler;
+import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.AlterarCoordenadorParaProfessorHandler;
+import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.AlterarProfessorParaCoordenadorHandler;
+import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.AtualizarCoordenadorHandler;
+import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.BaseHandler;
+import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.CopiandoDadosSalvandoSenha;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,42 +43,25 @@ public class AdminService {
 
     @Transactional
     public void registerTeacher(Professor professor) {
+        BaseHandler firstHandler = null;
         professor.setAdmin(false);
         PasswordEncoder hash = new BCryptPasswordEncoder();
         if (professor.isCoordenador()) {
-            Professor atualCoordenador = professorRepository.findByCoordenadorTrueAndCursoId(professor.getCurso().getId());
-            System.out.println(atualCoordenador);
-            if (atualCoordenador != null && professor.getId() != atualCoordenador.getId()) {
-                atualCoordenador.setCoordenador(false);
-                List<Authority> authorities = atualCoordenador.getUser().getAuthorities();
-                for(int i = 0; i < authorities.size(); i++) {
-                    System.out.println("Entrando no for que verifica se tem o role_coordenador ");
-
-                    if(authorities.get(i).getAuthority().equals("ROLE_COORDENADOR")) {
-                        System.out.println("Entrando no if que verifica se tem o role_coordenador");
-                        
-                        authorityRepository.delete(authorities.remove(i));
-                        userRepository.save(atualCoordenador.getUser());
-                    }
-
-                }
-            }
             
+            Professor atualCoordenador = professorRepository.findByCoordenadorTrueAndCursoId(professor.getCurso().getId());
+            if (atualCoordenador != null && professor.getId() != atualCoordenador.getId()) {
+                firstHandler = new AtualizarCoordenadorHandler(professorRepository, authorityRepository, userRepository, atualCoordenador, professor);
+                
+            } 
         }
         if (professor.getId() == null) {
-            System.out.println("o id é nulo");
-            String passwordEncrypt = hash.encode((CharSequence)professor.getSenha());
-            User user = new User(professor.getMatricula(), passwordEncrypt);
-            user.setEnabled(true);
-
-            List<Authority> authorities = new ArrayList<Authority>(2);
-            authorities.add(new Authority(user, "ROLE_PROFESSOR"));
-            if (professor.isCoordenador()) {
-                authorities.add(new Authority(user, "ROLE_COORDENADOR"));
+            BaseHandler adicionarProfessorHandler = new AdicionarProfessorHandler(professorRepository, authorityRepository, userRepository, null, professor);
+            if (firstHandler == null) {
+                firstHandler = adicionarProfessorHandler;
             }
-            user.setAuthorities(authorities);
-            professor.setUser(user);
-            professorRepository.save(professor);
+            else {
+                firstHandler.setNextHandler(adicionarProfessorHandler);
+            }
 
         }
         
@@ -84,33 +73,66 @@ public class AdminService {
             
             if(!professorBD.isCoordenador() && professor.isCoordenador()) {
                 System.out.println("Professor no BD não é coordenador");
-                User user = professorBD.getUser();
-                user.getAuthorities().add(new Authority(user, "ROLE_COORDENADOR"));
+                BaseHandler alterarProfessorParaCoordenador = new AlterarProfessorParaCoordenadorHandler(professorRepository, authorityRepository, userRepository, professorBD, professor);
+
+                if (firstHandler == null) {
+                    firstHandler = alterarProfessorParaCoordenador;
+              
+                }
+                else {
+                    if (firstHandler.getNextHandler() == null) {
+                        firstHandler.setNextHandler(alterarProfessorParaCoordenador);
+                    }
+                    else {
+                        BaseHandler lastHandler = firstHandler;
+                        while(lastHandler.getNextHandler() != null) {
+                            lastHandler = lastHandler.getNextHandler();
+                        }
+                        lastHandler.setNextHandler(alterarProfessorParaCoordenador); 
+                    }
+                }
             }
             else if (professorBD.isCoordenador() && !professor.isCoordenador()) {
-                System.out.println("Professor no BD é coordenador");
-                User user = professorBD.getUser();
-                List<Authority> authorities = user.getAuthorities();
-                for(int i = 0; i < authorities.size(); i++) {
-                    if(authorities.get(i).getAuthority().equals("ROLE_COORDENADOR")) {
-                        System.out.println("retirando flag de coordenador");
-                        authorityRepository.delete(authorities.remove(i));
-                        userRepository.save(user);
-                    }
-                    
+                BaseHandler alterarCoordenadorParaProfessor = new AlterarCoordenadorParaProfessorHandler(professorRepository, authorityRepository, userRepository, professorBD, professor);
+                if (firstHandler == null) {
+                    firstHandler = alterarCoordenadorParaProfessor;
                 }
-                user.getAuthorities().forEach((authority) -> System.out.println(authority));
-                
+                else {
+                    if (firstHandler.getNextHandler() == null) {
+                        firstHandler.setNextHandler(alterarCoordenadorParaProfessor);
+                    }
+                    else {
+                        BaseHandler lastHandler = firstHandler;
+                        while(lastHandler.getNextHandler() != null) {
+                            lastHandler = lastHandler.getNextHandler();
+                        } 
+                        lastHandler.setNextHandler(alterarCoordenadorParaProfessor);
+                    }
+                }  
             }
-            
-            BeanUtils.copyProperties(professor, professorBD, "senha", "processos", "matricula", "user", "colegiado", "votos");
-            boolean matchPassword = hash.matches(professor.getSenha(), professorBD.getSenha());
-            if (!matchPassword) {
-                String passwordEncrypt = hash.encode(professor.getSenha());
-                professorBD.setSenha(passwordEncrypt);
+            BaseHandler copiarDadosSalvandoSenha = new CopiandoDadosSalvandoSenha(professorRepository, authorityRepository, userRepository, professorBD, professor);
+            if (firstHandler == null) {
+                firstHandler = copiarDadosSalvandoSenha;
             }
-            professorRepository.save(professorBD);
+            else {
+                if (firstHandler.getNextHandler() == null) {
+                    firstHandler.setNextHandler(copiarDadosSalvandoSenha);
+                }
+                else {
+                    BaseHandler lastHandler = firstHandler;
+                    while(lastHandler.getNextHandler() != null) {
+                        lastHandler = lastHandler.getNextHandler();
+                    } 
+                    lastHandler.setNextHandler(copiarDadosSalvandoSenha);
+                }
+            }
         }
+        do {
+            System.out.println("entrando no do while");
+            firstHandler.handle();
+            firstHandler = firstHandler.getNextHandler();
+        }
+        while(firstHandler != null);
     }
 
     @Transactional

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <table>
+        <thead>
+            <th> Assunto </th>
+            <th> Aluno </th>
+            <th> anexos </th>
+            <th> Adicionar </th>
+        </thead>
+
+        <tbody th:each="processo : ${processos}">
+            <td th:text="${processo.assunto.nome}"> </td>
+            <td th:text="${processo.interessado.nome}"> </td>
+            <td>
+                <ul> 
+                    <li th:each="anexo : ${anexos}">
+                        <a th:href="@{${anexo.url}}"> </a>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <form th:action="@{/coordenador/sessao/add/processo}" method="post">
+                    <input type="hidden" th:value="${processo.id}" name="idProcesso">
+                    <button type="submit"> <img th:src="@{/images/user-plus.svg}" alt="enviar">  </button> 
+                </form>
+            </td>
+        </tbody>
+    </table>
+</body>

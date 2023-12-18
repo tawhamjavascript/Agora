@@ -18,7 +18,7 @@
 
     
 
-    <title>Admin</title>
+    <title> Admin </title>
 
 
 </head>
@@ -34,9 +34,9 @@
 
     <div class="container">
         <div id="sidebar">
-            <a th:href="">Cadastrar Sessão</a>
-            <a th:href="">Listar Sessões</a>
-            <a th:href="">Home</a>
+            <a>Cadastrar Sessão</a>
+            <a>Listar Sessões</a>
+            <a>Home</a>
         </div>
 
         <div id="main">
@@ -46,50 +46,24 @@
                     <thead>
                         <tr>
                             <th>Identificador</th>
-                            <th>Relator</th>
                             <th>Status</th>
+                            <th> Data </th>
+                            <th> Horário </th>
                             <th>Julgar</th>
-                            <th>Alterar</th>
-                            <th>Excluir</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="">
-                            <td th:text="">3121213213</th>
-                            <td th:text="">Sistemas para Internet</td>
-                            <td th:text=""></td>
-                            <td th:text=""></td>
+                        <tr th:each="reuniao : ${reuniao}">
+                            <td th:text="${reuniao.id}"></th>
+                            <td th:text="${reuniao.status}"></td>
+                            <td th:text="${reuniao.dataReuniao}"> </td>
+                            <td th:text="${reuniao.horario}"> </td>
                             <td>
-                                <a th:href="">
-                                    <img th:src="@{/images/pencil-square.svg}">
+                                <a th:href="@{/coordenador/sessao/julgar}">
+                                    Julgar
                                 </a>
                             </td>
-
-                            <td>
-                                <a th:href="">
-                                    <img th:src="@{images/trash-2.svg}" alt="">
-                                </a>
-                            </td>
-
-                        </tr>
-
-                        <tr th:each="">
-                            <td th:text="">3121213213</th>
-                            <td th:text="">Sistemas para Internet</td>
-                            <td th:text=""></td>
-                            <td th:text=""></td>
-                            <td>
-                                <a th:href="">
-                                    <img th:src="@{/images/pencil-square.svg}">
-                                </a>
-                            </td>
-
-                            <td>
-                                <a th:href="">
-                                    <img th:src="@{images/trash-2.svg}" alt="">
-                                </a>
-                            </td>
-
                         </tr>
                     </tbody>
                 </table>

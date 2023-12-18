@@ -379,11 +379,10 @@ public class AdminController {
 
     }
 
-    @DeleteMapping("/colegiado/{id}/membros/{idProfessor}")
+    @DeleteMapping("/colegiado/{id}/membros/delete/{idProfessor}")
     public ModelAndView deletarMembro(@PathVariable(value = "id") Long idColegiado, @PathVariable(value = "idProfessor") Long idProfessor, ModelAndView mav) {
         adminService.deletarMembro(idColegiado, idProfessor);
-        mav.setViewName("/admin/cadastro-colegiados");
-        mav.addObject("colegiado", adminService.getColegiado(idColegiado));
+        mav.setViewName("redirect:/admin/colegiado/" + idColegiado);
         return mav;
 
     }

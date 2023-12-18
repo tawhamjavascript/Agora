@@ -8,7 +8,8 @@ import br.edu.ifpb.agora.model.StatusEnum;
 import br.edu.ifpb.agora.model.Usuario;
 import br.edu.ifpb.agora.repository.AssuntoRepository;
 import br.edu.ifpb.agora.service.AlunoService;
-import br.edu.ifpb.agora.service.DocumentService;
+import br.edu.ifpb.agora.service.PadraoProjeto.PadraoTemplate.DocumentService;
+import br.edu.ifpb.agora.service.PadraoProjeto.PadraoTemplate.DocumentServiceAnexosProcesso;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class AlunoController {
     private AssuntoRepository assuntoRepository;
 
     @Autowired
-    private DocumentService documentService;
+    private DocumentServiceAnexosProcesso documentService;
 
     @GetMapping("/processo/cadastrar")
     public ModelAndView cadastrarProcesso(ModelAndView mav) {
@@ -145,7 +146,7 @@ public class AlunoController {
         
     }
 
-    @GetMapping("processo/{id}/documentos/{idDoc}")
+    @GetMapping("processo/{id}/anexo/{idDoc}")
     public ResponseEntity<byte[]> getDocumento(@PathVariable("idDoc") Long idDoc) {
         Documento documento = documentService.getDocumento(idDoc);
         System.out.println("chegando aqui");

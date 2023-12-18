@@ -3,7 +3,8 @@ package br.edu.ifpb.agora.controller;
 
 import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.service.ProfessorService;
-import jakarta.servlet.http.HttpSession;
+import br.edu.ifpb.agora.service.PadraoProjeto.ProcessosTemporarios;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.security.Principal;
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+
 
 @Controller
 @RequestMapping("/coordenador")
@@ -28,6 +36,8 @@ public class CoordenadorController {
 
     @Autowired
     private CoordenadorService coordenadorService;
+
+    
 
 
     @ModelAttribute("statusItens")
@@ -87,4 +97,52 @@ public class CoordenadorController {
         mav.setViewName("redirect:/coordenador/processo");
         return mav;
     }
+
+    @GetMapping("/sessao")
+    public ModelAndView getSessoes(Principal principal, ModelAndView mav) {
+        mav.setViewName("coordenador/listagem-sessoes");
+        mav.addObject("reunioes", coordenadorService.getReuniaoDoColegiado(principal));
+        return mav;
+    }
+    
+
+    
+
+    
+    
+    @GetMapping("/sessao/cadastro")
+    public ModelAndView getCadastroSessao(Principal principal, ModelAndView mav) {
+        mav.setViewName("coordenador/cadastro-sessao");
+        mav.addObject("reuniao", new Reuniao());
+        mav.addObject("processos", coordenadorService.getProcessosEmMemoria(principal));
+        return mav;
+    }
+
+    @PostMapping("/sessao/cadastro")
+    public ModelAndView CadastroReuniao(Reuniao reuniao, ModelAndView mav, Principal principal) {
+        coordenadorService.salvarReuniao(principal, reuniao);
+        mav.setViewName("redirect:/coordenador/sessao");
+        return mav;
+        
+        
+       
+    }
+    
+
+    @GetMapping("/sessao/add/processo")
+    public ModelAndView getCadastroProcesso(Principal principal, ModelAndView mav) {
+        mav.setViewName("coordenador/adicionar-processo");
+        mav.addObject("processos", coordenadorService.getProcessosDoCursoEComDecisaoRelator(principal));
+        return mav;
+
+    }
+
+    @PostMapping("/sessao/add/processo")
+    public ModelAndView salvarProcessoEmMemoria(Long id, Principal principal, ModelAndView mav) {
+        coordenadorService.salvarProcessoEmMemoria(principal, id);
+        mav.setViewName("redirect:/coordenador/sessao/add/processo");
+        return mav;
+        
+    }
+    
 }

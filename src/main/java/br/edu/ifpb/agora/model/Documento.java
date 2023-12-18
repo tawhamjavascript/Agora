@@ -42,9 +42,6 @@ public class Documento implements Serializable {
     @JdbcTypeCode(Types.BINARY)
     private byte[] dados;
 
-    @ManyToOne
-    @JoinColumn(name = "id_processo")
-    private Processo processo;
 
     public Documento(String nome, byte[] dados) {
         this.nome = nome;

@@ -7,6 +7,9 @@ import java.util.Optional;
 
 import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.repository.*;
+import br.edu.ifpb.agora.service.PadraoProjeto.ProcessosTemporarios;
+import jakarta.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +32,11 @@ public class CoordenadorService {
     @Autowired
     private AlunoRepository alunoRepository;
 
+    private ProcessosTemporarios processosTemporarios = ProcessosTemporarios.getInstance();
+
+
+
+
     public List<Processo> listarTodosProcessosDoColegiado(Principal user) {
 
         Professor coordenador = professorRepository.findByMatricula(user.getName());
@@ -40,7 +48,14 @@ public class CoordenadorService {
 
         Professor coordenador = professorRepository.findByMatricula(user.getName());
         Colegiado colegiado = colegiadoRepository.findByCursoId(coordenador.getCurso().getId());
-        return colegiado.getMembros();
+
+        if (colegiado == null) {
+            return null;
+        }
+
+        else {
+            return colegiado.getMembros();
+        }
 
     }
 
@@ -88,6 +103,48 @@ public class CoordenadorService {
         processoBD.setStatus(StatusEnum.DISTRIBUIDO);
         processoBD.setDataDistribuicao(new Date());
         processoRepository.save(processoBD);
+    }
+
+
+    public List<Processo> getProcessosDoCursoEComDecisaoRelator(Principal principal) {
+        Professor professor = professorRepository.findByMatricula(principal.getName());
+        return processoRepository.findAllByStatusAndCursoIdAndDecisaoRelatorIsNotNull(StatusEnum.DISTRIBUIDO, professor.getCurso().getId());
+        
+    }
+
+    public List<Reuniao> getReuniaoDoColegiado(Principal user) {
+        Professor professor = professorRepository.findByMatricula(user.getName());
+        Colegiado colegiado = colegiadoRepository.findByCursoId(professor.getCurso().getId());
+        List<Reuniao> reunioes = reuniaoRepository.findByColegiadoId(colegiado.getId());
+        return reunioes;
+    }
+
+    
+    public void salvarReuniao(Principal user, Reuniao reuniao) {
+        List<Processo> processos = processosTemporarios.deletaProcessos(user.getName());
+        reuniao.setProcessos(processos);
+        reuniao.setStatus(StatusReuniao.PROGRAMADA);
+
+        Professor professor = professorRepository.findByMatricula(user.getName());
+        Colegiado colegiado = colegiadoRepository.findByCursoId(professor.getCurso().getId());
+
+        colegiado.addReuniao(reuniao);
+        reuniao.setColegiado(colegiado);
+
+        colegiadoRepository.save(colegiado);
+        reuniaoRepository.save(reuniao);
+    }
+
+    public void salvarProcessoEmMemoria(Principal user, Long idProcesso) {
+        Processo processo = processoRepository.findById(idProcesso).get();
+        processo.setStatus(StatusEnum.EM_PAUTA);
+        processoRepository.save(processo);
+        processosTemporarios.addProcesso(user.getName(), processo);
+        
+    }
+
+    public List<Processo> getProcessosEmMemoria(Principal user) {
+        return processosTemporarios.getProcessos(user.getName());
     }
 
 //    public List<Processo> listarTodosProcessosDoColegiadoPorStatus(Professor coordenador, Colegiado colegiado, StatusEnum status){

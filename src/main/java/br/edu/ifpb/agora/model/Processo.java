@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Processo {
+public class Processo implements EntidadesSalvarDocumento{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -63,8 +63,15 @@ public class Processo {
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
-    @OneToMany(mappedBy = "processo")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Documento> anexos;
+
+    @Enumerated(EnumType.STRING)
+    private TipoDecisao decisaoColegiado;
+
+    public Documento getUltimoAnexo() {
+        return this.anexos.get(this.anexos.size() - 1);
+    }
 
     public void addAnexos(Documento documento) {
         this.anexos.add(documento);
@@ -81,6 +88,5 @@ public class Processo {
     public TipoDecisao getTipoDecisao() {
         return this.decisaoRelator;
     }
-
 
 }

@@ -34,6 +34,8 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
 
     public List<Processo> findAllByRelatorMatricula(String matricula);
 
+    public List<Processo> findAllByStatusAndCursoIdAndDecisaoRelatorIsNotNull(StatusEnum status, Long id);
+
     // termina aqui consultas JPA atualizadas com spring security
 
 

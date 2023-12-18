@@ -4,7 +4,7 @@ layout:decorate="layout/layout"
 th:with="userType='admin', titleHeader='COLEGIADO', personToList='colegiados'">
 <body>
 
-  <div layout:fragment="content">
+    <div layout:fragment="content">
     <div id="main">
       <h2> Salvar ÓRGÃO DE COLEGIADO</h2>
 
@@ -47,9 +47,9 @@ th:with="userType='admin', titleHeader='COLEGIADO', personToList='colegiados'">
                     <tr th:each="professor : ${colegiado.membros}">
                         <th th:text="${professor.nome}" scope="row"></th>
                         <td>
-                            <button th:onclick="|deletar(${professor.id})|">
+                            <a th:onclick="|deletar(${professor.id})|">
                                 <img th:src="@{/images/trash-2.svg}">
-                            </button>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
@@ -64,19 +64,5 @@ th:with="userType='admin', titleHeader='COLEGIADO', personToList='colegiados'">
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  <script>
-
-      function deletar(professorId) {
-          console.log(`${window.location.href}/membros/${professorId}`);
-          fetch(`${window.location.href}/membros/${professorId}` , {
-              method: 'DELETE',
-          })
-              .then(() => {
-                  window.location.reload();
-              })
-      }
-
-  </script>
 </body>
 </html>

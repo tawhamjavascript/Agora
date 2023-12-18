@@ -35,6 +35,8 @@ public class Authority {
         this.id = id;
         this.username = user;
         this.authority = authority;
+
+
     }
 
     @Embeddable

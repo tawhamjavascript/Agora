@@ -18,7 +18,6 @@
 
 
 
-  <title>Admin</title>
 </head>
 
 <body>
@@ -29,49 +28,34 @@
     </div>
 
     <div id="nome-usuario">
-      <h3 th:text="${session.usuario.nome}"></h3>
+      <h3 sec:authentication="name"></h3>
     </div>
   </div>
 
   <div class="container">
     <div id="sidebar-sessao">
-      <a th:href="">Cadastrar Sessão</a>
-      <a th:href="">Listar Sessões</a>
-      <a th:href="">Home</a>
+      <a >Cadastrar Sessão</a>
+      <a >Listar Sessões</a>
+      <a>Home</a>
     </div>
 
     <div id="main">
 
       <h2>NOVA SESSÃO DO COLEGIADO</h2>
 
-      <form action="">
+      <form th:action="@{/coordenador/sessao/cadastro}" method="post" th:object="${reuniao}">
 
         <div class="position-relative">
-          <button type="button" id="button-x" class="btn btn-danger position-absolute top-0 end-0 rounded-circle"
-            aria-label="Fechar">
-            X
-          </button>
-
-
-
-
           <div id="form-register-sessao">
-
-            <label for="identificador" class="col-form-label">Identificador de Sessão:</label>
-            <input type="text" id="identificador" class="form-control" />
             <p></p>
 
-            <label for="identificador">Data:</label>
-            <input type="text" id="identificador" class="form-control" />
+            <label for="data">Data:</label>
+            <input type="text" th:field="*{dataReuniao}" class="form-control" />
             <p></p>
 
-            <label for="identificador">Hora:</label>
-            <input type="text" id="identificador" class="form-control" />
+            <label for="horario">Hora:</label>
+            <input type="text" th:field="*{horario}" class="form-control" />
             <p></p>
-
-
-
-
 
             <label for="tabela-1-sessao" class="col-form-label">Pauta da Sessão:</label>
 
@@ -83,54 +67,24 @@
                     <th>Assunto</th>
                     <th>Relator</th>
                     <th>Aluno Interessado</th>
-                    <th>Status</th>
+                    <th> decisão do relator </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr th:each="">
-                    <td th:text="">teste</th>
-                    <td th:text="">teste</td>
-                    <td th:text="">teste</td>
-                    <td th:text="">teste</td>
-                    <td th:text="">teste</td>
+                  <tr th:each="processo : ${processos}">
+                    <td th:text="${processo.numero}"> </td>
+                    <td th:text="${processo.assunto.nome}"></td>
+                    <td th:text="${processo.relator.nome}"></td>
+                    <td th:text="${processo.interessado.nome}"></td>
+                    <td th:text="${processo.decisaoRelator}"></td>
                   </tr>
                 </tbody>
               </table>
 
-              <button type="submit" class="button-style"> Adicionar Processos </button>
+              <a th:href="@{/coordenador/sessao/add/processo}"> Adicionar Processos </a>
 
             </div>
-
-            <label for="tabela-2-sessao" class="col-form-label">Membros:</label>
-
-            <div class="form-tabela">
-              <table class="tabela-sessao" id="tabela-2-sessao">
-                <thead>
-                  <tr>
-                    <th>Matrícula</th>
-                    <th>Membro</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr th:each="">
-                    <td th:text="">teste</th>
-                    <td th:text="">teste</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <button type="submit" class="button-style"> Adicionar Membros</button>
-
-            </div>
-
-
-
             <button type="submit" class="button-style mx-auto d-block" id="button-cadastrar-sessao">Cadastrar</button>
-
-
-
-
-
 
           </div>
         </div>
