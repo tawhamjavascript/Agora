@@ -29,8 +29,12 @@ public class CoordenadorController {
 
     private HashMap<String, String> pathTo = new HashMap<String, String>();    
 
-    private List<String> getPath() {
-        return Arrays.asList("/css/main.css", "/css/coordenador/listagem.css");
+    private List<String> getPath(String page) {
+        if(page.equals("listagem")) {
+            return Arrays.asList("/css/main.css", "/css/coordenador/listagem.css");
+        }
+
+        return Arrays.asList("/css/coordenador/home.css");
     }
 
 
@@ -60,6 +64,7 @@ public class CoordenadorController {
 
     @GetMapping("/processo")
     public ModelAndView processos(ModelAndView modelAndView, Principal principal) {
+        pathTo.put("cadastrar", "/coordenador/sessao/cadastro");
         pathTo.put("listar", "/coordenador/processo");
         pathTo.put("logout", "/auth/logout");
 
@@ -67,12 +72,13 @@ public class CoordenadorController {
         modelAndView.addObject("processos", coordenadorService.listarTodosProcessosDoColegiado(principal));
 
         modelAndView.addObject("caminho", pathTo);
-        modelAndView.addObject("stylePaths", getPath());
+        modelAndView.addObject("stylePaths", getPath("listagem"));
         return modelAndView;
     }
 
     @GetMapping("/processo/consultar")
     public ModelAndView processosConsultar(@RequestParam(name = "filtro") String filtro, ModelAndView modelAndView, Principal principal) {
+        pathTo.put("cadastrar", "/coordenador/sessao/cadastro");
         pathTo.put("listar", "/coordenador/processo");
         pathTo.put("logout", "/auth/logout");
 
@@ -80,7 +86,7 @@ public class CoordenadorController {
         modelAndView.addObject("processos", coordenadorService.filtro(principal, filtro));
 
         modelAndView.addObject("caminho", pathTo);
-        modelAndView.addObject("stylePaths", getPath());
+        modelAndView.addObject("stylePaths", getPath("listagem"));
         return modelAndView;
     }
 
@@ -105,8 +111,12 @@ public class CoordenadorController {
         return mav;
     }
     
-
-    
+    @GetMapping("/home")
+    public ModelAndView getHome(ModelAndView mav) {
+        mav.setViewName("coordenador/home");
+        mav.addObject("stylePaths", getPath(""));
+        return mav;
+    }
 
     
     
