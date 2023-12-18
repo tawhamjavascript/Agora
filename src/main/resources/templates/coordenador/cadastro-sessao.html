@@ -67,7 +67,7 @@
                     <th>Assunto</th>
                     <th>Relator</th>
                     <th>Aluno Interessado</th>
-                    <th> decisão do relator </th>
+                    <th> Decisão do relator </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -81,7 +81,11 @@
                 </tbody>
               </table>
 
-              <a th:href="@{/coordenador/sessao/add/processo}"> Adicionar Processos </a>
+            
+              <div id="add-person">
+                <a th:href="@{/coordenador/sessao/add/processo}"> Adicionar Processos </a>
+              </div>
+
 
             </div>
             <button type="submit" class="button-style mx-auto d-block" id="button-cadastrar-sessao">Cadastrar</button>
