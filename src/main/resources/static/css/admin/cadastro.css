@@ -160,8 +160,20 @@ tr:nth-child(odd) {
 }
 
 .button-style {
-  height: 7.5rem;
-  margin-left: 5rem;
+  height: 2.5rem;
+  margin-left: 9.5rem;
+}
+
+.button-colegiado-style {
+  margin: auto !important;
+  width: 3rem !important;
+  height: 2.5rem !important;
+  background: none !important;
+  
+}
+
+.button-colegiado-style:hover {
+  cursor: pointer;
 }
 
 #button-cadastrar-sessao {

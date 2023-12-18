@@ -47,7 +47,7 @@ th:with="userType='admin', titleHeader='COLEGIADO', personToList='colegiados'">
                     <tr th:each="professor : ${colegiado.membros}">
                         <th th:text="${professor.nome}" scope="row"></th>
                         <td>
-                            <a th:onclick="|deletar(${professor.id})|">
+                            <a class="button-colegiado-style" th:onclick="|deletar(${professor.id})|">
                                 <img th:src="@{/images/trash-2.svg}">
                             </a>
                         </td>
