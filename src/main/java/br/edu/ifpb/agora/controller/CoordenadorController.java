@@ -73,6 +73,7 @@ public class CoordenadorController {
 
         modelAndView.addObject("caminho", pathTo);
         modelAndView.addObject("stylePaths", getPath("listagem"));
+        modelAndView.addObject("page", "processo");
         return modelAndView;
     }
 
@@ -87,6 +88,7 @@ public class CoordenadorController {
 
         modelAndView.addObject("caminho", pathTo);
         modelAndView.addObject("stylePaths", getPath("listagem"));
+        modelAndView.addObject("page", "processo");
         return modelAndView;
     }
 
@@ -106,8 +108,16 @@ public class CoordenadorController {
 
     @GetMapping("/sessao")
     public ModelAndView getSessoes(Principal principal, ModelAndView mav) {
+        pathTo.put("cadastrar", "/coordenador/sessao/cadastro");
+        pathTo.put("listar", "/coordenador/sessao");
+        pathTo.put("home", "/coordenador/home");
+
         mav.setViewName("coordenador/listagem-sessoes");
         mav.addObject("reunioes", coordenadorService.getReuniaoDoColegiado(principal));
+
+        mav.addObject("stylePaths", getPath("listagem"));
+        mav.addObject("caminho", pathTo);
+        mav.addObject("page", "sessao");
         return mav;
     }
     
