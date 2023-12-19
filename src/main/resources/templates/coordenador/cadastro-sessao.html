@@ -49,12 +49,12 @@
           <div id="form-register-sessao">
             <p></p>
 
-            <label for="data">Data:</label>
-            <input type="text" th:field="*{dataReuniao}" class="form-control" />
+            <label for="dataReuniao">Data:</label>
+            <input type="date" th:field="*{dataReuniao}" class="form-control" />
             <p></p>
 
             <label for="horario">Hora:</label>
-            <input type="text" th:field="*{horario}" class="form-control" />
+            <input type="time" th:field="*{horario}" class="form-control" />
             <p></p>
 
             <label for="tabela-1-sessao" class="col-form-label">Pauta da Sessão:</label>
@@ -81,7 +81,7 @@
                 </tbody>
               </table>
 
-              <a th:href="@{/coordenador/sessao/add/processo}"> Adicionar Processos </a>
+              <a href="" id = "addProcesso" onclick="salvarReuniaoEmMemoria()"> Adicionar Processos </a>
 
             </div>
             <button type="submit" class="button-style mx-auto d-block" id="button-cadastrar-sessao">Cadastrar</button>
@@ -105,7 +105,39 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"></script>
+    
+    <script>
+      function salvarReuniaoEmMemoria(event) {
+      const dataReuniao = document.getElementById("dataReuniao").value;
+      const horario = document.getElementById("horario").value;
+      console.log(dataReuniao, horario)
+      event.preventDefault();
 
+      fetch("http://localhost:8080/Agora/coordenador/sessao/salvarMemoria", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"dataReuniao": dataReuniao, "horario": horario})
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na requisição: ${res.status} ${res.statusText}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            // Lógica de sucesso
+            window.location.href = "http://localhost:8080/Agora/coordenador/sessao/add/processo";
+        })
+        .catch(error => {
+            // Tratamento de erro
+            console.error('Erro na requisição fetch:', error);
+        });
+    }
+    document.getElementById("addProcesso").addEventListener("click", salvarReuniaoEmMemoria);
+
+ 
+    </script>
 </body>
-
 </html>

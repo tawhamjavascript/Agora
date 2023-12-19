@@ -3,9 +3,16 @@ package br.edu.ifpb.agora.controller;
 
 import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.service.ProfessorService;
-import br.edu.ifpb.agora.service.PadraoProjeto.ProcessosTemporarios;
+import br.edu.ifpb.agora.service.PadraoProjeto.DB4O;
+import br.edu.ifpb.agora.service.PadraoProjeto.PadraoTemplate.DocumentService;
+import br.edu.ifpb.agora.service.PadraoProjeto.PadraoTemplate.DocumentServiceAtaReuniao;
+import br.edu.ifpb.agora.service.PadraoProjeto.PadraoTemplate.DocumentServiceParecerProcesso;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import br.edu.ifpb.agora.service.CoordenadorService;
@@ -15,10 +22,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.security.Principal;
 import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -37,8 +40,13 @@ public class CoordenadorController {
     @Autowired
     private CoordenadorService coordenadorService;
 
-    
+    @Autowired
+    private DocumentServiceAtaReuniao documentoServiceAta;
 
+    @Autowired
+    private DocumentServiceParecerProcesso documentoServiceParecer;
+
+    private DB4O db4o = DB4O.getInstance();
 
     @ModelAttribute("statusItens")
     public List<StatusEnum> getStatus() {
@@ -105,15 +113,10 @@ public class CoordenadorController {
         return mav;
     }
     
-
-    
-
-    
-    
     @GetMapping("/sessao/cadastro")
     public ModelAndView getCadastroSessao(Principal principal, ModelAndView mav) {
         mav.setViewName("coordenador/cadastro-sessao");
-        mav.addObject("reuniao", new Reuniao());
+        mav.addObject("reuniao", coordenadorService.getReuniaoCadastro(principal));
         mav.addObject("processos", coordenadorService.getProcessosEmMemoria(principal));
         return mav;
     }
@@ -123,9 +126,7 @@ public class CoordenadorController {
         coordenadorService.salvarReuniao(principal, reuniao);
         mav.setViewName("redirect:/coordenador/sessao");
         return mav;
-        
-        
-       
+           
     }
     
 
@@ -138,11 +139,31 @@ public class CoordenadorController {
     }
 
     @PostMapping("/sessao/add/processo")
-    public ModelAndView salvarProcessoEmMemoria(Long id, Principal principal, ModelAndView mav) {
-        coordenadorService.salvarProcessoEmMemoria(principal, id);
+    public ModelAndView salvarProcessoEmMemoria(Long idProcesso, Principal principal, ModelAndView mav) {
+        coordenadorService.salvarProcessoEmMemoria(principal, idProcesso);
         mav.setViewName("redirect:/coordenador/sessao/add/processo");
         return mav;
         
+    }
+
+    @PostMapping("/sessao/salvarMemoria")
+    @ResponseBody
+    public ResponseEntity<String> salvarReuniaoMemoria(Principal principal, @RequestBody Reuniao reuniao, HttpEntity<String> httpEntity) {
+        System.out.println("Data: " + reuniao.getDataReuniao() + " Horario:" + reuniao.getHorario());
+        coordenadorService.salvarReuniaoMemoria(principal, reuniao);
+        return new ResponseEntity("{\"mensagem\": \"Reunião salva com sucesso\"}", HttpStatus.OK);
+
+    }
+
+    @GetMapping("reuniao/{id}/ata/documento/{idDoc}")
+    public ResponseEntity<byte[]> getDocumentoParecer(@PathVariable("idDoc") Long idDoc) {
+        Documento documento = documentoServiceAta.getDocumento(idDoc);
+        System.out.println("chegando aqui");
+
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + documento.getNome() + "\"")
+                .body(documento.getDados());
     }
     
 }

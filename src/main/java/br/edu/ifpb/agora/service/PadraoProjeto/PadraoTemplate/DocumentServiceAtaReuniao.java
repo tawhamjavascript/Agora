@@ -43,11 +43,12 @@ public class DocumentServiceAtaReuniao extends DocumentService {
         // TODO Auto-generated method stub
         String fileDownloadUri = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
+                .path("/coordenador/")
                 .path("/reuniao/")
-                .path(id.toString())
+                .path(String.valueOf(id))
                 .path("/ata")
                 .path("/documento/")
-                .path(idDocumento.toString())
+                .path(String.valueOf(idDocumento))
                 .toUriString();
         return fileDownloadUri;
     }

@@ -54,10 +54,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="reuniao : ${reuniao}">
+                        <tr th:each="reuniao : ${reunioes}">
                             <td th:text="${reuniao.id}"></th>
                             <td th:text="${reuniao.status}"></td>
-                            <td th:text="${reuniao.dataReuniao}"> </td>
+                            <td th:text="${#dates.format(reuniao.dataReuniao, 'dd-MMM-yyyy')}"> </td>
                             <td th:text="${reuniao.horario}"> </td>
                             <td>
                                 <a th:href="@{/coordenador/sessao/julgar}">

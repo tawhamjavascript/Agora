@@ -156,5 +156,18 @@ public class AlunoController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + documento.getNome() + "\"")
                 .body(documento.getDados());
     }
+
+    @GetMapping("processo/{id}/parecer/documento/{idDoc}")
+    public ResponseEntity<byte[]> getDocumentoParecer(@PathVariable("idDoc") Long idDoc) {
+        Documento documento = documentService.getDocumento(idDoc);
+        System.out.println("chegando aqui");
+
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + documento.getNome() + "\"")
+                .body(documento.getDados());
+    }
+
+
     
 }

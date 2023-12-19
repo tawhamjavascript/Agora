@@ -1,13 +1,14 @@
 package br.edu.ifpb.agora.service;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.repository.*;
-import br.edu.ifpb.agora.service.PadraoProjeto.ProcessosTemporarios;
+import br.edu.ifpb.agora.service.PadraoProjeto.DB4O;
 import jakarta.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class CoordenadorService {
     @Autowired
     private AlunoRepository alunoRepository;
 
-    private ProcessosTemporarios processosTemporarios = ProcessosTemporarios.getInstance();
+    private DB4O db4O = DB4O.getInstance();
 
 
 
@@ -97,6 +98,7 @@ public class CoordenadorService {
         return processoRepository.findById(idProcesso).get();
     }
 
+    @Transactional
     public void salvarProcesso(Processo processo) {
         Processo processoBD = processoRepository.findById(processo.getId()).get();
         processoBD.setRelator(processo.getRelator());
@@ -119,10 +121,9 @@ public class CoordenadorService {
         return reunioes;
     }
 
-    
+    @Transactional
     public void salvarReuniao(Principal user, Reuniao reuniao) {
-        List<Processo> processos = processosTemporarios.deletaProcessos(user.getName());
-        reuniao.setProcessos(processos);
+        Reuniao reuniaoMemoria = db4O.deletar(user.getName());
         reuniao.setStatus(StatusReuniao.PROGRAMADA);
 
         Professor professor = professorRepository.findByMatricula(user.getName());
@@ -130,6 +131,17 @@ public class CoordenadorService {
 
         colegiado.addReuniao(reuniao);
         reuniao.setColegiado(colegiado);
+        reuniao.setDataReuniao(reuniaoMemoria.getDataReuniao());
+
+        List<Processo> processosPersistidos = new ArrayList<>();
+
+        reuniaoMemoria.getProcessos().forEach(processo -> {
+            Processo processoBD = processoRepository.findById(processo.getId()).get();
+            processosPersistidos.add(processoBD);
+        });
+        reuniao.setProcessos(processosPersistidos);
+
+        
 
         colegiadoRepository.save(colegiado);
         reuniaoRepository.save(reuniao);
@@ -139,12 +151,32 @@ public class CoordenadorService {
         Processo processo = processoRepository.findById(idProcesso).get();
         processo.setStatus(StatusEnum.EM_PAUTA);
         processoRepository.save(processo);
-        processosTemporarios.addProcesso(user.getName(), processo);
-        
+        db4O.addProcesso(user.getName(), processo);
+  
     }
 
     public List<Processo> getProcessosEmMemoria(Principal user) {
-        return processosTemporarios.getProcessos(user.getName());
+        return db4O.getReunioesProcesso(user.getName());  
+
+
+        
+    }
+
+    public Reuniao getReuniaoCadastro(Principal user) {
+        if (!db4O.existeReuniao(user.getName())) {
+            System.out.println("usuário não existe");
+            return new Reuniao();
+
+        } 
+        System.out.println(db4O.getReuniao(user.getName()).getHorario()
+        + db4O.getReuniao(user.getName()).getDataReuniao());
+        return db4O.getReuniao(user.getName());
+    }
+
+    public void salvarReuniaoMemoria(Principal user, Reuniao reuniao) {
+        this.db4O.addReuniao(user.getName(), reuniao);
+
+
     }
 
 //    public List<Processo> listarTodosProcessosDoColegiadoPorStatus(Professor coordenador, Colegiado colegiado, StatusEnum status){

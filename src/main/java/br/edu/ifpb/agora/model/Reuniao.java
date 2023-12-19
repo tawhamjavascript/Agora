@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +24,7 @@ public class Reuniao implements EntidadesSalvarDocumento{
     private Long id;
 
     @FutureOrPresent(message = "A data da reunião deve ser no presente ou no futuro")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dataReuniao;
 
     @NotBlank(message = "É necessário a definição do horário da reunião")
@@ -30,7 +33,7 @@ public class Reuniao implements EntidadesSalvarDocumento{
     @Enumerated(EnumType.ORDINAL)
     private StatusReuniao status;
 
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "reuniao_id")
     private List<Processo> processos;
 
