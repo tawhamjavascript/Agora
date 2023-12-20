@@ -190,7 +190,11 @@ public class CoordenadorController {
     }
 
     @GetMapping("sessao/{id}/conducao") 
-    public ModelAndView getConducaoSessao(@PathVariable("id") Long idReuniao, ModelAndView mav) {
+    public ModelAndView getConducaoSessao(@PathVariable("id") Long idReuniao, Principal principal, ModelAndView mav) {
+        if (coordenadorService.existeReuniaoEmAndamento(principal)) {
+            mav.setViewName("redirect:/coordenador/sessao");
+            return mav;
+        }
         mav.setViewName("coordenador/conducao-sessao");
         Reuniao reuniao = coordenadorService.getReuniao(idReuniao);
         mav.addObject("reuniao", reuniao);

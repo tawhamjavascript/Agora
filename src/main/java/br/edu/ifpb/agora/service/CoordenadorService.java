@@ -196,6 +196,18 @@ public class CoordenadorService {
         reuniaoRepository.save(reuniaoBD);
     }
 
+    public boolean existeReuniaoEmAndamento(Principal user) {
+        Professor professor = professorRepository.findByMatricula(user.getName());
+        Colegiado colegiado = professor.getColegiado();
+        List<Reuniao> reunioes = colegiado.getReunioes();
+        for (Reuniao reuniao : reunioes) {
+            if (reuniao.getStatus() == StatusReuniao.EM_ANDAMENTO) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Transactional
     public Reuniao getReuniao(Long idReuniao) {
         Reuniao reuniao = reuniaoRepository.findById(idReuniao).get();
