@@ -35,6 +35,7 @@ public class AdicionarProfessorHandler extends BaseHandler{
         }
         user.setAuthorities(authorities);
         professorForm.setUser(user);
+        professorForm.setSenha(passwordEncrypt);
         professorRepository.save(professorForm);
 
     }

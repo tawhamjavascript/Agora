@@ -3,7 +3,9 @@ package br.edu.ifpb.agora.service;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import br.edu.ifpb.agora.model.*;
@@ -178,6 +180,129 @@ public class CoordenadorService {
 
 
     }
+
+    @Transactional
+    public Reuniao getReuniao(Long idReuniao) {
+        Reuniao reuniao = reuniaoRepository.findById(idReuniao).get();
+        reuniao.setStatus(StatusReuniao.EM_ANDAMENTO);
+
+        for (Processo processo : reuniao.getProcessos()) {
+            if (processo.getStatus() == StatusEnum.EM_PAUTA) {
+                processo.setStatus(StatusEnum.EM_JULGAMENTO);
+                processoRepository.save(processo);
+                break;
+            }
+        }
+        reuniaoRepository.save(reuniao);
+
+        return reuniao;
+    }
+
+    public Map<String, Voto> getVotos(Reuniao reuniao) {
+        Processo processo = new Processo();
+        for (Processo p : reuniao.getProcessos()) {
+            if (p.getStatus() == StatusEnum.EM_JULGAMENTO) {
+                processo = p;
+
+            }
+        }
+        if (processo.getId() == null) {
+            return null;
+        }
+        Map<String, Voto> votos = new HashMap<>();
+        Colegiado colegiado = reuniao.getColegiado();
+        final Processo processoFinal = processo;
+        colegiado.getMembros().forEach(professor -> {
+            processoFinal.getVotos().forEach(voto -> {
+                if (voto.getProfessor().getId() == professor.getId()) {
+                    votos.put(professor.getNome(), voto);
+                    System.out.println(professor.getNome());
+                }
+                else {
+                    votos.put(professor.getNome(), null);
+                }
+            });
+        });
+
+        
+
+        return votos;
+    }
+
+    @Transactional
+    public void salvarVoto(Long idReuniao, Long idProfessor, String tipoVoto) {
+        Reuniao reuniao = reuniaoRepository.findById(idReuniao).get();
+        Professor professor = professorRepository.findById(idProfessor).get();
+        Processo processo = new Processo();
+        for (Processo p : reuniao.getProcessos()) {
+            if (p.getStatus() == StatusEnum.EM_JULGAMENTO) {
+                processo = p;
+
+            }
+        }
+        Voto voto = new Voto();
+        voto.setProfessor(professor);
+        voto.setTipoVoto(TipoVoto.valueOf(tipoVoto));
+        processo.addVoto(voto);
+        if(processo.getVotos().size() == reuniao.getColegiado().getMembros().size()) {
+            decisaoColegiado(processo);
+        }
+        processoRepository.save(processo);
+        
+        
+    }
+
+    @Transactional
+    private void decisaoColegiado(Processo processo) {
+        int divergenteDoRelator = 0;
+        int comRelator = 0;
+        for (Voto voto : processo.getVotos()) {
+            if (voto.getTipoVoto() == TipoVoto.DIVERGENTE) {
+                divergenteDoRelator++;
+            }
+            else {
+                comRelator++;
+            }
+        }
+
+        if (divergenteDoRelator > comRelator) {
+            if (processo.getDecisaoRelator() == TipoDecisao.DEFERIDO) {
+                processo.setDecisaoColegiado(TipoDecisao.INDEFERIDO);
+                
+            } else {
+                processo.setDecisaoColegiado(TipoDecisao.DEFERIDO);
+                
+            }
+        }
+        else {
+            processo.setDecisaoColegiado(processo.getDecisaoRelator());
+        }
+        processoRepository.save(processo);
+    }
+
+    @Transactional
+    public void finalizarVotacao(Long idReuniao) {
+        Reuniao reuniao = reuniaoRepository.findById(idReuniao).get();
+        Processo processo = new Processo();
+        for (Processo p : reuniao.getProcessos()) {
+            if (p.getStatus() == StatusEnum.EM_JULGAMENTO) {
+                processo = p;
+            }
+        }
+        processo.setStatus(StatusEnum.JULGADO);
+        processoRepository.save(processo);
+    
+    }
+
+    @Transactional
+    public void finalizarReuniao(Long idSessao) {
+        Reuniao reuniao = reuniaoRepository.findById(idSessao).get();
+        reuniao.setStatus(StatusReuniao.ENCERRADA);
+        reuniaoRepository.save(reuniao);
+
+    }
+
+
 
 //    public List<Processo> listarTodosProcessosDoColegiadoPorStatus(Professor coordenador, Colegiado colegiado, StatusEnum status){
 //        if (coordenador.isCoordenador()){
