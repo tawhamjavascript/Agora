@@ -48,6 +48,7 @@ public class DocumentServiceParecerProcesso extends DocumentService {
 
         String fileDownloadUri = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
+                .path("/aluno/")
                 .path("/processo/")
                 .path(id.toString())
                 .path("/parecer")

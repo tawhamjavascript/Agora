@@ -18,14 +18,13 @@
 
 <div id="sidebar" th:fragment="navmenu" th:switch="${page}">
   <div th:case="'processo'">
-    <a th:href="@{${caminho['cadastrar']}}">Adicionar Processo</a>
     <a th:href="@{${caminho['listar']}}">Listar Processos</a>
     <a th:href="@{/coordenador/home}">Home</a>
   </div>
 
   <div th:case="'sessao'">
-    <a th:href="@{${caminho['cadastrar']}}">Adicionar Processo</a>
-    <a th:href="@{${caminho['listar']}}">Listar Processos</a>
+    <a th:href="@{${caminho['cadastrar']}}">Cadastrar Sessao</a>
+    <a th:href="@{${caminho['listar']}}">Listar Sessoes</a>
     <a th:href="@{/coordenador/home}">Home</a>
   </div>
   </form>
