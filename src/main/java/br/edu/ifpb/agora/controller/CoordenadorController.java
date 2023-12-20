@@ -3,17 +3,20 @@ package br.edu.ifpb.agora.controller;
 
 import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.repository.ReuniaoRepository;
-import br.edu.ifpb.agora.service.ProfessorService;
 import br.edu.ifpb.agora.service.PadraoProjeto.DB4O;
 import br.edu.ifpb.agora.service.PadraoProjeto.PadraoTemplate.DocumentService;
 import br.edu.ifpb.agora.service.PadraoProjeto.PadraoTemplate.DocumentServiceAtaReuniao;
 import br.edu.ifpb.agora.service.PadraoProjeto.PadraoTemplate.DocumentServiceParecerProcesso;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -87,16 +90,21 @@ public class CoordenadorController {
     }
 
     @GetMapping("/processo")
-    public ModelAndView processos(ModelAndView modelAndView, Principal principal) {
+    public ModelAndView processos(ModelAndView modelAndView, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size, Principal principal) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Processo> processos = coordenadorService.listarTodosProcessosDoColegiado(usuario.getId(), paging);
+        NavPage navPage = NavPageBuilder.newNavPage(processos.getNumber() + 1, processos.getTotalElements(), processos.getTotalPages(), size);
+        modelAndView.addObject("navPage", navPage);
         pathTo.put("cadastrar", "/coordenador/sessao/cadastro");
         pathTo.put("listar", "/coordenador/processo");
         pathTo.put("logout", "/auth/logout");
-
         modelAndView.setViewName("coordenador/listagem-processos");
         modelAndView.addObject("processos", coordenadorService.listarTodosProcessosDoColegiado(principal));
 
         modelAndView.addObject("caminho", pathTo);
         modelAndView.addObject("stylePaths", getPath("listagem"));
+        modelAndView.addObject("processos", processos);
         return modelAndView;
     }
 

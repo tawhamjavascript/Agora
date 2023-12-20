@@ -7,6 +7,8 @@ import br.edu.ifpb.agora.model.Professor;
 import br.edu.ifpb.agora.model.StatusEnum;
 import jakarta.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,6 +23,7 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
     // consultas JPA atualizadas com spring security
 
     public List<Processo> findAllByInteressadoMatricula(String matricula);
+    public Page<Processo> findAllByInteressadoId(Long id, Pageable p);
 
     public List<Processo> findAllByInteressadoMatriculaAndAssuntoId(String matricula, Long idAssunto);
 
@@ -68,17 +71,7 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
     
     List<Processo> findAllByCursoIdAndStatus(Long id, StatusEnum filtroEnum);
 
-    // Funções desatualizadas 
-
-    // List<Processo> findAllByInteressadoIdAndAssuntoIdOrderByDataRecepcaoDesc(Long id, Long idAssunto);
-
-    // List<Processo> findAllByInteressadoIdAndStatusOrderByDataRecepcaoDesc(Long id, StatusEnum status);
-
-    // List<Processo> findAllByInteressadoIdOrderByDataRecepcaoDesc(Long id);
-
-    // public List<Processo> findAllByInteressadoIdAndAssuntoId(Long id, Long idAssunto);
-
-    // public List<Processo> findAllByInteressadoIdAndEmPauta(Long id, Boolean pauta);
-
-    // public List<Processo> findAllByInteressadoCursoId(Long id);
+    Page<Processo> findAllByCursoId(Long id, Pageable paging);
+    
+    Page<Processo> findAllByRelatorId(Long id, Pageable paging);
 }

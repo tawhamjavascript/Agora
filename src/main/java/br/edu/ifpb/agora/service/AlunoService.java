@@ -6,6 +6,8 @@ import java.util.List;
 
 import br.edu.ifpb.agora.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import br.edu.ifpb.agora.model.Aluno;
 import br.edu.ifpb.agora.model.Assunto;
@@ -96,5 +98,9 @@ public class AlunoService {
 
     public List<Processo> consultarProcessosOrdenados(String matricula){
         return processoRepository.findAllByInteressadoMatriculaOrderByDataRecepcaoDesc(matricula);
+    }
+
+    public Page<Processo> consultaProcessos(Long id, Pageable paging) {
+        return processoRepository.findAllByInteressadoId(id, paging);
     }
 }

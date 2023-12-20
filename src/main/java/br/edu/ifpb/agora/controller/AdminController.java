@@ -2,6 +2,9 @@ package br.edu.ifpb.agora.controller;
 
 import br.edu.ifpb.agora.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -43,13 +46,17 @@ public class AdminController {
     }
 
     @GetMapping("/curso")
-    public ModelAndView getCursos(ModelAndView mav) {
+    public ModelAndView getCursos(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Curso> cursos = adminService.allCourses(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(cursos.getNumber() + 1, cursos.getTotalElements(), cursos.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         pathTo.put("incluir", "/admin/curso/cadastro");
         pathTo.put("listar", "/admin/curso");        
         pathTo.put("home", "/admin/home");
 
         mav.setViewName("admin/listagem-cursos");
-        mav.addObject("cursos", adminService.allCourses());
+        mav.addObject("cursos", cursos);
 
         mav.addObject("caminho", pathTo);
         mav.addObject("stylePaths", getPath("listagem"));
@@ -106,13 +113,17 @@ public class AdminController {
 
 
     @GetMapping("/assunto")
-    public ModelAndView getAssuntos(ModelAndView mav) {
+    public ModelAndView getAssuntos(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Assunto> assuntos = adminService.allSubjects(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(assuntos.getNumber() + 1, assuntos.getTotalElements(), assuntos.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         pathTo.put("incluir", "/admin/assunto/cadastro");
         pathTo.put("listar", "/admin/assunto");        
         pathTo.put("home", "/admin/home");
 
         mav.setViewName("admin/listagem-assunto-processo-reuniao");
-        mav.addObject("assuntos", adminService.allSubjects());
+        mav.addObject("assuntos", assuntos);
 
         mav.addObject("caminho", pathTo);
         mav.addObject("stylePaths", getPath("listagem"));
@@ -174,13 +185,17 @@ public class AdminController {
     }
 
     @GetMapping("/aluno")
-    public ModelAndView getAlunos(ModelAndView mav) {
+    public ModelAndView getAlunos(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page -1 , size);
+        Page<Aluno> pageAlunos = adminService.allStudent(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(pageAlunos.getNumber() + 1, pageAlunos.getTotalElements(), pageAlunos.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         pathTo.put("incluir", "/admin/aluno/cadastro");
         pathTo.put("listar", "/admin/aluno");
         pathTo.put("home", "/admin/home");
 
         mav.setViewName("admin/listagem-aluno");
-        mav.addObject("alunos", adminService.allStudent());
+        mav.addObject("alunos", pageAlunos);
 
         mav.addObject("caminho", pathTo);
         mav.addObject("stylePaths", getPath("listagem"));
@@ -237,12 +252,16 @@ public class AdminController {
     }
 
     @GetMapping("/professor")
-    public ModelAndView getProfessores(ModelAndView mav) {
+    public ModelAndView getProfessores(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Professor> professores = adminService.allTeachers(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(professores.getNumber() + 1, professores.getTotalElements(), professores.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         pathTo.put("incluir", "/admin/professor/cadastro");
         pathTo.put("listar", "/admin/professor");        
         pathTo.put("home", "/admin/home");
         mav.setViewName("admin/listagem-professor");
-        mav.addObject("professores", adminService.allTeachers());
+        mav.addObject("professores", professores);
         mav.addObject("caminho", pathTo);
         mav.addObject("stylePaths", getPath("listagem"));
         return mav;
@@ -299,13 +318,17 @@ public class AdminController {
 
 
     @GetMapping("/colegiado")
-    public ModelAndView getColegiados(ModelAndView mav) {
+    public ModelAndView getColegiados(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Colegiado> colegiados = adminService.allColegiados(paging);
+        NavPage navPage = NavPageBuilder.newNavPage(colegiados.getNumber() + 1, colegiados.getTotalElements(), colegiados.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         pathTo.put("incluir", "/admin/colegiado/cadastrar");
         pathTo.put("listar", "/admin/colegiado");        
         pathTo.put("home", "/admin/home");
 
         mav.setViewName("admin/listagem-colegiados");
-        mav.addObject("colegiados", adminService.allColegiados());
+        mav.addObject("colegiados", colegiados);
 
         mav.addObject("caminho", pathTo);
         mav.addObject("stylePaths", getPath("listagem"));

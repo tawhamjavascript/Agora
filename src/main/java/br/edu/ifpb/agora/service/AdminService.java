@@ -10,6 +10,8 @@ import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.BaseHandler
 import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.CopiandoDadosSalvandoSenha;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -205,7 +207,11 @@ public class AdminService {
         alunoRepository.save(aluno);
     }
 
-    public List<Aluno> allStudent() {
+    public Page<Aluno> allStudent(Pageable page) {
+        return alunoRepository.findAll(page);
+    }
+
+    public List<Aluno> allStudent(){
         return alunoRepository.findAll();
     }
 
@@ -230,8 +236,11 @@ public class AdminService {
     }
 
     public List<Curso> allCourses() {
-
         return cursoRepository.findAll();
+    }
+
+    public Page<Curso> allCourses(Pageable p){
+        return cursoRepository.findAll(p);
     }
 
     public Curso getCourse(Long id) {
@@ -308,5 +317,17 @@ public class AdminService {
         professor.setColegiado(null);
         professorRepository.save(professor);
         colegiadoRepository.save(colegiado);
+    }
+
+    public Page<Assunto> allSubjects(Pageable paging) {
+        return this.assuntoRepository.findAll(paging);
+    }
+
+    public Page<Professor> allTeachers(Pageable paging) {
+        return this.professorRepository.findAll(paging);
+    }
+
+    public Page<Colegiado> allColegiados(Pageable paging) {
+        return this.colegiadoRepository.findAll(paging);
     }
 }

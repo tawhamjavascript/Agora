@@ -36,7 +36,8 @@
 
 
         <div class="tabela">
-            <table>
+            <div th:replace="~{/fragments/paging-select-size}" ></div>
+        <table>
                 <thead>
                     <tr>
                         <th>Nº</th>
@@ -64,6 +65,7 @@
                 </tbody>
             </table>
         </div>
+        <div th:replace="~{/fragments/paging :: paginator('professor/processos', ${navPage})}" ></div>
     </div>
 </body>
 

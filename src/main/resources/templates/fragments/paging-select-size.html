@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-end">
+    <form th:action="@{#}" method="get" class="d-flex align-items-center m-1">
+        <label for="pageSize" class="h5 m-1">nº. elementos:</label>
+        <select id="pageSize" name="size" class="h5 m-1">
+            <option value=""></option>
+            <option th:value="5">5</option>
+            <option th:value="10">10</option>
+            <option th:value="15">15</option>
+            <option th:value='20'>20</option>
+            <option th:value='25'>25</option>
+        </select>
+        <button type="submit" class="btn btn-primary">filtrar</button>
+    </form>
+</div>

@@ -8,6 +8,8 @@ import br.edu.ifpb.agora.repository.ReuniaoRepository;
 import br.edu.ifpb.agora.repository.VotoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -31,6 +33,10 @@ public class ProfessorService {
     public List<Processo> listarProcessosDesignados(Principal user){
 
         return processoRepository.findAllByRelatorMatricula(user.getName());
+    }
+
+    public Page<Processo> listarProcessosDesignados(Usuario professor, Pageable paging) {
+        return processoRepository.findAllByRelatorId(professor.getId(), paging);
     }
 
     @Transactional
@@ -80,4 +86,10 @@ public class ProfessorService {
         processoRepository.save(processo);
 
     }
+
+    public Page<Reuniao> listarReunioes(Usuario professor, Pageable paging) {
+        return reuniaoRepository.AllReunioesByProfessorAndColegiado(professor.getId(), paging);
+    }
+
+    
 }

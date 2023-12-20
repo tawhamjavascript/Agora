@@ -3,6 +3,8 @@ package br.edu.ifpb.agora.controller;
 
 import br.edu.ifpb.agora.model.Assunto;
 import br.edu.ifpb.agora.model.Documento;
+import br.edu.ifpb.agora.model.NavPage;
+import br.edu.ifpb.agora.model.NavPageBuilder;
 import br.edu.ifpb.agora.model.Processo;
 import br.edu.ifpb.agora.model.StatusEnum;
 import br.edu.ifpb.agora.model.Usuario;
@@ -14,13 +16,14 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -96,16 +99,21 @@ public class AlunoController {
     }
 
     @GetMapping("/processo")
-    public ModelAndView consultarProcessos(ModelAndView mav, Principal principal) {
-        pathTo.put("novoProcesso", "/aluno/processo/cadastrar");        
-        pathTo.put("listar", "/aluno/processo");
-        pathTo.put("logout", "/auth/logout");
-
+    public ModelAndView consultarProcessos(ModelAndView mav, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size, Principal principal) {
+        Pageable paging = PageRequest.of(page-1, size);
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Page<Processo> processos = alunoService.consultaProcessos(usuario.getId(), paging);
+        NavPage navPage = NavPageBuilder.newNavPage(processos.getNumber() + 1, processos.getTotalElements(), processos.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         mav.setViewName("aluno/tela-aluno-listagem-processos");
         mav.addObject("processos", alunoService.consultaProcessos(principal));
 
         mav.addObject("caminho", pathTo);
         mav.addObject("stylePaths", getPath("listagem"));
+        pathTo.put("novoProcesso", "/aluno/processo/cadastrar");        
+        pathTo.put("listar", "/aluno/processo");
+        pathTo.put("logout", "/auth/logout");
+
         return mav;
 
     }

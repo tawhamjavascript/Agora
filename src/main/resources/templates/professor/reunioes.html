@@ -36,6 +36,7 @@
                 <button type="submit">Filtrar</button>
             </form>
 
+        <div th:replace="~{/fragments/paging-select-size}" ></div>
             <table id="tabela">
                 <thead>
                     <tr>
@@ -52,6 +53,7 @@
                     </tr>
                 </tbody>
             </table>
+        <div th:replace="~{/fragments/paging :: paginator('professor/reunioes', ${navPage})}" ></div>
         </div>
     </div>
 

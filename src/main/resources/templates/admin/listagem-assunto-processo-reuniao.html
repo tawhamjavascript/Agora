@@ -9,6 +9,7 @@ th:with="userType='admin', titleHeader='PESSOAL', personToList='assuntos'">
     <div id="main">
         <div>
           <h2>LISTAGEM DE ASSUNTO DE PROCESSO</h2>
+          <div th:replace="~{/fragments/paging-select-size}" ></div>
           <table class="table" id="tabela">
             <thead>
               <tr>
@@ -35,6 +36,7 @@ th:with="userType='admin', titleHeader='PESSOAL', personToList='assuntos'">
               </tr>
             </tbody>
           </table>
+          <div th:replace="~{/fragments/paging :: paginator('admin/assunto', ${navPage})}" ></div>
         </div>
     </div>
   </div>    
