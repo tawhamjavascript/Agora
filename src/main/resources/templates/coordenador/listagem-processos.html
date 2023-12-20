@@ -27,7 +27,6 @@
     <div id="main">
         <div>
           <h2>LISTAGEM DE PROCESSOS</h2>
-
           <form method="get" th:action="@{/coordenador/processo/consultar}">
             <label for="filtro">Filtrar por:</label>
             <select name="filtro" id="filtro">
@@ -53,6 +52,7 @@
       
           </form>
 
+          <div th:replace="~{/fragments/paging-select-size}" ></div>
           <table class="table" id="tabela">
             <thead>
               <tr>
