@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 
 
@@ -176,11 +177,12 @@ public class CoordenadorController {
 
     }
 
-    @GetMapping("reuniao/{id}/ata/documento/{idDoc}")
+    @GetMapping("sessao/{id}/ata/documento/{idDoc}")
     public ResponseEntity<byte[]> getDocumentoParecer(@PathVariable("idDoc") Long idDoc) {
         Documento documento = documentoServiceAta.getDocumento(idDoc);
         System.out.println("chegando aqui");
 
+        
         return ResponseEntity
                 .ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + documento.getNome() + "\"")
@@ -192,8 +194,6 @@ public class CoordenadorController {
         mav.setViewName("coordenador/conducao-sessao");
         Reuniao reuniao = coordenadorService.getReuniao(idReuniao);
         mav.addObject("reuniao", reuniao);
-
-    
         mav.addObject("votos", coordenadorService.getVotos(reuniao));
         return mav;
     }

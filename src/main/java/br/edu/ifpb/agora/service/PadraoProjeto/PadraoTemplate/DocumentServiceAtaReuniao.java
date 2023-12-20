@@ -45,7 +45,7 @@ public class DocumentServiceAtaReuniao extends DocumentService {
         String fileDownloadUri = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/coordenador/")
-                .path("/reuniao/")
+                .path("/sessao/")
                 .path(String.valueOf(id))
                 .path("/ata")
                 .path("/documento/")

@@ -182,16 +182,26 @@ public class CoordenadorService {
     }
 
     @Transactional
-    public Reuniao getReuniao(Long idReuniao) {
-        Reuniao reuniao = reuniaoRepository.findById(idReuniao).get();
+    private void iniciarReuniao(Reuniao reuniao) {
+        Reuniao reuniaoBD = reuniaoRepository.findById(reuniao.getId()).get();
         reuniao.setStatus(StatusReuniao.EM_ANDAMENTO);
-
-        for (Processo processo : reuniao.getProcessos()) {
+        for (Processo processo : reuniaoBD.getProcessos()) {
             if (processo.getStatus() == StatusEnum.EM_PAUTA) {
                 processo.setStatus(StatusEnum.EM_JULGAMENTO);
                 processoRepository.save(processo);
                 break;
             }
+        }
+
+        reuniaoRepository.save(reuniaoBD);
+    }
+
+    @Transactional
+    public Reuniao getReuniao(Long idReuniao) {
+        Reuniao reuniao = reuniaoRepository.findById(idReuniao).get();
+        if (reuniao.getStatus() == StatusReuniao.PROGRAMADA) {
+            iniciarReuniao(reuniao);
+            
         }
         reuniaoRepository.save(reuniao);
 
@@ -211,21 +221,31 @@ public class CoordenadorService {
         }
         Map<String, Voto> votos = new HashMap<>();
         Colegiado colegiado = reuniao.getColegiado();
-        final Processo processoFinal = processo;
-        colegiado.getMembros().forEach(professor -> {
-            processoFinal.getVotos().forEach(voto -> {
+        for(Professor professor: colegiado.getMembros()) {
+            for (Voto voto : processo.getVotos()) {
                 if (voto.getProfessor().getId() == professor.getId()) {
                     votos.put(professor.getNome(), voto);
-                    System.out.println(professor.getNome());
+                    break;
                 }
                 else {
                     votos.put(professor.getNome(), null);
                 }
+            }
+        }
+
+        if (votos.isEmpty()) {
+            System.out.println("Mapa vazio");
+        } else {
+            votos.forEach((key, voto) -> {
+                if (voto == null) {
+                    System.out.println("Key: " + key + " Voto: null");
+                }
+                else {
+                    System.out.println("Key: " + key + " Voto: " + voto.getTipoVoto());
+                }
             });
-        });
-
-        
-
+        }
+    
         return votos;
     }
 
@@ -290,9 +310,21 @@ public class CoordenadorService {
             }
         }
         processo.setStatus(StatusEnum.JULGADO);
+        Processo processoSeguinte = null;
+
+        for(Processo p : reuniao.getProcessos()) {
+            if (p.getStatus() == StatusEnum.EM_PAUTA) {
+                processoSeguinte = p;
+            }
+        }
+        if (processoSeguinte != null) {
+            processoSeguinte.setStatus(StatusEnum.EM_JULGAMENTO);
+            processoRepository.save(processoSeguinte);
+        }
         processoRepository.save(processo);
     
     }
+    
 
     @Transactional
     public void finalizarReuniao(Long idSessao) {
