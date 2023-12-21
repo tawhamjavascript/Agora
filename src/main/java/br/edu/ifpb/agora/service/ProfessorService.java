@@ -55,6 +55,11 @@ public class ProfessorService {
 
     }
 
+    public Page<Reuniao> listarReunioes(Principal user, Pageable paging) {
+        Professor professor = professorRepository.findByMatricula(user.getName());
+        return reuniaoRepository.AllReunioesByProfessorAndColegiado(professor.getId(), paging);
+    }
+
     public List<Reuniao> listarReunioesByStatus(Principal user, StatusReuniao status) {
         Professor professor = professorRepository.findByMatricula(user.getName());
         Colegiado colegiado = professor.getColegiado();
@@ -87,9 +92,7 @@ public class ProfessorService {
 
     }
 
-    public Page<Reuniao> listarReunioes(Usuario professor, Pageable paging) {
-        return reuniaoRepository.AllReunioesByProfessorAndColegiado(professor.getId(), paging);
-    }
+    
 
     
 }

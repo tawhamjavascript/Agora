@@ -47,9 +47,9 @@ public class ProfessorController {
 
 
     @GetMapping("/reunioes")
-    public ModelAndView reunioes(ModelAndView mav, Principal user, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size, Professor professor) {
+    public ModelAndView reunioes(ModelAndView mav, Principal user, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
         Pageable paging = PageRequest.of(page -1, size);
-        Page<Reuniao> reunioes = professorService.listarReunioes(professor, paging);
+        Page<Reuniao> reunioes = professorService.listarReunioes(user, paging);
         NavPage navPage = NavPageBuilder.newNavPage(reunioes.getNumber() + 1, reunioes.getTotalElements(), reunioes.getTotalPages(), size);
         mav.addObject("navPage", navPage);
         mav.setViewName("professor/reunioes");
