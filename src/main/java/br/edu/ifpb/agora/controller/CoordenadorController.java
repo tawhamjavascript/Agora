@@ -100,10 +100,9 @@ public class CoordenadorController {
     }
 
     @GetMapping("/processo")
-    public ModelAndView processos(ModelAndView modelAndView, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size, Principal principal) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
+    public ModelAndView processos(ModelAndView modelAndView,  @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size, Principal principal) {
         Pageable paging = PageRequest.of(page -1, size);
-        Page<Processo> processos = coordenadorService.listarTodosProcessosDoColegiado(usuario.getId(), paging);
+        Page<Processo> processos = coordenadorService.listarTodosProcessosDoColegiado(principal, paging);
         NavPage navPage = NavPageBuilder.newNavPage(processos.getNumber() + 1, processos.getTotalElements(), processos.getTotalPages(), size);
         modelAndView.addObject("navPage", navPage);
         pathTo.put("listar", "/coordenador/processo");

@@ -48,6 +48,11 @@ public class CoordenadorService {
 
     }
 
+    public Page<Processo> listarTodosProcessosDoColegiado(Principal user, Pageable paging) {
+        Professor coordenador = professorRepository.findByMatricula(user.getName());
+        return processoRepository.findAllByCursoId(coordenador.getCurso().getId(), paging);
+    }
+
     public List<Professor> listarTodosProfessoresDoColegiado(Principal user) {
 
         Professor coordenador = professorRepository.findByMatricula(user.getName());
@@ -365,12 +370,5 @@ public class CoordenadorService {
             return true;
         } 
         return false;
-    }
-
-
-
-    public Page<Processo> listarTodosProcessosDoColegiado(Long id, Pageable paging) {
-        Professor coordenador = professorRepository.findById(id).get();
-        return processoRepository.findAllByCursoId(coordenador.getCurso().getId(), paging);
     }
 }
