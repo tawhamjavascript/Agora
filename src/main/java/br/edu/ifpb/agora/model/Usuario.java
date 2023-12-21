@@ -29,8 +29,7 @@ public class Usuario {
     @Pattern(regexp = "[0-9]{11}" , message = "Telefone inválido")
     private String fone;
     
-    @NotBlank(message="Campo obrigatório")
-    @Pattern(regexp = "[0-9]{11}" , message = "Matrícula inválida")
+    @MatriculaConstraint
     private String matricula;
     
     @NotBlank(message="Campo obrigatório")
