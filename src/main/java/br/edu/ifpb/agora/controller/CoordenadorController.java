@@ -100,8 +100,6 @@ public class CoordenadorController {
         pathTo.put("listar", "/coordenador/processo");
         pathTo.put("logout", "/auth/logout");
         modelAndView.setViewName("coordenador/listagem-processos");
-        modelAndView.addObject("processos", coordenadorService.listarTodosProcessosDoColegiado(principal));
-
         modelAndView.addObject("caminho", pathTo);
         modelAndView.addObject("stylePaths", getPath("listagem"));
         modelAndView.addObject("processos", processos);
@@ -137,9 +135,13 @@ public class CoordenadorController {
     }
 
     @GetMapping("/sessao")
-    public ModelAndView getSessoes(Principal principal, ModelAndView mav) {
+    public ModelAndView getSessoes(Principal principal, ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page -1, size);
+        Page<Reuniao> reunioes = coordenadorService.getReuniaoDoColegiado(principal, paging);
+        NavPage navPage = NavPageBuilder.newNavPage(reunioes.getNumber(), reunioes.getTotalElements(), reunioes.getTotalPages(), size);
+        mav.addObject("navPage", navPage);
         mav.setViewName("coordenador/listagem-sessoes");
-        mav.addObject("reunioes", coordenadorService.getReuniaoDoColegiado(principal));
+        mav.addObject("reunioes", reunioes);
         return mav;
     }
     

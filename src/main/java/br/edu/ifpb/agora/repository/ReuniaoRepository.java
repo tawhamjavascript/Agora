@@ -20,6 +20,8 @@ public interface ReuniaoRepository extends JpaRepository<Reuniao, Long> {
 
     public List<Reuniao> findByColegiadoId(Long id);
 
+    public Page<Reuniao> findByColegiadoId(Long id, Pageable paging);
+
     public List<Reuniao> findByColegiadoIdAndStatus(Long id, StatusReuniao status);
 
     Reuniao findByStatus(StatusReuniao statusReuniao);

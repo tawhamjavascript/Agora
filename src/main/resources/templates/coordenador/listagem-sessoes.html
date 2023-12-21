@@ -39,6 +39,7 @@
         <div id="main">
             <div>
                 <h2>LISTAGEM DE SESSÕES DO COLEGIADO</h2>
+                <div th:replace="~{/fragments/paging-select-size}" ></div>
                 <table id="tabela-sessoes">
                     <thead>
                         <tr>
@@ -73,6 +74,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <div th:replace="~{/fragments/paging :: paginator('coordenador/sessao', ${navPage})}" ></div>
             </div>
 
 

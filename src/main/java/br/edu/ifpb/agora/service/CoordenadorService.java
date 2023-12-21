@@ -11,7 +11,6 @@ import java.util.Optional;
 import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.repository.*;
 import br.edu.ifpb.agora.service.PadraoProjeto.DB4O;
-import jakarta.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -122,6 +121,13 @@ public class CoordenadorService {
         Professor professor = professorRepository.findByMatricula(user.getName());
         Colegiado colegiado = colegiadoRepository.findByCursoId(professor.getCurso().getId());
         List<Reuniao> reunioes = reuniaoRepository.findByColegiadoId(colegiado.getId());
+        return reunioes;
+    }
+
+    public Page<Reuniao> getReuniaoDoColegiado(Principal user, Pageable paging) {
+        Professor professor = professorRepository.findByMatricula(user.getName());
+        Colegiado colegiado = colegiadoRepository.findByCursoId(professor.getCurso().getId());
+        Page<Reuniao> reunioes = reuniaoRepository.findByColegiadoId(colegiado.getId(), paging);
         return reunioes;
     }
 
