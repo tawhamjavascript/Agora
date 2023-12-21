@@ -92,9 +92,15 @@ public class AdminController {
     
     @PostMapping("/curso")
     public ModelAndView saveCurso(@Valid Curso curso, BindingResult result, ModelAndView mav) {
+        pathTo.put("incluir", "/admin/curso/cadastro");
+        pathTo.put("listar", "/admin/curso");        
+        pathTo.put("home", "/admin/home");
         if (result.hasErrors()){
             mav.addObject("curso", curso);
             mav.setViewName("/admin/cadastro-curso");
+
+            mav.addObject("caminho", pathTo);
+            mav.addObject("stylePaths", getPath("cadastro"));
             return mav;
         }
         adminService.addCourse(curso);
@@ -146,9 +152,14 @@ public class AdminController {
 
     @PostMapping("/assunto")
     public ModelAndView saveAssunto(@Valid Assunto assunto, BindingResult result, ModelAndView mav) {
+        pathTo.put("incluir", "/admin/assunto/cadastro");
+        pathTo.put("listar", "/admin/assunto");
+        pathTo.put("home", "/admin/home");
         if (result.hasErrors()){
             mav.setViewName("admin/cadastro-assunto-processo-reuniao");
             mav.addObject("assunto", assunto);
+            mav.addObject("caminho", pathTo);
+            mav.addObject("stylePaths", getPath("cadastro"));
             return mav;
         }
         adminService.registerSubject(assunto);
@@ -218,9 +229,14 @@ public class AdminController {
 
     @PostMapping("/aluno")
     public ModelAndView saveAluno(@Valid Aluno aluno, BindingResult result, ModelAndView mav) {
+        pathTo.put("incluir", "/admin/aluno/cadastro");
+        pathTo.put("listar", "/admin/aluno");
+        pathTo.put("home", "/admin/home");
         if (result.hasErrors()){
             mav.setViewName("admin/cadastrar-aluno");
-            mav.addObject("aluno", aluno);
+            mav.addObject("aluno", aluno);        
+            mav.addObject("caminho", pathTo);
+            mav.addObject("stylePaths", getPath("cadastro"));
             return mav;
         }
         adminService.registerStudent(aluno);
@@ -365,6 +381,9 @@ public class AdminController {
 
     @PostMapping("/colegiado")
     public ModelAndView saveColegiado(@Valid Colegiado colegiado, BindingResult result, ModelAndView mav) {
+        pathTo.put("incluir", "/admin/colegiado/cadastrar");
+        pathTo.put("listar", "/admin/colegiado");        
+        pathTo.put("home", "/admin/home");
         if (result.hasErrors()){
             if(colegiado.getId() != null) {
                 Colegiado colegiadoBD = adminService.getColegiado(colegiado.getId());
@@ -373,6 +392,9 @@ public class AdminController {
 
             mav.setViewName("admin/cadastro-colegiados");
             mav.addObject("colegiado",colegiado);
+
+            mav.addObject("caminho", pathTo);
+            mav.addObject("stylePaths", getPath("cadastro"));
             return mav;
         }
         if (colegiado.getId() == null) {

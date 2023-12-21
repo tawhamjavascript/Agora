@@ -204,12 +204,13 @@ public class CoordenadorService {
         reuniaoRepository.save(reuniaoBD);
     }
 
-    public boolean existeReuniaoEmAndamento(Principal user) {
+    public boolean existeReuniaoEmAndamento(Long id, Principal user) {
         Professor professor = professorRepository.findByMatricula(user.getName());
-        Colegiado colegiado = professor.getColegiado();
+        Colegiado colegiado = colegiadoRepository.findByCursoId(professor.getCurso().getId());
         List<Reuniao> reunioes = colegiado.getReunioes();
         for (Reuniao reuniao : reunioes) {
-            if (reuniao.getStatus() == StatusReuniao.EM_ANDAMENTO) {
+            if (reuniao.getStatus() == StatusReuniao.EM_ANDAMENTO && reuniao.getId() != id) {
+                System.out.println("aqui");
                 return true;
             }
         }
@@ -347,11 +348,23 @@ public class CoordenadorService {
     
 
     @Transactional
-    public void finalizarReuniao(Long idSessao) {
-        Reuniao reuniao = reuniaoRepository.findById(idSessao).get();
-        reuniao.setStatus(StatusReuniao.ENCERRADA);
-        reuniaoRepository.save(reuniao);
+    public boolean finalizarReuniao(Long idSessao) {
+        int contadorDeProcessosVotados =  0;
 
+        Reuniao reuniao = reuniaoRepository.findById(idSessao).get();
+
+        for(Processo processo: reuniao.getProcessos()) {
+            if (processo.getDecisaoColegiado() != null) {
+                contadorDeProcessosVotados++;
+            }
+        }
+
+        if (contadorDeProcessosVotados == reuniao.getProcessos().size() && reuniao.getAta() != null) {
+            reuniao.setStatus(StatusReuniao.ENCERRADA);
+            reuniaoRepository.save(reuniao);
+            return true;
+        } 
+        return false;
     }
 
 

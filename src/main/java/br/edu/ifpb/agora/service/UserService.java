@@ -26,7 +26,7 @@ public class UserService {
         System.out.println(authorities.get(0).getAuthority());
         String result;
         if (authorities.size() > 1) {
-            result = "/coordenador/processo";
+            result = "/coordenador/home";
             
         }
         else if (authorities.get(0).getAuthority().equals("ROLE_ALUNO")) {

@@ -44,6 +44,15 @@ public class CoordenadorController {
         if(page.equals("listagem")) {
             return Arrays.asList("/css/main.css", "/css/coordenador/listagem.css");
         }
+        else if(page.equals("cadastro")) {
+            return Arrays.asList("/css/main.css", "/css/coordenador/cadastro.css");
+        }
+        else if(page.equals("adicionar")) {
+            return Arrays.asList("/css/coordenador/adicionar.css");
+        }
+        else if(page.equals("adicionar-processo-relator")) {
+            return Arrays.asList("/css/main.css", "/css/coordenador/adicionar.css");
+        }
 
         return Arrays.asList("/css/coordenador/home.css");
     }
@@ -85,6 +94,7 @@ public class CoordenadorController {
     @GetMapping("/home")
     public ModelAndView home(ModelAndView modelAndView) {
         modelAndView.setViewName("coordenador/home");
+        modelAndView.addObject("stylePaths", getPath(""));
         return modelAndView;
 
     }
@@ -96,19 +106,18 @@ public class CoordenadorController {
         Page<Processo> processos = coordenadorService.listarTodosProcessosDoColegiado(usuario.getId(), paging);
         NavPage navPage = NavPageBuilder.newNavPage(processos.getNumber() + 1, processos.getTotalElements(), processos.getTotalPages(), size);
         modelAndView.addObject("navPage", navPage);
-        pathTo.put("cadastrar", "/coordenador/sessao/cadastro");
         pathTo.put("listar", "/coordenador/processo");
         pathTo.put("logout", "/auth/logout");
         modelAndView.setViewName("coordenador/listagem-processos");
         modelAndView.addObject("caminho", pathTo);
         modelAndView.addObject("stylePaths", getPath("listagem"));
         modelAndView.addObject("processos", processos);
+        modelAndView.addObject("page", "processo");
         return modelAndView;
     }
 
     @GetMapping("/processo/consultar")
     public ModelAndView processosConsultar(@RequestParam(name = "filtro") String filtro, ModelAndView modelAndView, Principal principal) {
-        pathTo.put("cadastrar", "/coordenador/sessao/cadastro");
         pathTo.put("listar", "/coordenador/processo");
         pathTo.put("logout", "/auth/logout");
 
@@ -117,12 +126,14 @@ public class CoordenadorController {
 
         modelAndView.addObject("caminho", pathTo);
         modelAndView.addObject("stylePaths", getPath("listagem"));
+        modelAndView.addObject("page", "processo");
         return modelAndView;
     }
 
     @GetMapping("/processo/{id}/relator")
     public ModelAndView getProcesso(@PathVariable("id") Long idProcesso, ModelAndView mav) {
         mav.setViewName("coordenador/adicionar-relator");
+        mav.addObject("stylePaths", getPath("adicionar-processo-relator"));
         mav.addObject("processo", coordenadorService.getProcesso(idProcesso));
         return mav;
     }
@@ -140,16 +151,32 @@ public class CoordenadorController {
         Page<Reuniao> reunioes = coordenadorService.getReuniaoDoColegiado(principal, paging);
         NavPage navPage = NavPageBuilder.newNavPage(reunioes.getNumber(), reunioes.getTotalElements(), reunioes.getTotalPages(), size);
         mav.addObject("navPage", navPage);
+        pathTo.put("cadastrar", "/coordenador/sessao/cadastro");
+        pathTo.put("listar", "/coordenador/sessao");
+        pathTo.put("home", "/coordenador/home");
+
         mav.setViewName("coordenador/listagem-sessoes");
         mav.addObject("reunioes", reunioes);
+
+        mav.addObject("stylePaths", getPath("listagem"));
+        mav.addObject("caminho", pathTo);
+        mav.addObject("page", "sessao");
         return mav;
     }
     
     @GetMapping("/sessao/cadastro")
     public ModelAndView getCadastroSessao(Principal principal, ModelAndView mav) {
+        pathTo.put("cadastrar", "/coordenador/sessao/cadastro");
+        pathTo.put("listar", "/coordenador/sessao");
+        pathTo.put("home", "/coordenador/home");
+
         mav.setViewName("coordenador/cadastro-sessao");
         mav.addObject("reuniao", coordenadorService.getReuniaoCadastro(principal));
         mav.addObject("processos", coordenadorService.getProcessosEmMemoria(principal));
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("cadastro"));
+        mav.addObject("page", "sessao");
         return mav;
     }
 
@@ -165,6 +192,7 @@ public class CoordenadorController {
     @GetMapping("/sessao/add/processo")
     public ModelAndView getCadastroProcesso(Principal principal, ModelAndView mav) {
         mav.setViewName("coordenador/adicionar-processo");
+        mav.addObject("stylePaths", getPath("adicionar"));
         mav.addObject("processos", coordenadorService.getProcessosDoCursoEComDecisaoRelator(principal));
         return mav;
 
@@ -201,7 +229,9 @@ public class CoordenadorController {
 
     @GetMapping("sessao/{id}/conducao") 
     public ModelAndView getConducaoSessao(@PathVariable("id") Long idReuniao, Principal principal, ModelAndView mav) {
-        if (coordenadorService.existeReuniaoEmAndamento(principal)) {
+
+
+        if (coordenadorService.existeReuniaoEmAndamento(idReuniao, principal)) {
             mav.setViewName("redirect:/coordenador/sessao");
             return mav;
         }
@@ -209,6 +239,15 @@ public class CoordenadorController {
         Reuniao reuniao = coordenadorService.getReuniao(idReuniao);
         mav.addObject("reuniao", reuniao);
         mav.addObject("votos", coordenadorService.getVotos(reuniao));
+
+        pathTo.put("cadastrar", "/coordenador/sessao/cadastro");
+        pathTo.put("listar", "/coordenador/sessao");
+        pathTo.put("home", "/coordenador/home");
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("listagem"));
+        mav.addObject("page", "sessao");
+
         return mav;
     }
 
@@ -221,8 +260,12 @@ public class CoordenadorController {
 
     @GetMapping("sessao/{id}/salvar")
     public ModelAndView salvarSessao(@PathVariable("id") Long idReuniao, ModelAndView mav) {
-        coordenadorService.finalizarReuniao(idReuniao);
-        mav.setViewName("redirect:/coordenador/sessao");
+        boolean result = coordenadorService.finalizarReuniao(idReuniao);
+        if (result) {
+            mav.setViewName("redirect:/coordenador/sessao");
+        } else {
+            mav.setViewName("redirect:/coordenador/sessao/" + idReuniao + "/conducao");
+        }
         return mav;
     }
 
