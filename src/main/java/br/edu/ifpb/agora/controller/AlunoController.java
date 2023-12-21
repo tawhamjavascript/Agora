@@ -104,10 +104,9 @@ public class AlunoController {
     }
 
     @GetMapping("/processo")
-    public ModelAndView consultarProcessos(ModelAndView mav, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size, Principal principal) {
+    public ModelAndView consultarProcessos(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size, Principal principal) {
         Pageable paging = PageRequest.of(page-1, size);
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        Page<Processo> processos = alunoService.consultaProcessos(usuario.getId(), paging);
+        Page<Processo> processos = alunoService.consultaProcessos(principal, paging);
         NavPage navPage = NavPageBuilder.newNavPage(processos.getNumber() + 1, processos.getTotalElements(), processos.getTotalPages(), size);
         mav.addObject("navPage", navPage);
         mav.setViewName("aluno/tela-aluno-listagem-processos");

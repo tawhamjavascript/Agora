@@ -51,6 +51,10 @@ public class AlunoService {
         return processoRepository.findAllByInteressadoMatricula(user.getName());
     }
 
+     public Page<Processo> consultaProcessos(Principal user, Pageable paging){
+        return processoRepository.findAllByInteressadoMatricula(user.getName(), paging);
+    }
+
 
     public List<Processo> filtrarProcesso(Principal user, String filtro, String order) {
         if (filtro.isBlank()) {
@@ -100,7 +104,4 @@ public class AlunoService {
         return processoRepository.findAllByInteressadoMatriculaOrderByDataRecepcaoDesc(matricula);
     }
 
-    public Page<Processo> consultaProcessos(Long id, Pageable paging) {
-        return processoRepository.findAllByInteressadoId(id, paging);
-    }
 }
