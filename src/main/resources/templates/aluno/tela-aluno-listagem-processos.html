@@ -34,14 +34,16 @@ th:with="title='Listagem de processos', titleHeader='Processos'">
       </form>
 
         <div>
-          <table class="table" id="tabela-processos">
+          <table class="table table-bordered" id="tabela-processos">
             <thead>
               <tr>
                 <th scope="col">N°</th>
                 <th scope="col">Data</th>
                 <th scope="col">Assunto</th>
                 <th scope="col">Status</th>
+                <th scope="col"> Decisão colegiado </th>
                 <th scope="col">Documentos</th>
+
               </tr>
             </thead>
             <tbody>
@@ -50,6 +52,8 @@ th:with="title='Listagem de processos', titleHeader='Processos'">
                 <td th:text="${#dates.format(processo.dataRecepcao, 'dd/MMM/yyyy')}"></td>
                 <td th:text="${processo.assunto.nome}"></td>
                 <td th:text="${processo.status.getStatus()}"></td>
+                <td th:if="${processo.decisaoColegiado != null}" th:text="${processo.decisaoColegiado}"></td>
+                <td th:unless="${processo.decisaoColegiado != null}"> Processo não julgado </td>
                 <td>
                   <ul>
                     <li th:each="anexo : ${processo.getAnexos()}"> 

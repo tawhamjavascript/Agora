@@ -23,7 +23,6 @@ public class Reuniao implements EntidadesSalvarDocumento{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @FutureOrPresent(message = "A data da reunião deve ser no presente ou no futuro")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dataReuniao;
 
@@ -40,7 +39,7 @@ public class Reuniao implements EntidadesSalvarDocumento{
     @ManyToOne
     private Colegiado colegiado;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Documento ata;
 
     public void addProcesso(Processo processo) {

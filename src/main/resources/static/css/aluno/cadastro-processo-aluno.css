@@ -3,7 +3,7 @@
 
   border-radius: 8px;
 
-  height: 25rem;
+  height: 18rem;
   width: 40vw;
 
   padding: 10px;
@@ -37,5 +37,10 @@
   background: #d3d3d3;
 
   margin-top: 2rem;
+  margin-left: 11rem;
+}
+
+.button:hover {
+  cursor: pointer;
 }
 

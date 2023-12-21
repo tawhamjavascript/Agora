@@ -45,7 +45,7 @@ public class Processo implements EntidadesSalvarDocumento{
     @JoinColumn(name = "assunto_id")
     private Assunto assunto;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "processo_id")
     private List<Voto> votos;
 

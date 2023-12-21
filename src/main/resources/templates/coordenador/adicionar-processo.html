@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/src/main/resources/static/css/coordenador/adicionar.css">
-</head>
+<head th:insert="~{fragments/base-coordenador :: headfiles(title='coordenador')}">
 
 <body>
     <div class="container">
-        <table id="tabela">
+        <table class="table table-bordered" id="tabela">
             <thead>
-                <th> Assunto </th>
-                <th> Aluno </th>
-                <th> anexos </th>
-                <th> Adicionar </th>
+                <th scope="col"> Assunto </th>
+                <th scope="col"> Aluno </th>
+                <th scope="col"> anexos </th>
+                <th scope="col"> Adicionar </th>
             </thead>
     
             <tbody th:each="processo : ${processos}">
@@ -35,6 +31,6 @@
             </tbody>
         </table>
     
-        <a th:href="@{/coordenador/sessao/cadastro}"> Voltar </a>
+        <a id="voltar" th:href="@{/coordenador/sessao/cadastro}"> Voltar </a>
     </div>  
 </body>

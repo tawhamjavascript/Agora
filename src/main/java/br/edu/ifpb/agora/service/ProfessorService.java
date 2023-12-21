@@ -51,10 +51,11 @@ public class ProfessorService {
 
     public List<Reuniao> listarReunioesByStatus(Principal user, StatusReuniao status) {
         Professor professor = professorRepository.findByMatricula(user.getName());
+        Colegiado colegiado = professor.getColegiado();
         if (status.equals(StatusReuniao.SEM_FILTRO)) {
             return listarReunioes(user);
         }
-        return reuniaoRepository.AllReunioesByProfessorAndColegiadoAndStatus(professor.getId(), status);
+        return reuniaoRepository.findByColegiadoIdAndStatus(colegiado.getId(), status);
     }
 
 

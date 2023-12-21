@@ -2,6 +2,7 @@ package br.edu.ifpb.agora.controller;
 
 
 import br.edu.ifpb.agora.model.*;
+import br.edu.ifpb.agora.repository.ReuniaoRepository;
 import br.edu.ifpb.agora.service.ProfessorService;
 import br.edu.ifpb.agora.service.PadraoProjeto.DB4O;
 import br.edu.ifpb.agora.service.PadraoProjeto.PadraoTemplate.DocumentService;
@@ -15,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import br.edu.ifpb.agora.service.CoordenadorService;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +25,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
+
 
 
 
@@ -42,6 +47,9 @@ public class CoordenadorController {
         else if(page.equals("adicionar")) {
             return Arrays.asList("/css/coordenador/adicionar.css");
         }
+        else if(page.equals("adicionar-processo-relator")) {
+            return Arrays.asList("/css/main.css", "/css/coordenador/adicionar.css");
+        }
 
         return Arrays.asList("/css/coordenador/home.css");
     }
@@ -57,6 +65,10 @@ public class CoordenadorController {
     private DocumentServiceParecerProcesso documentoServiceParecer;
 
     private DB4O db4o = DB4O.getInstance();
+
+    @Autowired
+    private ReuniaoRepository reuniaoRepository;
+
 
     @ModelAttribute("statusItens")
     public List<StatusEnum> getStatus() {
@@ -77,10 +89,11 @@ public class CoordenadorController {
     }
 
     @GetMapping("/home")
-    public ModelAndView getHome(ModelAndView mav) {
-        mav.setViewName("/coordenador/home");
-        mav.addObject("stylePaths", getPath(""));
-        return mav;
+    public ModelAndView home(ModelAndView modelAndView) {
+        modelAndView.setViewName("coordenador/home");
+        modelAndView.addObject("stylePaths", getPath(""));
+        return modelAndView;
+
     }
 
     @GetMapping("/processo")
@@ -114,6 +127,7 @@ public class CoordenadorController {
     @GetMapping("/processo/{id}/relator")
     public ModelAndView getProcesso(@PathVariable("id") Long idProcesso, ModelAndView mav) {
         mav.setViewName("coordenador/adicionar-relator");
+        mav.addObject("stylePaths", getPath("adicionar-processo-relator"));
         mav.addObject("processo", coordenadorService.getProcesso(idProcesso));
         return mav;
     }
@@ -191,15 +205,75 @@ public class CoordenadorController {
 
     }
 
-    @GetMapping("reuniao/{id}/ata/documento/{idDoc}")
+    @GetMapping("sessao/{id}/ata/documento/{idDoc}")
     public ResponseEntity<byte[]> getDocumentoParecer(@PathVariable("idDoc") Long idDoc) {
         Documento documento = documentoServiceAta.getDocumento(idDoc);
         System.out.println("chegando aqui");
 
+        
         return ResponseEntity
                 .ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + documento.getNome() + "\"")
                 .body(documento.getDados());
     }
+
+    @GetMapping("sessao/{id}/conducao") 
+    public ModelAndView getConducaoSessao(@PathVariable("id") Long idReuniao, Principal principal, ModelAndView mav) {
+
+
+        if (coordenadorService.existeReuniaoEmAndamento(idReuniao, principal)) {
+            mav.setViewName("redirect:/coordenador/sessao");
+            return mav;
+        }
+        mav.setViewName("coordenador/conducao-sessao");
+        Reuniao reuniao = coordenadorService.getReuniao(idReuniao);
+        mav.addObject("reuniao", reuniao);
+        mav.addObject("votos", coordenadorService.getVotos(reuniao));
+
+        pathTo.put("cadastrar", "/coordenador/sessao/cadastro");
+        pathTo.put("listar", "/coordenador/sessao");
+        pathTo.put("home", "/coordenador/home");
+
+        mav.addObject("caminho", pathTo);
+        mav.addObject("stylePaths", getPath("listagem"));
+        mav.addObject("page", "sessao");
+
+        return mav;
+    }
+
+    @PostMapping("sessao/{id}/professor/{idProfessor}/votar")
+    public ModelAndView votar(@PathVariable("id") Long idReuniao, @PathVariable("idProfessor") Long idProfessor, ModelAndView mav, String voto) {
+        coordenadorService.salvarVoto(idReuniao, idProfessor, voto);
+        mav.setViewName("redirect:/coordenador/sessao/" + idReuniao + "/conducao");
+        return mav;
+    }
+
+    @GetMapping("sessao/{id}/salvar")
+    public ModelAndView salvarSessao(@PathVariable("id") Long idReuniao, ModelAndView mav) {
+        boolean result = coordenadorService.finalizarReuniao(idReuniao);
+        if (result) {
+            mav.setViewName("redirect:/coordenador/sessao");
+        } else {
+            mav.setViewName("redirect:/coordenador/sessao/" + idReuniao + "/conducao");
+        }
+        return mav;
+    }
+
+    @GetMapping("sessao/{id}/processo/salvar")
+    public ModelAndView salvarProcesso(@PathVariable("id") Long idReuniao, ModelAndView mav) {
+        coordenadorService.finalizarVotacao(idReuniao);
+        mav.setViewName("redirect:/coordenador/sessao/" + idReuniao + "/conducao");
+        return mav;
+    }
+
+    @PostMapping("sessao/{id}/ata")
+    public ModelAndView postMethodName(@RequestParam("file") List<MultipartFile> arquivo,
+            @PathVariable("id") Long id, ModelAndView mav) {
     
+        documentoServiceAta.save(id, arquivo);
+        mav.setViewName("redirect:/coordenador/sessao/" + id + "/conducao");
+        return mav;
+  
+    }
+
 }

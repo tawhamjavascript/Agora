@@ -12,6 +12,12 @@
   gap: 1rem;
 }
 
+#tabela-1-sessao {
+  background: #F1F1F1;
+  color: #0D4085; 
+  width: fit-content;
+}
+
 #form-register {
   background: #F1F1F1;
 
@@ -21,7 +27,6 @@
   border-radius: 16px;
 
   color: #0D4085;
-  font-size: 20px;
 
   padding: 10px;
 }
@@ -41,7 +46,6 @@
   font-weight: bold;
 
   margin-top: 2rem;
-  margin-left: 30%;
 
   text-decoration: none;
 }

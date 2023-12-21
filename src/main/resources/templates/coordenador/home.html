@@ -6,8 +6,8 @@
   <div th:insert="~{/fragments/base-coordenador :: header(titleHeader='Homepage Coordenador')}"></div>
   <div class="container">
     <div id="box-buttons">
-      <a class="button-style" href="/Agora/coordenador/sessao">Sessoes</a>
-      <a class="button-style" href="/Agora/coordenador/processo">Processos</a>
+      <a class="button-style" th:href="@{/coordenador/sessao}">Sessoes</a>
+      <a class="button-style" th:href="@{/coordenador/processo}">Processos</a>
       <form th:action="@{/auth/logout}" method="POST">
         <input class="button-style" type="submit"  value="logout">
         </input>

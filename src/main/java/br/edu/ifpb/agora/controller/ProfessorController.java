@@ -65,7 +65,8 @@ public class ProfessorController {
 
     @GetMapping("/reunioes/filtro")
     public ModelAndView reunioesByStatus(@RequestParam(name = "filtro") StatusReuniao filtro, Principal user, ModelAndView mav) {
-        mav.setViewName("redirect:/professor/reunioes");
+        mav.setViewName("professor/reunioes");
+
         mav.addObject("reunioes", professorService.listarReunioesByStatus(user, filtro));
         return mav;
     }

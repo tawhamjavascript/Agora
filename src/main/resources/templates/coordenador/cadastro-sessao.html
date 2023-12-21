@@ -25,7 +25,7 @@ th:with="title='coordenador', titleHeader='COLEGIADO'">
             <label for="tabela-1-sessao" class="col-form-label">Pauta da Sessão:</label>
 
             <div class="form-tabela">
-              <table class="table" id="tabela-1-sessao">
+              <table class="table table-bordered" id="tabela-1-sessao">
                 <thead>
                   <tr>
                     <th>Número do processo</th>
@@ -46,7 +46,11 @@ th:with="title='coordenador', titleHeader='COLEGIADO'">
                 </tbody>
               </table>
 
-              <a href="" id = "addProcesso" onclick="salvarReuniaoEmMemoria()"> Adicionar Processos </a>
+              <div id="add-person">
+
+                <a href="" id = "addProcesso" onclick="salvarReuniaoEmMemoria()"> Adicionar Processos </a>
+
+              </div>
 
             </div>
             <button type="submit" class="button-style">Cadastrar</button>

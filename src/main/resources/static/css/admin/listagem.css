@@ -8,39 +8,6 @@
   width: 38vw;
 }
 
-
-#tabela-sessoes {
-  width: 110%;
-  color: #316CCF;
-  border-radius: 15px;
-  overflow: hidden;   
-
-
-}
-
-#tabela-sessoes tr {
-  height: 3.5rem;
-  
-}
-
-td, th {
-  padding: 2rem;
-}
-
-
-
-#tabela-sessoes thead {
-  background-color: #E9E9E9;
-}
-
-#tabela-sessoes tbody tr:nth-child(odd) {
-  background-color: #F1F1F1;
-}
-
-#tabela-sessoes tbody tr:nth-child(even) {
-  background-color: #E9E9E9;
-}
-
 #main {
   width: 90%;
 }

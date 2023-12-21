@@ -8,14 +8,15 @@ th:with="title='coordenador', titleHeader='COLEGIADO'">
         <div id="main">
             <div>
                 <h2>LISTAGEM DE SESSÕES DO COLEGIADO</h2>
-                <table id="tabela-sessoes">
+                <table id="tabela" class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Identificador</th>
-                            <th>Status</th>
-                            <th> Data </th>
-                            <th> Horário </th>
-                            <th>Julgar</th>
+                            <th scope="col">Identificador</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"> Data </th>
+                            <th scope="col"> Horário </th>
+                            <th scope="col">Julgar</th>
+                            <th scope="col">Ata</th>
                             
                         </tr>
                     </thead>
@@ -26,9 +27,17 @@ th:with="title='coordenador', titleHeader='COLEGIADO'">
                             <td th:text="${#dates.format(reuniao.dataReuniao, 'dd-MMM-yyyy')}"> </td>
                             <td th:text="${reuniao.horario}"> </td>
                             <td>
-                                <a th:href="@{/coordenador/sessao/julgar}">
+                                <a th:if="${reuniao.status.getStatus() != 'encerrada'}" th:href="@{/coordenador/sessao/{id}/conducao(id=${reuniao.id})}">
                                     Julgar
                                 </a>
+                                <span th:unless="${reuniao.status.getStatus() != 'encerrada'}"> Julgado </span>
+                            </td>
+
+                            <td>
+                                <a th:if="${reuniao.status.getStatus() == 'encerrada'}" th:href="@{/coordenador/sessao/{id}/ata/documento/{idAta}(id=${reuniao.id}, idAta=${reuniao.ata.id})}">
+                                    Ata
+                                </a>
+                                <span th:unless="${reuniao.status.getStatus() == 'encerrada'}"> Reunião não realizada </span>
                             </td>
                         </tr>
                     </tbody>

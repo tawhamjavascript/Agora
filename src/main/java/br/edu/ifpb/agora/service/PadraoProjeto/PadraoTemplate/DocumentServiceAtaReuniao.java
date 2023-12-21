@@ -30,9 +30,10 @@ public class DocumentServiceAtaReuniao extends DocumentService {
     @Transactional
     public Documento salvarDocumento(EntidadesSalvarDocumento entidade, Documento documento) {
         Reuniao reuniao = (Reuniao) entidade;
-        reuniao.setAta(documento);
-        reuniaoRepository.save(reuniao);
-        return reuniao.getAta();
+        Reuniao reuniaoBD = reuniaoRepository.findById(reuniao.getId()).get();
+        reuniaoBD.setAta(documento);
+        reuniaoRepository.save(reuniaoBD);
+        return reuniaoBD.getAta();
         
 
         
@@ -44,7 +45,7 @@ public class DocumentServiceAtaReuniao extends DocumentService {
         String fileDownloadUri = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/coordenador/")
-                .path("/reuniao/")
+                .path("/sessao/")
                 .path(String.valueOf(id))
                 .path("/ata")
                 .path("/documento/")

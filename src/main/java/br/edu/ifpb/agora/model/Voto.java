@@ -23,6 +23,5 @@ public class Voto {
     @ManyToOne
     private Professor professor;
 
-    private String justificativa;
 
 }
