@@ -35,8 +35,8 @@ public class ProfessorService {
         return processoRepository.findAllByRelatorMatricula(user.getName());
     }
 
-    public Page<Processo> listarProcessosDesignados(Usuario professor, Pageable paging) {
-        return processoRepository.findAllByRelatorId(professor.getId(), paging);
+    public Page<Processo> listarProcessosDesignados(Principal user, Pageable paging) {
+        return processoRepository.findAllByRelatorMatricula(user.getName(), paging);
     }
 
     @Transactional

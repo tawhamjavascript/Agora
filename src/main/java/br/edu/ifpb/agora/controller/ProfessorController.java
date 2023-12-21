@@ -76,10 +76,9 @@ public class ProfessorController {
     }
 
     @GetMapping("/processos")
-    public ModelAndView processos(ModelAndView mav, Principal principal, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size, Professor professor) {
-
+    public ModelAndView processos(ModelAndView mav, Principal principal, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
         Pageable paging = PageRequest.of(page -1, size);
-        Page<Processo> processos = professorService.listarProcessosDesignados(professor, paging);
+        Page<Processo> processos = professorService.listarProcessosDesignados(principal, paging);
         NavPage navPage = NavPageBuilder.newNavPage(processos.getNumber() +1, processos.getTotalElements(), processos.getTotalPages(), size);
         mav.addObject("navPage", navPage);
         mav.setViewName("professor/processos");

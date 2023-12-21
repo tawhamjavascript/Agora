@@ -76,4 +76,6 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long> {
     Page<Processo> findAllByCursoId(Long id, Pageable paging);
     
     Page<Processo> findAllByRelatorId(Long id, Pageable paging);
+
+    public Page<Processo> findAllByRelatorMatricula(String matricula, Pageable paging);
 }
