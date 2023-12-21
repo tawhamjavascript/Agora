@@ -47,7 +47,7 @@ public class ProfessorController {
 
 
     @GetMapping("/reunioes")
-    public ModelAndView reunioes(ModelAndView mav, Principal user, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+    public ModelAndView reunioes(ModelAndView mav, Principal user, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size, Professor professor) {
         Pageable paging = PageRequest.of(page -1, size);
         Page<Reuniao> reunioes = professorService.listarReunioes(professor, paging);
         NavPage navPage = NavPageBuilder.newNavPage(reunioes.getNumber() + 1, reunioes.getTotalElements(), reunioes.getTotalPages(), size);
@@ -76,7 +76,7 @@ public class ProfessorController {
     }
 
     @GetMapping("/processos")
-    public ModelAndView processos(ModelAndView mav, Principal principal, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+    public ModelAndView processos(ModelAndView mav, Principal principal, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size, Professor professor) {
 
         Pageable paging = PageRequest.of(page -1, size);
         Page<Processo> processos = professorService.listarProcessosDesignados(professor, paging);

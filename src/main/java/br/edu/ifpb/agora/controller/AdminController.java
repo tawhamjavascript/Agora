@@ -287,6 +287,8 @@ public class AdminController {
         if (result.hasErrors()){
             mav.setViewName("admin/cadastro-professor");
             mav.addObject("professor", professor);
+            mav.addObject("caminho", pathTo);
+            mav.addObject("stylePaths", getPath("cadastro"));
             return mav;
         }
         adminService.registerTeacher(professor);

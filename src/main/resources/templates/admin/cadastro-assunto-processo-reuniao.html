@@ -5,7 +5,7 @@ th:with="userType='admin', titleHeader='PESSOAL', personToList='assuntos'">
 <body>
   <div layout:fragment="content">
     <div id="main">
-      <h2> Salvar processo </h2>
+      <h2> Novo Assunto </h2>
 
       <div id="form-register">
         <form th:action="@{/admin/assunto}" method="post" th:object="${assunto}">
