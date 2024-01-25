@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="layout/layout-coordenador"
+th:with="title='coordenador', titleHeader='COLEGIADO'">
+
+<body>
+    <div layout:fragment="content">
+
+        <div id="main">
+
+            <h2>CONDUÇÃO DA SESSÃO - <p></p>
+            </h2>
+
+                <div id="form-register-sessao">
+
+                    <label class="col-form-label">Pauta da Sessão:</label>
+                    <div class="form-tabela-conducao">
+                        <table class="table table-bordered" id="tabela">
+                            <thead>
+                                <tr>
+                                    <th> Número do processo </th>
+                                    <th> Assunto </th>
+                                    <th> Relator </th>
+                                    <th> Decisão do relator </th>
+                                    <th> Aluno Interessado </th>
+                                    <th> Decisão do Coolegiado </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="processo : ${reuniao.processos}">
+                                    <td th:text="${processo.numero}"></th>
+                                    <td th:text="${processo.assunto.nome}"></td>
+                                    <td th:text="${processo.relator.nome}"></td>
+                                    <td th:text="${processo.decisaoRelator}"></td>
+                                    <td th:text="${processo.interessado.nome}"></td>
+                                    <td th:if="${processo.decisaoColegiado == '' or processo.decisaoColegiado == null}"> Não julgado </td>
+                                    <td th:unless="${processo.decisaoColegiado == '' or processo.decisaoColegiado == null}" th:text="${processo.decisaoColegiado}">  </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <a th:href="@{/coordenador/sessao/{id}/salvar(id=${reuniao.id})}" class="button-style" id="finalizar-button"> Finalizar Sessão </a>
+
+                    </div>
+
+                    <label class="col-form-label">Membros:</label>
+                    <div class="form-tabela-conducao">
+                        <table class="table table-bordered" id="tabela">
+                            <thead>
+                                <tr>
+                                    <th scope="col"> Matrícula </th>
+                                    <th scope="col"> Membro </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="membro : ${reuniao.colegiado.membros}">
+                                    <td th:text="${membro.matricula}">teste</td>
+                                    <td th:text="${membro.nome}">teste</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <h3 class="text-center mt-2" th:if="${votos != null}">Processo </h3> <p></p>
+                  
+                   
+
+                    <label for="" class="col-form-label" th:if="${votos != null}">Votação:</label>
+                    <div class="form-tabela-conducao">
+                        <table class="table table-bordered" id="tabela" th:if="${votos != null}">
+                            <thead>
+                                <tr>
+                                    <th>Membro</th>
+                                    <th>Voto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="membro : ${reuniao.colegiado.membros}">
+                                    <td th:text="${membro.nome}"></td>
+                                    <td th:if="${votos.get(membro.nome) == null}">
+            
+                                        <form th:action="@{/coordenador/sessao/{id}/professor/{idProfessor}/votar(id=${reuniao.id}, idProfessor=${membro.id})}" method="post"> 
+                                            <input type="hidden" name="voto" value="COM_RELATOR">
+                                            <button type="submit" class="button-style"> Com o relator  </button>
+                                        </form>
+                                        <form th:action="@{/coordenador/sessao/{id}/professor/{idProfessor}/votar(id=${reuniao.id}, idProfessor=${membro.id})}" method="post"> 
+                                            <input type="hidden" name="voto" value="DIVERGENTE">
+                                            <button type="submit" class="button-style"> Divergente </button>
+                                        </form>
+                                    </td>
+
+                                    <td th:unless="${votos.get(membro.nome) == null}">
+                                        <p th:text="${votos.get(membro.nome).tipoVoto}"></p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- form-inferior d-flex flex-column -->
+                    <div class="">
+                        <form id="form-anexo" th:action="@{/coordenador/sessao/{id}/ata(id=${reuniao.id})}" method="post" enctype="multipart/form-data">
+                            <!-- class="form-item d-flex justify-content-center align-items-center" -->
+                            <!-- d-flex justify-content-center align-items-center -->
+                            <div id="anexo">
+                                <label for="file" class="col-form-label"> Ata reuniao </label>
+                                <div class="">
+                                    <input type="file" class="form-control" id="file" name="file" accept="application/pdf">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="button-style mx-auto d-block"> Salvar Ata </button>
+                        </form>
+                    
+        
+                    
+                        <a th:if="${votos != null}" th:href="@{/coordenador/sessao/{id}/processo/salvar(id=${reuniao.id})}" class="button-style" id="button-cadastrar-sessao"> Salvar Resultado da Votação </a>
+                    </div>
+                    
+                </div>
+            
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+</body>
+
+</html>

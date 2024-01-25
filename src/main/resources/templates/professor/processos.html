@@ -9,50 +9,64 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/professor/processos.css}">
 
+
     <title>Processos</title>
 </head>
 
 <body>
-    <div class="header">
-        <div class="icon">
-            <a th:href="@{/professor/home}">&#9665; </a>
-        </div>
-        <h1>Processos</h1>
-        <a th:href="@{/auth/logout}" id="logout-button">
-            <img th:src="@{/images/log-out.svg}" alt="logout">
-        </a>
-    </div>
+    <div>
+        <!-- <div class="header">
+            <div class="icon">
+                <a th:href="@{/professor/home}">&#9665; </a>
+            </div>
+            <h1>Processos</h1>
+            <form class="form-inline my-2 my-lg-0" th:action="@{/auth/logout}" method="POST">
+                <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="logout">
+                </input>
+            </form>
+        </div> -->
+       
+        <div th:replace="~{/fragments/base-professor :: header('Processos do Professor')}"></div>
 
-    <div class="tabela">
-        <div th:replace="~{/fragments/paging-select-size}" ></div>
+
+        <div th:replace="~{/fragments/base-professor :: menu}"></div>
+
+
+        
+
+
+        <div class="tabela">
+            <div th:replace="~{/fragments/paging-select-size}" ></div>
         <table>
-            <thead>
-                <tr>
-                    <th>Nº</th>
-                    <th>Assunto</th>
-                    <th>Status</th>
-                    <th>Documento</th>
-                    <th>Votar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="processo : ${processos}" th:object="${processo}">
-                    <td th:text="${processo.numero}"></td>
-                    <td th:text="${processo.assunto.nome}"></td>
-                    <td th:text="${processo.status.getStatus()}"></td>
-                    <td th:if="${processo.anexos.size() == 0}" > Sem documentos </td>
-                    <td th:unless="${processo.anexos.size() == 0}">
-                        <a href="#">Ver Documento</a>
-                    </td>
-                    <td th:if="${processo.decisaoRelator == null}">
-                        <a th:href="@{/professor/processo/{id}(id=${processo.id})}">Votar</a>
-                    </td>
-                    <td th:unless="${processo.decisaoRelator == null}" th:text="${processo.decisaoRelator}">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Assunto</th>
+                        <th>Status</th>
+                        <th>Documento</th>
+                        <th>Votar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="processo : ${processos}" th:object="${processo}">
+                        <td th:text="${processo.numero}"></td>
+                        <td th:text="${processo.assunto.nome}"></td>
+                        <td th:text="${processo.status.getStatus()}"></td>
+                        <td th:if="${processo.anexos.size() == 0}"> Sem documentos </td>
+                        <td th:unless="${processo.anexos.size() == 0}">
+                            <a href="#">Ver Documento</a>
+                        </td>
+                        <td th:if="${processo.decisaoRelator == null}">
+                            <a th:href="@{/professor/processo/{id}(id=${processo.id})}">Votar</a>
+                        </td>
+                        <td th:unless="${processo.decisaoRelator == null}" th:text="${processo.decisaoRelator}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div th:replace="~{/fragments/paging :: paginator('professor/processos', ${navPage})}" ></div>
     </div>
 </body>
+
 </html>

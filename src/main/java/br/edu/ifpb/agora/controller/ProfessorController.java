@@ -10,7 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import java.util.Arrays;
+import java.util.HashMap;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -19,6 +22,20 @@ public class ProfessorController {
 
     @Autowired
     private ProfessorService professorService;
+
+
+    // private HashMap<String, String> pathTo = new HashMap<String, String>();    
+
+    // private List<String> getPath(String page) {
+    // if(page.equals("cadastro")) {
+    //         return Arrays.asList("/css/aluno/main.css", "/css/aluno/cadastro-processo-aluno.css");
+    //     } else if (page.equals("listagem")) {
+    //         return Arrays.asList("/css/aluno/main.css", "/css/aluno/aluno.css");
+    //     }
+    //     return Arrays.asList("/css/aluno/main.css");
+    // }
+
+
 
 
     @GetMapping("/home")
@@ -30,10 +47,9 @@ public class ProfessorController {
 
 
     @GetMapping("/reunioes")
-    public ModelAndView reunioes(ModelAndView mav, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
-        Usuario professor = (Usuario) session.getAttribute("usuario");
+    public ModelAndView reunioes(ModelAndView mav, Principal user, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
         Pageable paging = PageRequest.of(page -1, size);
-        Page<Reuniao> reunioes = professorService.listarReunioes(professor, paging);
+        Page<Reuniao> reunioes = professorService.listarReunioes(user, paging);
         NavPage navPage = NavPageBuilder.newNavPage(reunioes.getNumber() + 1, reunioes.getTotalElements(), reunioes.getTotalPages(), size);
         mav.addObject("navPage", navPage);
         mav.setViewName("professor/reunioes");
@@ -52,18 +68,17 @@ public class ProfessorController {
     }
 
     @GetMapping("/reunioes/filtro")
-    public ModelAndView reunioesByStatus(@RequestParam(name = "filtro") StatusReuniao filtro, HttpSession session, ModelAndView mav) {
-        Usuario professor = (Usuario) session.getAttribute("usuario");
-        mav.setViewName("redirect:/professor/reunioes");
-        mav.addObject("reunioes", professorService.listarReunioesByStatus(professor, filtro));
+    public ModelAndView reunioesByStatus(@RequestParam(name = "filtro") StatusReuniao filtro, Principal user, ModelAndView mav) {
+        mav.setViewName("professor/reunioes");
+
+        mav.addObject("reunioes", professorService.listarReunioesByStatus(user, filtro));
         return mav;
     }
 
     @GetMapping("/processos")
-    public ModelAndView processos(ModelAndView mav, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
-        Usuario professor = (Usuario) session.getAttribute("usuario");
+    public ModelAndView processos(ModelAndView mav, Principal principal, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
         Pageable paging = PageRequest.of(page -1, size);
-        Page<Processo> processos = professorService.listarProcessosDesignados(professor, paging);
+        Page<Processo> processos = professorService.listarProcessosDesignados(principal, paging);
         NavPage navPage = NavPageBuilder.newNavPage(processos.getNumber() +1, processos.getTotalElements(), processos.getTotalPages(), size);
         mav.addObject("navPage", navPage);
         mav.setViewName("professor/processos");

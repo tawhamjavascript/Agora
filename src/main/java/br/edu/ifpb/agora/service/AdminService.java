@@ -2,15 +2,25 @@ package br.edu.ifpb.agora.service;
 
 import br.edu.ifpb.agora.model.*;
 import br.edu.ifpb.agora.repository.*;
-import br.edu.ifpb.agora.util.PasswordUtil;
+import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.AdicionarProfessorHandler;
+import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.AlterarCoordenadorParaProfessorHandler;
+import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.AlterarProfessorParaCoordenadorHandler;
+import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.AtualizarCoordenadorHandler;
+import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.BaseHandler;
+import br.edu.ifpb.agora.service.PadraoProjeto.ChainOfResponsibility.CopiandoDadosSalvandoSenha;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import org.springframework.beans.BeanUtils;
 
 @Service
 public class AdminService {
@@ -29,34 +39,109 @@ public class AdminService {
 
     @Autowired ColegiadoRepository colegiadoRepository;
 
+    @Autowired AuthorityRepository authorityRepository;
+
+    @Autowired UserRepository userRepository;
+
     @Transactional
     public void registerTeacher(Professor professor) {
+        BaseHandler firstHandler = null;
+        professor.setAdmin(false);
+        PasswordEncoder hash = new BCryptPasswordEncoder();
         if (professor.isCoordenador()) {
+            
             Professor atualCoordenador = professorRepository.findByCoordenadorTrueAndCursoId(professor.getCurso().getId());
-            if (atualCoordenador != null) {
-                atualCoordenador.setCoordenador(false);
+            if (atualCoordenador != null && professor.getId() != atualCoordenador.getId()) {
+                firstHandler = new AtualizarCoordenadorHandler(professorRepository, authorityRepository, userRepository, atualCoordenador, professor);
+                
+            } 
+        }
+        if (professor.getId() == null) {
+            BaseHandler adicionarProfessorHandler = new AdicionarProfessorHandler(professorRepository, authorityRepository, userRepository, null, professor);
+            if (firstHandler == null) {
+                firstHandler = adicionarProfessorHandler;
+            }
+            else {
+                firstHandler.setNextHandler(adicionarProfessorHandler);
+            }
 
+        }
+        
+        else {
+            System.out.println("Professor existe no banco");
+            Professor professorBD = professorRepository.findByMatricula(professor.getMatricula());
+            
+            System.out.println(" " + professorBD.isCoordenador() + " " + professor.isCoordenador());
+            
+            if(!professorBD.isCoordenador() && professor.isCoordenador()) {
+                System.out.println("Professor no BD não é coordenador");
+                BaseHandler alterarProfessorParaCoordenador = new AlterarProfessorParaCoordenadorHandler(professorRepository, authorityRepository, userRepository, professorBD, professor);
+
+                if (firstHandler == null) {
+                    firstHandler = alterarProfessorParaCoordenador;
+              
+                }
+                else {
+                    if (firstHandler.getNextHandler() == null) {
+                        firstHandler.setNextHandler(alterarProfessorParaCoordenador);
+                    }
+                    else {
+                        BaseHandler lastHandler = firstHandler;
+                        while(lastHandler.getNextHandler() != null) {
+                            lastHandler = lastHandler.getNextHandler();
+                        }
+                        lastHandler.setNextHandler(alterarProfessorParaCoordenador); 
+                    }
+                }
+            }
+            else if (professorBD.isCoordenador() && !professor.isCoordenador()) {
+                BaseHandler alterarCoordenadorParaProfessor = new AlterarCoordenadorParaProfessorHandler(professorRepository, authorityRepository, userRepository, professorBD, professor);
+                if (firstHandler == null) {
+                    firstHandler = alterarCoordenadorParaProfessor;
+                }
+                else {
+                    if (firstHandler.getNextHandler() == null) {
+                        firstHandler.setNextHandler(alterarCoordenadorParaProfessor);
+                    }
+                    else {
+                        BaseHandler lastHandler = firstHandler;
+                        while(lastHandler.getNextHandler() != null) {
+                            lastHandler = lastHandler.getNextHandler();
+                        } 
+                        lastHandler.setNextHandler(alterarCoordenadorParaProfessor);
+                    }
+                }  
+            }
+            BaseHandler copiarDadosSalvandoSenha = new CopiandoDadosSalvandoSenha(professorRepository, authorityRepository, userRepository, professorBD, professor);
+            if (firstHandler == null) {
+                firstHandler = copiarDadosSalvandoSenha;
+            }
+            else {
+                if (firstHandler.getNextHandler() == null) {
+                    firstHandler.setNextHandler(copiarDadosSalvandoSenha);
+                }
+                else {
+                    BaseHandler lastHandler = firstHandler;
+                    while(lastHandler.getNextHandler() != null) {
+                        lastHandler = lastHandler.getNextHandler();
+                    } 
+                    lastHandler.setNextHandler(copiarDadosSalvandoSenha);
+                }
             }
         }
-        if(professor.getId() != null) {
-            Professor professorBD = professorRepository.findById(professor.getId()).get();
-
-            if (PasswordUtil.checkPass(professor.getSenha(), professorBD.getSenha())) {
-                professor.setSenha(professorBD.getSenha());
-
-            } else {
-                professor.setSenha(PasswordUtil.hashPassword(professor.getSenha()));
-            }
-
-        } else {
-            professor.setSenha(PasswordUtil.hashPassword(professor.getSenha()));
+        do {
+            System.out.println("entrando no do while");
+            firstHandler.handle();
+            firstHandler = firstHandler.getNextHandler();
         }
-        professorRepository.save(professor);
+        while(firstHandler != null);
     }
 
     @Transactional
     public void removeTeacher(Long id) {
-        professorRepository.delete(professorRepository.findById(id).get());
+        Professor professor = professorRepository.findById(id).get();
+        professor.getUser().setEnabled(false);
+        professorRepository.delete(professor);
     }
 
     @Transactional
@@ -89,26 +174,33 @@ public class AdminService {
     @Transactional
     public void registerStudent(Aluno aluno) {
         aluno.setAdmin(false);
-        if (aluno.getId() != null) {
-            Aluno alunoBD = alunoRepository.findById(aluno.getId()).get();
+        PasswordEncoder hash = new BCryptPasswordEncoder();
+        if (aluno.getId() == null) {
+            String passwordEncrypt = hash.encode((CharSequence)aluno.getSenha());
+            User user = new User(aluno.getMatricula(), passwordEncrypt);
+            user.setEnabled(true);
+            user.setAuthorities(Collections.singletonList(new Authority(user, "ROLE_ALUNO")));
+            aluno.setUser(user);
+            alunoRepository.save(aluno);
 
-            if (PasswordUtil.checkPass(aluno.getSenha(), alunoBD.getSenha())) {
-                aluno.setSenha(alunoBD.getSenha());
-
-            } else {
-                aluno.setSenha(PasswordUtil.hashPassword(aluno.getSenha()));
-            }
-
-        } else {
-            aluno.setSenha(PasswordUtil.hashPassword(aluno.getSenha()));
         }
 
-        alunoRepository.save(aluno);
+        else {
+            Aluno alunoBD = alunoRepository.findByMatricula(aluno.getMatricula());
+            BeanUtils.copyProperties(aluno, alunoBD, "senha", "processos", "matricula", "user");
+            boolean matchPassword = hash.matches(aluno.getSenha(), alunoBD.getSenha());
+            if (!matchPassword) {
+                String passwordEncrypt = hash.encode(aluno.getSenha());
+                alunoBD.setSenha(passwordEncrypt);
+            }
+            alunoRepository.save(alunoBD);
+        }
     }
-
     @Transactional
     public void removeStudent(Long id) {
-        alunoRepository.delete(alunoRepository.findById(id).get());
+        Aluno aluno = alunoRepository.findById(id).get();
+        aluno.getUser().setEnabled(false);
+        alunoRepository.delete(aluno);
     }
     @Transactional
     public void updateStudent(Aluno aluno) {
@@ -192,7 +284,15 @@ public class AdminService {
 
     @Transactional
     public void salvarColegiado(Colegiado colegiado) {
-        colegiadoRepository.save(colegiado);
+        if (colegiado.getId() == null) {
+            colegiadoRepository.save(colegiado);
+
+        }
+        else {
+            Colegiado colegiadoBD = colegiadoRepository.findById(colegiado.getId()).get();
+            BeanUtils.copyProperties(colegiado, colegiadoBD, "reunioes", "curso");
+        
+        }
     }
 
     @Transactional

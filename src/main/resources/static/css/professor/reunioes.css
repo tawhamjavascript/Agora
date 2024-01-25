@@ -1,14 +1,68 @@
+html,
 body {
-    font-family: 'Sunflower', sans-serif;
-    background-color: #F1F1F1;
-    color: #10428C;
+    color: #0D4085
 }
 
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 1.95rem;
+    gap: 8rem;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #sidebar a {
+    margin-bottom: 2rem;
+    width: 10rem;
+    height: 3rem;
+    color: black;
+    font-weight: 700;
+    font-size: large;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    border-radius: 8px;
+    background: #F1F1F1;
+  }
+
+  #sidebar input {
+    width: 10rem;
+    height: 3rem;
+  
+    color: black;
+    font-weight: 700;
+    font-size: large;
+    text-decoration: none;
+  
+    border-radius: 8px;
+    background: #F1F1F1;
+  
+    border: none;
+  }
+
+
+
 .header {
-    background-color: #10428C;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #10428C;
+    box-shadow: 0px .8px .8px rgba(0, 0, 0, 0.5);
+    height: 3rem;
+}
+
+
+.header h3 {
+    margin-top: .8rem;
+    font-weight: bolder;
 }
 
 .header .icon {
@@ -22,8 +76,8 @@ body {
     top: 15px;
     right: 10px;
     filter: invert(100%);
- 
- }
+
+}
 
 
 .username {
@@ -32,10 +86,6 @@ body {
     margin: 20px 0;
 }
 
-.centro {
-    text-align: center;
-    margin: 20px;
-}
 
 .filter-form {
     margin: 10px;
@@ -45,7 +95,8 @@ body {
     color: #10428C;
 }
 
-select, button {
+select,
+button {
     background: linear-gradient(to right, #50D5FF, #2F64CC);
     color: white;
     font-size: 18px;
@@ -57,17 +108,24 @@ select, button {
     font-family: Arial, sans-serif;
 }
 
-.header {
-    text-align: center;
-    padding: 20px;
-    background-color: #f2f2f2;
-}
+
 
 .icon {
-    position: absolute;
-    top: 20px;
-    left: 20px;
     font-size: 24px;
+    display: inline;
+    color: #10428C;
+    text-decoration: none;
+    background: #F1F1F1;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 30px;
+    border-style: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
 }
 
 .username {
@@ -77,36 +135,42 @@ select, button {
 }
 
 .centro {
-    margin: 20px auto;
-    width: 80%;
+    margin: 30px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+   
+
+}
+
+
+#tabela {
+    padding: 20px;
+    background: #F1F1F1;
+    color: #0D4085;
+    margin: 20px auto;
+    width: 100%;
+
 }
 
 table {
     width: 100%;
     background-color: white;
     border-collapse: collapse;
-    margin: auto; /* Centraliza a tabela */
+    margin: auto;
 }
 
-th, td {
-    border: 1px solid #10428C;
-    padding: 10px;
+
+th,
+td {
+    /* border: 1px solid #ccc; */
+    padding: 20px;
     text-align: left;
 }
 
-th {
-    background-color: #10428C;
-    color: white;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
+.middle-div {
+    margin-left: 10rem;
 }

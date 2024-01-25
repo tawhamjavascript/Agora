@@ -18,6 +18,12 @@ public interface ReuniaoRepository extends JpaRepository<Reuniao, Long> {
     @Query("select r from Professor p join p.colegiado c join c.reunioes r where p.id= ?1")
     public List<Reuniao> AllReunioesByProfessorAndColegiado(Long idProfessor);
 
+    public List<Reuniao> findByColegiadoId(Long id);
+
+    public Page<Reuniao> findByColegiadoId(Long id, Pageable paging);
+
+    public List<Reuniao> findByColegiadoIdAndStatus(Long id, StatusReuniao status);
+
     Reuniao findByStatus(StatusReuniao statusReuniao);
 
     @Query("select r from Professor p join p.colegiado c join c.reunioes r where p.id= ?1")

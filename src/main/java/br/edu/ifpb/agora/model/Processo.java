@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Processo {
+public class Processo implements EntidadesSalvarDocumento{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -22,7 +22,10 @@ public class Processo {
     private Date dataRecepcao;
     private Date dataDistribuicao;
     private Date dataParecer;
-    private byte[] parecer;
+
+    @OneToOne
+    @JoinColumn(name = "id_parecer")
+    private Documento parecer;
 
 
     @Size(min = 0, max = 500, message = "O texto deve ter no máximo 500 caracteres")
@@ -42,7 +45,7 @@ public class Processo {
     @JoinColumn(name = "assunto_id")
     private Assunto assunto;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "processo_id")
     private List<Voto> votos;
 
@@ -60,11 +63,18 @@ public class Processo {
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
-    @ElementCollection
-    private List<byte[]> anexos;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Documento> anexos;
 
-    public void addAnexos(byte[] anexo) {
-        this.anexos.add(anexo);
+    @Enumerated(EnumType.STRING)
+    private TipoDecisao decisaoColegiado;
+
+    public Documento getUltimoAnexo() {
+        return this.anexos.get(this.anexos.size() - 1);
+    }
+
+    public void addAnexos(Documento documento) {
+        this.anexos.add(documento);
     }
 
     public void addVoto(Voto voto) {
@@ -78,6 +88,5 @@ public class Processo {
     public TipoDecisao getTipoDecisao() {
         return this.decisaoRelator;
     }
-
 
 }

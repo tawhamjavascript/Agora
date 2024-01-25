@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/base-coordenador :: headfiles(title='coordenador')}">
+
+<body>
+    <div class="container">
+        <table class="table table-bordered" id="tabela">
+            <thead>
+                <th scope="col"> Assunto </th>
+                <th scope="col"> Aluno </th>
+                <th scope="col"> anexos </th>
+                <th scope="col"> Adicionar </th>
+            </thead>
+    
+            <tbody th:each="processo : ${processos}">
+                <td th:text="${processo.assunto.nome}"> </td>
+                <td th:text="${processo.interessado.nome}"> </td>
+                <td>
+                    <ul> 
+                        <li th:each="anexo : ${anexos}">
+                            <a th:href="@{${anexo.url}}"> </a>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <form th:action="@{/coordenador/sessao/add/processo}" method="post">
+                        <input type="hidden" th:value="${processo.id}" name="idProcesso">
+                        <button type="submit"> <img th:src="@{/images/user-plus.svg}" alt="enviar">  </button> 
+                    </form>
+                </td>
+            </tbody>
+        </table>
+    
+        <a id="voltar" th:href="@{/coordenador/sessao/cadastro}"> Voltar </a>
+    </div>  
+</body>

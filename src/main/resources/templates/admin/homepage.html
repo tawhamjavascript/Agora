@@ -1,13 +1,8 @@
 <!DOCTYPE html >
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+<head th:insert="~{fragments/base-admin :: headfiles(userType='Admin Homepage')}">
 
-  <link rel="stylesheet" th:href="@{/css/admin/homepage.css}">
-
-  <title>Homepage Admin</title>
-</head>
 <body>
   <div id="cabecalho">
     <div>
@@ -18,10 +13,15 @@
     <h2>Homepage do Administrador</h2>
 
     <div>
-      <a th:href="@{/auth}" id="logout-button">
-
-        <img th:src="@{/images/log-out.svg}" alt="logout">
-      </a>
+      <form class="form-inline my-2 my-lg-0" th:action="@{/auth/logout}" method="POST">
+        <!-- <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="logout"> -->
+        <button type="submit">
+          <img th:src="@{/images/log-out.svg}" alt="Logout">
+        </button>
+    
+      </input>
+    </form>
+        
     </div>
   </div>
 

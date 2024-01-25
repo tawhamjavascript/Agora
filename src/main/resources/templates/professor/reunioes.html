@@ -14,49 +14,47 @@
 </head>
 
 <body>
-    <div class="header">
-        <div class="icon">
-            <a th:href="@{/professor/home}">&#9665; </a>
-        </div>
-        <h1>Reuniões</h1>
-        <a th:href="@{/auth/logout}" id="logout-button">
-            <img th:src="@{/images/log-out.svg}" alt="logout">
-        </a>
-    </div>
+    <div>
 
-    <div class="container centro">
-        <form class="filter-form" method="get" th:action="@{/professor/reunioes/filtro}">
-            <label for="status-filter">Filtrar por status:</label>
+        <div th:replace="~{/fragments/base-professor :: header('Reuniões do Professor')}"></div>
+
+        <div th:replace="~{/fragments/base-professor :: menu}"></div>
+        
+        <div class="centro">
+            <form class="filter-form" method="get" th:action="@{/professor/reunioes/filtro}">
+                <label for="status-filter">Filtrar por status:</label>
 
 
-            <select id="status-filter" name="filtro">
-                <optgroup label="Status processo">
-                    <option th:each="status : ${statusItens}" th:value="${status}" th:text="${status.getStatus()}"> </option>
-                </optgroup>
+                <select id="status-filter" name="filtro">
+                    <optgroup label="Status processo">
+                        <option th:each="status : ${statusItens}" th:value="${status}" th:text="${status.getStatus()}">
+                        </option>
+                    </optgroup>
 
 
-            </select>
-            <button type="submit">Filtrar</button>
-        </form>
+                </select>
+                <button type="submit">Filtrar</button>
+            </form>
 
         <div th:replace="~{/fragments/paging-select-size}" ></div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Processos</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="reuniao : ${reunioes}">
-                    <td th:text="${#dates.format(reuniao.getDataReuniao(), 'dd-MMM-yyyy')}"></td>
-                    <td th:text="${reuniao.getProcessos().size()}"></td>
-                    <td th:text="${reuniao.getStatus()}"></td>
-                </tr>
-            </tbody>
-        </table>
+            <table id="tabela">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Processos</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="reuniao : ${reunioes}">
+                        <td th:text="${#dates.format(reuniao.getDataReuniao(), 'dd-MMM-yyyy')}"></td>
+                        <td th:text="${reuniao.getProcessos().size()}"></td>
+                        <td th:text="${reuniao.getStatus()}"></td>
+                    </tr>
+                </tbody>
+            </table>
         <div th:replace="~{/fragments/paging :: paginator('professor/reunioes', ${navPage})}" ></div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>

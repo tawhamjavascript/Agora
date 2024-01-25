@@ -1,3 +1,35 @@
+.container {
+  justify-content: center;
+}
+
+
+#sidebar-sessao {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  margin-top: 4.8rem;
+}
+
+#sidebar-sessao a {
+  margin-bottom: 2rem;
+
+  width: 10rem;
+  height: 3rem;
+
+  color: black;
+  font-weight: 700;
+  font-size: large;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+  background: #F1F1F1;
+
+}
+
 #form-register {
   background: #F1F1F1;
 
@@ -8,7 +40,7 @@
 
   color: #0D4085;
   font-size: 20px;
-  
+
   padding: 10px;
 }
 
@@ -32,3 +64,210 @@
   text-decoration: none;
 }
 
+
+#form-register-sessao {
+  background: #F1F1F1;
+
+  height: auto;
+  width: 64rem;
+
+  border-radius: 16px;
+
+  color: #0D4085;
+  font-size: 20px;
+
+  padding: 10px;
+}
+
+#form-register-sessao a {
+  background: linear-gradient(90deg, #50D5FF 0%, #2F64CC 100%);
+  color: white;
+  width: 15rem;
+  height: 3rem;
+  border-radius: 30px;
+
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: large;
+  font-weight: bold;
+
+  margin-top: 2rem;
+
+  text-decoration: none;
+}
+
+
+#add-person {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+
+.form-tabela {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 9rem;
+
+}
+
+.form-tabela-conducao {
+  display: flex;
+  margin-bottom: 4rem;
+  margin-right: 3rem;
+}
+
+.form-tabela textarea {
+  margin-top: 10px;
+  /* Ajuste conforme necessário */
+  width: 100%;
+  display: block;
+  clear: both;
+}
+
+#form-register-sessao .form-control {
+  width: 40%;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  color: black;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+  border-radius: 8px;
+}
+
+th {
+  background-color: #ffffff;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.button-style {
+  height: 2.5rem;
+  margin-left: 9.5rem;
+}
+
+.button-colegiado-style {
+  margin: auto !important;
+  width: 3rem !important;
+  height: 2.5rem !important;
+  background: none !important;
+  
+}
+
+.button-colegiado-style:hover {
+  cursor: pointer;
+}
+
+#button-cadastrar-sessao {
+  height: 5rem;
+
+}
+
+#button-x {
+  margin: 2rem;
+}
+
+.tabela-sessao th,
+td {
+  text-align: center;
+}
+
+.observacoes {
+  margin-top: 10px;
+  clear: both;
+}
+
+.form-inferior {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-item {
+  display: flex;
+  justify-content: center;
+}
+
+#anexo {
+  flex-direction: column;
+  align-content: center;
+  margin-bottom: 3rem;
+}
+
+
+.message {
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 16px;
+  background: #F1F1F1;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 15rem;
+}
+
+.message p {
+  font-weight: bold;
+  margin: 0;
+  font-size: 18px;
+}
+
+
+
+
+
+/* 
+.message img {
+  transform: scale(1.5);
+} */
+
+#message-confirm {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  color: white;
+}
+
+#message-confirm-sim {
+  border-radius: 16px;
+  background: #3C5B3B;
+  padding: .8rem 1rem;
+}
+
+
+
+#message-confirm-nao {
+  border-radius: 16px;
+  background: #E35050;
+  padding: .8rem 1rem;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  font-size: 1.15rem;
+  background-color: #fff;
+  /* border: 1px solid #caced1; */
+  border: 1px solid #caced1;
+  border-radius: 0.25rem;
+  color: #000;
+  cursor: pointer;
+}

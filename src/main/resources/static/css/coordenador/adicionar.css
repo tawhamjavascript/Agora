@@ -8,3 +8,21 @@
   width: 50vw;
   margin-top: .5rem;
 }
+
+#voltar {
+  background: linear-gradient(90deg, #50D5FF 0%, #2F64CC 100%);
+  color: white;
+  width: 10rem;
+  height: 2.5rem;
+  border-radius: 30px;
+  border-style: none;
+
+  font-size: larger;
+  font-weight: bold;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-decoration: none;
+}

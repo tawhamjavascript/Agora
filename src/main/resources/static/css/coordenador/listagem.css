@@ -21,11 +21,89 @@
   width: 13rem;
 }
 
-#tabela {
-  background: #F1F1F1;
-  color: #0D4085; 
-  width: 50vw;
-  margin-top: .5rem;
+
+#tabela-sessoes {
+  width: 110%;
+  color: #316CCF;
+  border-radius: 15px;
+  overflow: hidden;   
 }
 
+#tabela-sessoes tr {
+  height: 3.5rem;
+  
+}
+
+/* td, th {
+  padding: 2rem;
+} */
+
+
+
+#tabela-sessoes thead {
+  background-color: #E9E9E9;
+}
+
+#tabela-sessoes tbody tr:nth-child(odd) {
+  background-color: #F1F1F1;
+}
+
+#tabela-sessoes tbody tr:nth-child(even) {
+  background-color: #E9E9E9;
+}
+
+#tabela {
+  background: #F1F1F1;
+  color: #0D4085;
+  margin-top: 2rem;
+  width: 50vw;
+}
+
+#sidebar input {
+  width: 10rem;
+  height: 3rem;
+
+  color: black;
+  font-weight: 700;
+  font-size: large;
+  text-decoration: none;
+
+  border-radius: 8px;
+  background: #F1F1F1;
+
+  border: none;
+}
+
+.button-style {
+  text-decoration: none;
+}
+
+.button-style:hover {
+  color: white;
+}
+
+#finalizar-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#button-cadastrar-sessao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+}
+
+#file {
+  width: max-content !important;
+  background: none !important;
+  color: black !important;
+  font-weight: 400 !important;
+  height: fit-content !important;
+}
+
+#form-register-sessao {
+  margin-bottom: 3rem;
+}
   
