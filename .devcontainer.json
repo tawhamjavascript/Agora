@@ -1,6 +1,6 @@
 {
     "name": "Agora",
-    "dockerComposeFile": "../../docker-compose.yml",
+    "dockerComposeFile": "./docker-compose.yml",
     "service": "java-linux",
     "workspaceFolder": "/home/code",
     "features": {

@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+        - postgres:/var/lib/postgresql/data
+
+  java-linux:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ../.:/home/code/pwebII
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "taw.balbino@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "ifpb"
+
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+    ports:
+        - "80:80"
+
+    depends_on:
+      - postgres
+
+volumes:
+    postgres:
+    pgadmin:
+
+
+
+
+
