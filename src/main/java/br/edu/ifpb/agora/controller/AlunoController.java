@@ -82,10 +82,15 @@ public class AlunoController {
 
     @PostMapping("/processo/cadastrar")
     public ModelAndView salvarProcesso(@Valid Processo processo, BindingResult result, ModelAndView modelAndView, Principal principal) {
+        pathTo.put("novoProcesso", "/aluno/processo/cadastrar");        
+        pathTo.put("listar", "/aluno/processo");
+        pathTo.put("logout", "/auth/logout");
         if (result.hasErrors()) {
             System.out.println(result.getFieldErrors());
             modelAndView.setViewName("aluno/tela-aluno-cadastro-processo");
             modelAndView.addObject("processo", processo);
+            modelAndView.addObject("caminho", pathTo);
+            modelAndView.addObject("stylePaths", getPath("cadastro"));
             return modelAndView;
 
         }
