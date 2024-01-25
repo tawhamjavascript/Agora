@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile
 
     volumes:
-      - ../.:/home/code/pwebII
+      - .:/home/code/pwebII
 
   pgadmin:
     image: dpage/pgadmin4
